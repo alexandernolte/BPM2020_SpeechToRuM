@@ -1,0 +1,32 @@
+% !TeX root = ../Main.tex
+\section{Related work}
+\label{sec:relatedwork}
+
+Our research relates to three streams of research: Consistency checking for knowledge bases, research on process mining, and specifically research on \gls{declare}.
+Research in the area of knowledge representation has considered the issue of consistency checking. In particular, in the context of Knowledge-based configuration systems, Felfernig et al.~\cite{DBLP:journals/ai/FelfernigFJS04} have challenged the problem of finding the core cause of inconsistencies within the knowledge base during its update test, in terms of minimal conflict sets (the so-called diagnosis). The proposed solution relies on the recursive partitioning of the (extended) CSP problem into subproblems, skipping those that do not contain an element of the propagation-specific conflict~\cite{DBLP:conf/aaai/Junker04}. In the same research context, the work described in \cite{felfernig2011corediag} focuses on the detection of non-redundant constraint sets. The approach is again based on a divide-and-conquer approach, that favours however those constraints that are ranked higher in a lexicographical order. Differently from such works, we tend to exploit the characteristics of \gls{declare} \glspl{contemp} in a sequential exploration of possible solutions. As in their proposed solutions, though, we base upon a preference-oriented ranking when deciding which \glspl{con} to keep in the returned set.
+
+
+The problem of consistency arises in process mining when working with behavioural constraints. Constraint sets as those of the $\alpha$ algorithm~\cite{Aalst.etal/2004:WorkflowMiningDiscovering} and its extension~\cite{Wen.etal/DMKD2007:AlphaPlusPlus} or behavioural profiles~\cite{DBLP:journals/tse/WeidlichMW11,DBLP:journals/is/WeidlichPDMW11} are per construction consistent. DCR graphs are not directly discussed from the perspective of consistency~\cite{DBLP:conf/bpm/ReijersSS13}, but benefit from our work due to their grounding in B{\"u}chi automata.
+
+More specifically, our work is related to research on \gls{declare} and strategies to keep sets small and consistent.
+In \cite{Maggi.etal/CIDM2011:UserGuidedDiscovery}, the authors present an approach based on the instantiation of a set of candidate \gls{declare} constraints that are checked with respect to the log to identify the ones that are satisfied in a higher percentage of traces. This approach has been improved in \cite{Maggi.etal/CAiSE2012:EfficientDiscoveryUnderstandable} by reducing the number of candidates to be checked through an apriori algorithm.
+In \cite{Maggi.etal/CAiSE2013:KnowledgeBasedIntegrated}, the same approach has been applied for the repair of \gls{declare} models based on log and for guiding the discovery task based on apriori knowledge provided in different forms. In this work, some simple reduction rules are presented. These reduction rules are, however, not sufficient to detect redundancies due to complex interactions among constraints in a discovered model as demonstrated in our experimentation.
+%In \cite{MCMM13}, an approach is presented to discover Declare constraints based on event logs containing non-atomic activities with complex lifecycles.
+
+In \cite{Bellodi.etal/CILC2010:ProbabilisticLogicBasedProM,Bellodi.etal/KSEM10:ProbabilisticDeclarativeProcessMining}, the authors present an approach for the mining of declarative process models expressed through a probabilistic logic. The approach first extract a set of integrity constraints from a log. Then,
+the learned constraints are translated into Markov Logic formulas that allow for a probabilistic classification of the traces.
+In \cite{Lamma.etal/BPM2007:InducingDeclarativeLogic,Chesani.etal/JPNOMC2009:ExploitingInductiveLogic}, the authors present an approach based on Inductive Logic Programming techniques to discover \gls{declare} process models. These approaches are not equipped with techniques for the analysis of the discovered models like the one presented in this paper.
+
+
+In \cite{DiCiccio.Mecella/CIDM2013:TwoStepFast,DiCiccio.Mecella/ACMTMIS2015:DiscoveryDeclarativeControl}, the authors introduce a two-step algorithm for the discovery of \gls{declare} constraints. As a first step, a knowledge base is built, with information about temporal statistics gathered from logs. Then, the statistical support of constraints is computed, by querying that knowledge base. Also these works introduce a basic way to deal with redundancy based on the subsumption hierarchy of \gls{declare} templates that is non capable to deal with redundancies due to complex interactions of constraints.
+
+
+In \cite{DiCiccio.etal/BPM2014:DiscoveringTargetBranched}, the authors propose an extension of the approach presented in \cite{DiCiccio.Mecella/CIDM2013:TwoStepFast,DiCiccio.Mecella/ACMTMIS2015:DiscoveryDeclarativeControl} to discover target-branched \gls{declare} constraints, i.e., constraints in which the target parameter is replaced by a disjunction of actual tasks. Here, as well as redundancy reductions based on the subsumption hierarchy of \gls{declare} constraints, also different aspects of redundancy are taken into consideration that are characteristic of target-branched \gls{declare}, such as set-dominance.
+%In \cite{Raeim.etal/CoopIS2014:LogBasedUnderstanding}, the authors propose an approach based on temporal logic query checking, to discover those LTL-based business rules that are valid in the log, by checking
+%against the log a (user-defined) class of rules.
+
+
+
+%In \cite{Westergaard.Maggi/CoopIS2012:LookingintoFuture}, a semantics for Declare to consider metric temporal constraints is presented and, in \cite{DBLP:conf/bir/Maggi14}, an approach for the discovery of this type of constraints is presented.
+%In \cite{Maggi.etal/BPM2013:DiscoveringDataAware}, the semantics of Declare is extended to consider conditions on the data flow as well as on the control flow. A technique based on daikon and decision trees is presented for the discovery of data-aware Declare constraints.
+%In \cite{Maggi/BPMDemos2013:DeclarativeProcessMining} a set of plug-ins and tools for process mining based on declarative process models is presented.

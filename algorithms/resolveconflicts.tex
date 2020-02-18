@@ -1,0 +1,50 @@
+%
+\begin{algorithm2e}[tb]
+\scriptsize
+\DontPrintSemicolon \SetAlgoVlined
+\KwIn{An \gls{fsa} $\autom$, a set of non-conflicting \glspl{con} \goodconset, a \gls{con} \glssymbol{con}, and a list of already checked \glspl{con} \blackboard}
+\BlankLine
+%resolveConflicts( A, R, C_U, V ) {
+%	if ( C_U \notin V )
+	\If(\tcp*[f]{If $\constraint$ was not already checked}){ $\constraint \notin \blackboard$ }{
+%		V <- V U C_U
+		$\blackboard \leftarrow \blackboard \bigcup \left\lbrace \constraint \right\rbrace$ \tcp*[f]{Record that $\constraint$ has been checked} \;
+%		if ( L(A) \supseq L (autom(regExp(C_U))) ) {
+		$A^{\constraint} \leftarrow \automFunc{\regexpFunc{\constraint}}$ \tcp*[f]{Build the $\constraint$-automaton} \;
+		\If(\tcp*[f]{If $\constraint$ is not redundant}){ $\languageFunc{\autom} \supset \languageFunc{A^{\constraint}} $ }{
+%		if ( L( A × autom(regExp(C_U)) ) is empty ) {
+			\If(\tcp*[f]{If $\constraint$ is not conflicting}){ $\languageFunc{\autom \times A^{\constraint}} \neq \emptyset $ }{
+%				A <- A × autom(regExp(C_U))
+				$\autom \leftarrow \autom \times A^{\constraint}$ \tcp*[f]{Merge the $\constraint$-automaton with the main \gls{fsa}} \;
+%				R <- R U C_U
+				$\goodconset \leftarrow \goodconset \bigcup \left\lbrace \constraint \right\rbrace$ \tcp*[f]{Include $\constraint$ in the set of returned \glspl{con}} \;
+			}
+			\Else(\tcp*[f]{Otherwise, resolve the conflict}){
+%				if ( r(C_U) is not T ) {
+				\If(\tcp*[f]{If a relaxation of \constraint, i.e., $\relaxopFunc{\constraint}$, exists}){ $\relaxopFunc{\constraint} \neq \top$ } {
+%					resolveConflicts( R, A, r(C_U) )
+					$\mathrm{resolveConflictAndRedundancy}\left( \autom, \goodconset, \relaxopFunc{\constraint}, \blackboard \right)$ 
+				}
+%				if ( C_U is-a corelacon ) {
+				\If{ $\constraint$ is a \gls{corelacon} }{
+%				resolveConflicts( A, R, forward(C_U), V )
+					$\mathrm{resolveConflictAndRedundancy}\left( \autom, \goodconset, \fwFunc{\constraint}, \blackboard \right)$ \;
+%				resolveConflicts( A, R, backward(C_U), V )
+					$\mathrm{resolveConflictAndRedundancy}\left( \autom, \goodconset, \bwFunc{\constraint}, \blackboard \right)$ \;
+				}
+%				}
+			}
+		}
+%		}
+	}
+%}
+\caption{Procedure $\mathrm{resolveConflictAndRedundancy}\left( \autom, \goodconset, \constraint, \blackboard \right)$, adding constraint $\constraint$ to the set of \gls{con} $\goodconset$, if it has not already been checked (and thus included in set $\blackboard$), and is not conflicting with the already added constraints, as verified over the corresponding \gls{fsa} $\autom$.
+\label{alg:conflireso}}
+\end{algorithm2e}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main.tex"
+%%% save-place: t
+%%% End: 

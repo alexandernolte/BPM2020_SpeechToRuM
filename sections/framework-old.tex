@@ -1,0 +1,149 @@
+% !TeX root = ../Main.tex
+\section{The approach}
+\label{sec:framework}
+
+\def\safeconset {\ensuremath{\declamodel^{\mathrm{S}}}}
+\def\safeconlist {\ensuremath{\safeconset_{\mathrm{list}}}}
+\def\safecon {\ensuremath{\constraint^{\mathrm{\safeconset}}_i}}
+\def\unsafeconset {\ensuremath{\declamodel^{\mathrm{U}}}}
+\def\unsafeconlist {\ensuremath{\unsafeconset_{\mathrm{list}}}}
+\def\unsafecon {\ensuremath{\constraint^{\mathrm{\unsafeconset}}_i}}
+\def\goodconset {\ensuremath{\declamodel^{\mathrm{R}}}}
+\def\blackboard {\ensuremath{\declamodel^{\mathrm{V}}}}
+\def\languageFunctor {\ensuremath{\mathscr{L}}}
+\def\automFunctor {\ensuremath{\mathscr{A}}}
+\def\regexpFunctor {\ensuremath{\mathscr{E}_\mathrm{Reg}}}
+\newcommand{\languageFunc}[1] {\ensuremath{\languageFunctor\left(#1\right)}}
+\newcommand{\automFunc}[1] {\ensuremath{\automFunctor\left(#1\right)}}
+\newcommand{\regexpFunc}[1] {\ensuremath{\regexpFunctor\left(#1\right)}}
+
+This section describes how we tackle the problem of finding the \gls{confliresproblem} in a way that reduces the intractable theoretical complexity.
+First, we present the algebraic structure on top of which the check of redundancies and conflicts is performed: it bases upon the mapping of the conjunction of \gls{declare} constraints to the product of \glspl{fsa}.
+Thereafter, we define and discuss the algorithm that allows to pursue our objective.
+In particular, we rely on the associativity of the product of \glspl{fsa}, thanks to which we can check every \gls{con} one at a time, and include it in the temporary solution by saving the product of the \gls{con} checked so far, with the current one. For the selection of the next candidate constraint to check, we make use of a greedy heuristic, that explores the search space by gathering at every step the \gls{con} that has the highest \gls{support}, or is most likely to imply the highest number of other \glspl{con}. The algorithm proceeds without visiting the same node in the search space twice.
+
+\subsection{Declare models as automata}
+As already shown in \cite{DiCiccio.Mecella/CIDM2013:TwoStepFast}, \gls{declare} \glspl{con} can be formulated as \glspl{rex} over the \gls{logalph}. The assumption is that every \gls{task} in the \gls{logalph} is bi-univocally identified by a character. Thus, \glspl{evttrace} can be assimilated to finite sequences of characters, i.e., strings, and regular languages implicitly represent the desired \glspl{evttrace} of a \gls{promod}.
+
+Using the \texttt{POSIX} wildcards, we can express, e.g.,
+$\Init{\taska}$
+as
+\texttt{a.*},
+and
+$\Resp{\taska}{\taskb}$
+as
+\texttt{[{\nore}a]*(a.*b)*[{\nore}a]*}.
+The comprehensive list of transpositions for \gls{declare} \glspl{temp} is listed in \Cref{tab:model:declareconstraintsandregexps} and explained in \cite{Prescher.etal/SIMPDA2014:FromDeclarativeProcesses}.
+Henceforth, we will refer to such mapping as
+$\regexpFunc{\constraint}$,
+which takes in input a \gls{con} {\constraint} and returns the corresponding \acrlong{rex}:
+e.g., {\regexpFunc{\Resp{\taska}{\taskb}}$ = $\texttt{[{\nore}a]*(a.*b)*[{\nore}a]*}}.
+Defining the operations of conjunction between \gls{declare} \glspl{con} ($\wedge$) and intersection between \glspl{rex} ($\mathtt{\&\&}$),
+{\regexpFunctor} is a monoid homomorphism w.r.t.\ $\wedge$ and $\mathtt{\&\&}$.
+In other words, given two \glspl{con}
+{\constraint} and {\constraintPrime},
+${\regexpFunc{\constraint \wedge \constraintPrime} = \regexpFunc{\constraint} \; \mathtt{\&\&} \; \regexpFunc{\constraintPrime}}$,
+preserving closure, associativity and the identity element (resp., $\top$ and \texttt{.*}) in both domains.
+
+Since regular grammars are recognisable through \acrlongpl{rex} \cite{ChomskyM58:finiteStateLanguages}, a \gls{rex} can always be associated to a deterministic labelled \gls{fsa}, %(or \gls{fsa} for short)
+which accepts all and only those finite strings that match the \gls{rex}.
+Formally, an \gls{fsa} is  tuple
+$ \mathcal{S} = \langle \Sigma, S, \autominitstate , \mathcal{\delta}, S^\mathit{f} \rangle $, where:
+$\Sigma$ is the alphabet;
+$S$ is the finite non-empty set of states;
+$\autominitstate \in S$ is the initial state;
+$\mathcal{\delta} : S \times \Sigma \rightarrow S$ is the transition function;
+$S^\mathit{f} \subseteq S$ is the set of final states.
+%
+Naming as $\automFunctor$ the operation leading from an \gls{rex} to an \gls{fsa}, we thus have that a \gls{declare} \gls{con} can be associated with its corresponding \gls{fsa} $\autom^\constraint$, as
+${\autom^\constraint = \automFunc{\regexpFunc{\constraint}}}$.
+Henceforth, we will also indicate $\autom^\constraint$ as the {\constraint}-automaton.
+We recall that by applying $\automFunctor$ to the \gls{rex} of a conjunction of constraints, we obtain an \gls{fsa} that exactly corresponds to the product $\times$ of the \glspl{fsa} for the individual constraints \cite{Gisburg66:languagesPreservation}:
+${\automFunc{\regexpFunc{\constraint \wedge \constraintPrime}} = \automFunc{\regexpFunc{\constraint}} \times \automFunc{\regexpFunc{\constraintPrime}}}$. Also recall that the identity element for \glspl{fsa} is a single-state automaton whose unique state is both initial and accepting, and has a self-loop for each character in the considered alphabet-
+
+
+%preserves as a monoid homomorphism the conjunction $\mathtt{\&\&}$ (a fortiori, $\wedge$) by the product $\times$ %between automata
+% The identity element is for \glspl{fsa} a single-state automaton, both initial and accepting, with an looping upon it for each character.
+% Therefore,
+% ${\automFunc{\regexpFunc{\constraint \wedge \constraintPrime}} = \automFunc{\regexpFunc{\constraint}} \times \automFunc{\regexpFunc{\constraintPrime}}}$.
+Given a model ${\declamodel = \left\lbrace \constraint_1, \ldots, \constraint_{|\declamodel|} \right\rbrace}$,
+we can therefore implicitly describe the set of \glspl{evttrace} that comply with $\declamodel$ as the language accepted by the product of all $\constraint_i$-automata (for $i \in [1, |\declamodel|]$).
+The language accepted by an \gls{fsa} $\autom$ will be denoted as $\languageFunc{\autom}$.
+In the light of this discussion, our approach searches a solution to the \gls{confliresproblem} within the \textbf{\gls{autopromo}}, i.e., the associative algebraic structure with identity element that consists of the universe-set of \glspl{fsa} and the product operation $\times$.
+
+\subsection{The algorithm}
+
+\input{algorithms/mainalgorithm.tex}
+\input{algorithms/resolveconflicts.tex}
+
+\Cref{alg:main} outlines the pseudocode of our technique.
+Its input is a \gls{declamodel}, \glssymbol{declamodel}, intended as a set of \glspl{con} $\constraint_1, \ldots, \constraint_{|\declamodel|}$.
+For every $\constraint \in \declamodel$, we assume that its \gls{support}, \gls{conf} and \gls{intf} are given too, which is the usual condition when \glssymbol{declamodel} is the output of mining algorithms such as \gls{decmapmin} or \gls{minerful}.
+\Cref{tab:runningexample:input} shows an example of {\declamodel}.
+We also assume that the same metrics are defined for those constraints that are not in \glssymbol{declamodel}, yet are either their subsuming, negated, \gls{fw} or \gls{bw} version. %(see \Cref{fig:subsum:map:rela}). %\todo{Marco: these must be defined in Section 2!}.
+Again, this is common in the output of the aforementioned algorithms. For the sake of readability, these additional \glspl{con} are not reported in \Cref{tab:runningexample:input}.
+\Cref{tab:runningexample:output} shows the output that corresponds to the processing of \Cref{tab:runningexample:input}.
+\Glspl{con} are coloured in grey that are considered as redundant. Struck-out \glspl{con} are those that are in conflict and thus dropped from the returned set.
+
+Given \glssymbol{declamodel}, the first operation ``$\mathrm{removeSubsumptionHierarchyRedundancies}$'' prunes out redundant \glspl{con} based on the subsumption hierarchy. The procedure considers a removal of the subsuming \glspl{con} such that their \gls{support} is less than or equal to the subsumed one, and the elimination of \gls{fw} and \gls{bw} \glspl{con} if the related \gls{corelacon} has a higher, or equal support. Detail of this operations have already been described in \cite{DiCiccio.Mecella/ACMTMIS2015:DiscoveryDeclarativeControl}. This procedure is useful because it reduces the number of candidate constraints to be considered, in turn reducing the number of iterations performed by the algorithm.
+In \Cref{tab:runningexample:output}, this operation is responsible for the dropping of {\Part{\taska}}, due to the fact that {\Init{\taska}} is known to hold true.
+
+Thereafter, we partition \glssymbol{declamodel} into two subsets, namely:
+\begin{inparaenum}[\itshape(i)\upshape]
+\item {\safeconset}, consisting of those \glspl{con} that are verified over the entire \gls{evtlog} (i.e., having a \gls{support} of $1.0$), and
+\item {\unsafeconset}, having the remaining \glspl{con}.
+\end{inparaenum}
+The reason for doing this is that the former is guaranteed to have no conflict: given the fact that constraints are mined using the alphabet of the \gls{evtlog}, those that have a support of $1.0$ can be conjoined, giving raise to a \emph{consistent} constraint model that continue to have an overall support of $1.0$.
+
+Even though constraints in {\safeconset} are guaranteed to be conflict-free, they could still contain redundancies. Hence, the consequent part of the algorithm is dedicated to eliminate redundant constraints from this set. To check redundancies, we employ the characterization of constraints in terms of \glspl{fsa}. Conversely, constraints in {\unsafeconset} may contain both redundancies and inconsistencies.
+\Cref{tab:runningexample:output} presents the partition of \glssymbol{declamodel} into {\safeconset} and {\unsafeconset}.
+
+\input{tables/ExampleInput.tex}
+
+
+To begin with, we initialize an \gls{fsa} {\autom} to be the identity element w.r.t.~automata product. In other words, {\autom} is initialized to accept any sequence of \glspl{evt} that map to a \gls{task} in the \gls{logalph}. This automata incrementally incorporates those constraints that are maintained in the filtered model.
+
+To set up the redundancy elimination in {\safeconset} as well as the redundancy and inconsistenty elimination in {\unsafeconset}, we then order their constitutive constraints according the the following criteria (in descending order of priority):
+%
+%\Glspl{con} in {\safeconset} and {\unsafeconset} are thus ordered according to the following criteria:
+\begin{inparaenum}[\itshape(i)\upshape]
+\item descending \gls{support} (this is trivial for {\safeconset}, since all constraints have a support of $1.0$);%, only for {\unsafeconset} as all \glspl{con} in {\safeconset} have a \gls{support} of $1.0$;
+\item category - consider first \glspl{exicon}, then positive \glspl{relacon}, and finally \glspl{negacon};
+\item descending \gls{conf};
+\item descending \gls{intf}.
+\end{inparaenum}
+This ranking is of utmost importance, as it determines the priority with which \glspl{con} are analysed. The priority, in turn, implicitly defines the ``survival expectation'' of a constraint, as constraints that come later in the list are more likely to be pruned if they are either redundant or conflicting. We briefly explain the reason for this multi-dimensional ranking.
+\Gls{support} is the first criterion adopted, because we prefer to preserve those \glspl{con} that are satisfied in the most part of the log.
+%
+The category criterion is instead driven by the expertise acquired during the years of \gls{declare} mining \cite{Schunselaar.etal/IFM2012:PatternsLogBased,Maggi.etal/CAiSE2012:EfficientDiscoveryUnderstandable}. In particular, we tend to preserve those constraints that have the potential of induce the removal of a massive amount of other constraints, due to redundancy.
+As an example, consider the case of the $\mathit{Init}$ \gls{exicon}: given $\rho \in \logalph$, if $\Init{\rho}$ holds true, then also the \gls{relacon} $\Prec{\rho}{\sigma}$ is guaranteed to hold true, for every $\sigma \in \logalph \setminus \left\lbrace \rho \right\rbrace$. This means that, in the best case, $|\logalph| -1$ \glspl{con} will be removed because they are all redundant with $\Init{\rho}$. Similarly, consider the positive \gls{relacon} $\ChaResp{\rho}{\sigma}$: it implies $\NotChaSucc{\rho}{\sigma'}$ for every $\sigma' \in \logalph \setminus \{ \rho, \sigma \}$. Thus,  $\ChaResp{\rho}{\sigma}$ has the potential of triggering the removal of $|\logalph| -2$ negative \glspl{con} due to redundancy.
+%
+The last criteria adopted pertain \gls{conf} and \gls{intf}, in order to prefer those \glspl{con} whose \gls{acti} \gls{task} (or, resp., both parameters) occur in most \glspl{evttrace}.
+
+In \Cref{alg:main}, the computation of this ranking is encapsulated inside function ``$\textrm{sortBySupportCategoryConfidenceIF}$'', which returns a list of \glspl{con} ordered according to the aforementioned criteria.
+In \Cref{tab:runningexample:output}, the result of the sorting is reported (see, e.g., \CoExi{\taska}{\taskd} and {\NotChaSucc{\taska}{\taskd}}).
+
+After the sorting, \glspl{con} are iteratively considered for inclusion in the refined model, by iterating through the corresponding ranked lists\todo{do not forget to add a note about associativity of automata products!}.
+\Glspl{con} in the list of {\safeconset}, namely $\safecon \in \safeconlist$, are only checked for redundancy, whereas \glspl{con} in {\unsafeconset}, $\unsafecon \in \unsafeconlist$, are checked for both redundancy and conflict.
+For every constraint $\safecon \in \safeconlist$, redundancy is checked by leveraging language-inclusion. In particular, this is done by computing the \gls{fsa} $A^{\safecon}$ for $\safecon$, then checking whether its generated language $\languageFunc{A^{\safecon}}$ is included inside $\languageFunc{A}$, which considers the contribution of all constraints maintained so far. If this is the case, then the constraint is dropped. Otherwise, $A$ is extended with the contribution of this new constraint (by computing the product $A \times A^{\safecon}$), and $\safecon$ is added to the set $\goodconset$ of constraints to be returned.
+In the example of \Cref{tab:runningexample:output}, {\CoExi{\taska}{\taskd}} is analysed after the \glspl{exicon} {\Init{\taska}} and {\End{\taskd}}, due to the preliminary sorting operation.
+It thus turns out to be redundant, because {\Init{\taska}} and {\End{\taskd}} already specify that both {\taska} and {\taskd} will occur in every \gls{evttrace}. Therefore, they will necessarily always co-occur.
+% w.r.t.\ the \todo{Do not forget to talk about language inclusion} one of product-automaton {\autom}, which accepts all and only those sequences of \glspl{evt} that comply with the \glspl{con} already assessed as non-redundant.
+% In fact, if the redundancy-check is passed, the \gls{fsa} then $\safecon$ is added to the set of returned \glspl{con}, {\goodconset}, and {\autom} is replaced by its product with the $\safecon$-automaton.
+
+The check for redundancy \textit{and} conflict for the \glspl{con} of {\unsafecon} is performed by procedure ``$\textrm{resolveConflictAndRedundancy}$'' (\Cref{alg:conflireso}).
+The procedure checks for conflicts of those \glspl{con} that are not redundant. This is done through a language emptiness test, performed over the intersection of the language generated by the currently analyzed constraint, and that of $A$, the automaton that accumulates the contribution of all constraints that have been kept so far. This, in turn, amounts to check whether their corresponding \glspl{fsa} generate a non-empty product.
+% Again, product-automaton {\autom} is used to merge the non-conflicting \gls{con}-automata, and therefore it is utilised to verify whether the intersection of languages of {\autom} and the \gls{con}-automaton is empty.
+
+In case a conflict is detected, we do not immediately drop the conflicting constraint, but we try instead to find a more relaxed constraint that retains its intended semantics as much as possible, but does not incur in a conflict. To do so, we employ the constraint subsumption hierarchy (cf.\ \Cref{sec:minimality}). In particular, we employ the \gls{relaxop} operator \glssymbol{relaxop} to retrieve the parent \gls{con} of the conflicting one, and we recursively invoke the ``$\textrm{resolveConflictAndRedundancy}$'' procedure over the parent. Recursion terminates when the first non-conflicting ancestor of the conflicting constraint is found, or when the top of the hierarchy is reached.
+The two cases are resp.\ covered in the example of \Cref{tab:runningexample:output} by {\ChaResp{\taskb}{\taska}}, replaced by subsuming {\AltResp{\taskb}{\taska}}, and the removed {\NotChaSucc{\taska}{\taskd}}.
+
+If the \gls{con} under analysis is a \gls{corelacon}, then we know that it is constituted by the conjunction of a corresponding pair of \gls{fw} and \gls{bw} \glspl{con}. In this situation, it could be the case that all the relaxations of the coupling constraint along the subsumtion hierarchy continue to be conflicting, but the conflict would be removed by just considering either its forward or backward component (or a relaxation thereof). Consequently, we also recursively invoke the ``$\textrm{resolveConflictAndRedundancy}$'' procedure on these two components (recall that redundancies are considered, hence this would result in a no-op if such components or their relaxation turn out to be implied by the other constraints).
+%i.e., the conjunction of a \gls{fw} and a \gls{bw} \gls{con}, then the recursive call is also performed on those two \glspl{con}.
+
+Finally, a last complete pass over those \glspl{con} in {\goodconset} is done, so as to check again whether there are subsumption-hierarchy redundancies and, if so, prune {\goodconset} accordingly.
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main.tex"
+%%% save-place: t
+%%% End: 

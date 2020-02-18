@@ -1,0 +1,150 @@
+% !TeX spellcheck = en_GB
+% !TeX program = pdflatex
+\documentclass{llncs}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package loading
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Allows for index generation
+\usepackage{makeidx}
+% For language-specific hyphenations etc.
+\usepackage[british,english]{babel}
+% To determine characteristics of float environments
+\usepackage{floatrow}
+% For subfigures
+\usepackage{subfig}
+% For nice links
+\usepackage{url}
+% For playing with colors in tabular environments
+\usepackage{colortbl}
+% For math symbols, such as \nexists
+\usepackage{amssymb}
+% For advanced graphics
+\usepackage{graphicx}
+% For equations, arrays of equations, defining operator names, etc.
+\usepackage{amsmath}
+% For cursive math
+\usepackage{mathrsfs}
+% For enumerating the line numbers
+\usepackage[left]{lineno}
+% For side notes, missing figures and inline to-do's
+\usepackage[textsize=scriptsize,colorinlistoftodos]{todonotes}
+% For specifying kewords and acronyms
+\usepackage[nonumberlist,acronym,sanitize=none]{glossaries}
+\glsdisablehyper
+% For commenting out some parts of the text
+\usepackage{comment}
+% For building hyperlinks
+\usepackage{hyperref}
+% For smart references
+\usepackage{cleveref}
+\crefname{algocf}{alg.}{algs.}
+\Crefname{algocf}{Algorithm}{Algorithms}
+% TikZ/Pgf advanced graphics
+\usepackage{tkz-base}
+\usetikzlibrary{decorations.pathmorphing,trees}
+% To use inline and other fancy list-like environments (e.g., inparaenum)
+\usepackage{paralist}
+% To divide a text line into multiple columns
+\usepackage{multicol}
+% To create good-looking book-style tables
+\usepackage{booktabs}
+% To play around with list environments
+\usepackage{enumitem}
+% To create multirow cells in tables
+\usepackage{multirow}
+% To create rotated cells in tables
+\usepackage{rotating}
+% To make algorithmic nice-looking pseudocode
+\usepackage[ruled,linesnumbered,algo2e]{algorithm2e}
+% For strike-through cancellations
+\usepackage[normalem]{ulem}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX handling, dirty tricks, and more
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{addons/commands}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Used keywords, symbols, and typesetting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{addons/glossary}
+%
+\begin{document}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Used acronyms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{addons/acronyms}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Start of the contributions
+\mainmatter
+% In order to avoid that text be beyond margins
+\begin{sloppypar}
+%
+\title{Ensuring Model Consistency in \\ Declarative Process Discovery%
+\thanks{The research of Claudio {Di Ciccio} and Jan Mendling has received funding from the EU Seventh Framework Programme under grant agreement 318275 (GET Service). The research of Fabrizio Maria Maggi has received funding from the Estonian Research Council and by ERDF via the Estonian Centre of Excellence in Computer Science.}%
+}
+%
+% abbreviated title (for running head) also used for the TOC unless \toctitle is used
+\titlerunning{Ensuring Model Consistency in Declarative Process Discovery}
+%
+\author{{Claudio~{Di~Ciccio}}\inst{1} %
+\and {{Fabrizio~Maria}~Maggi}\inst{2} %
+\and {Marco~Montali}\inst{3} %
+\and {Jan~Mendling}\inst{1}%
+}
+%
+% abbreviated author list (for running head)
+\authorrunning{C.\ {Di Ciccio}, F.M.\ Maggi, M.\ Montali, J.\ Mendling}
+%
+\institute{Vienna University of Economics and Business, Austria\\
+\email{\{claudio.di.ciccio,jan.mendling\}@wu.ac.at}
+\and
+University of Tartu, Estonia\\
+\email{f.m.maggi@ut.ee}
+\and
+Free University of Bozen-Bolzano, Italy\\
+\email{montali@inf.unibz.it}
+}
+%
+% typeset the title of the contribution
+\maketitle
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{sections/abstract}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/preliminaries}
+\input{sections/framework}
+\input{sections/experiments}
+\input{sections/relatedwork}
+\input{sections/conclusion}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\bibliographystyle{splncs03}
+%\bibliography{bibliography/CDC-Bibliography,bibliography/DiCiccio,bibliography/Maggi}
+\bibliography{Bibliography}
+%\bibliography{Bibliography}
+%
+\end{sloppypar}
+\end{document}

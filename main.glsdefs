@@ -1,0 +1,450 @@
+\ifglsentryexists{bp}{}%
+{%
+\gls@defglossaryentry{bp}%
+{%
+name={BP},%
+sort={BP},%
+type={acronym},%
+first={Business Process\glsspace (BP)},%
+firstplural={Business Processes\glsspace (BP\acrpluralsuffix )},%
+text={BP},%
+plural={BP\acrpluralsuffix },%
+description={Business Process},%
+descriptionplural={Business Processes},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Business Process},%
+longplural={Business Processes},%
+short={BP},%
+shortplural={BPs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{wf}{}%
+{%
+\gls@defglossaryentry{wf}%
+{%
+name={WF},%
+sort={WF},%
+type={acronym},%
+first={workflow\glsspace (WF)},%
+firstplural={workflow\acrpluralsuffix \glsspace (WF\acrpluralsuffix )},%
+text={WF},%
+plural={WF\acrpluralsuffix },%
+description={workflow},%
+descriptionplural={workflow\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={workflow},%
+longplural={workflows},%
+short={WF},%
+shortplural={WFs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{bpi}{}%
+{%
+\gls@defglossaryentry{bpi}%
+{%
+name={BPI},%
+sort={BPI},%
+type={acronym},%
+first={Business Process Intelligence\glsspace (BPI)},%
+firstplural={Business Process Intelligence\acrpluralsuffix \glsspace (BPI\acrpluralsuffix )},%
+text={BPI},%
+plural={BPI\acrpluralsuffix },%
+description={Business Process Intelligence},%
+descriptionplural={Business Process Intelligence\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Business Process Intelligence},%
+longplural={Business Process Intelligences},%
+short={BPI},%
+shortplural={BPIs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{bpm}{}%
+{%
+\gls@defglossaryentry{bpm}%
+{%
+name={BPM},%
+sort={BPM},%
+type={acronym},%
+first={Business Process Management\glsspace (BPM)},%
+firstplural={Business Process Management\acrpluralsuffix \glsspace (BPM\acrpluralsuffix )},%
+text={BPM},%
+plural={BPM\acrpluralsuffix },%
+description={Business Process Management},%
+descriptionplural={Business Process Management\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Business Process Management},%
+longplural={Business Process Managements},%
+short={BPM},%
+shortplural={BPMs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{bpms}{}%
+{%
+\gls@defglossaryentry{bpms}%
+{%
+name={BPMS},%
+sort={BPMS},%
+type={acronym},%
+first={Business Process Management System\glsspace (BPMS)},%
+firstplural={Business Process Management System\acrpluralsuffix \glsspace (BPMS\acrpluralsuffix )},%
+text={BPMS},%
+plural={BPMS\acrpluralsuffix },%
+description={Business Process Management System},%
+descriptionplural={Business Process Management System\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Business Process Management System},%
+longplural={Business Process Management Systems},%
+short={BPMS},%
+shortplural={BPMSs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{bpmn}{}%
+{%
+\gls@defglossaryentry{bpmn}%
+{%
+name={BPMN},%
+sort={BPMN},%
+type={acronym},%
+first={Business Process Model and Notation\glsspace (BPMN)},%
+firstplural={Business Process Model and Notation\acrpluralsuffix \glsspace (BPMN\acrpluralsuffix )},%
+text={BPMN},%
+plural={BPMN\acrpluralsuffix },%
+description={Business Process Model and Notation},%
+descriptionplural={Business Process Model and Notation\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Business Process Model and Notation},%
+longplural={Business Process Model and Notations},%
+short={BPMN},%
+shortplural={BPMNs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{soa}{}%
+{%
+\gls@defglossaryentry{soa}%
+{%
+name={SOA},%
+sort={SOA},%
+type={acronym},%
+first={Service-Oriented Architecture\glsspace (SOA)},%
+firstplural={Service-Oriented Architecture\acrpluralsuffix \glsspace (SOA\acrpluralsuffix )},%
+text={SOA},%
+plural={SOA\acrpluralsuffix },%
+description={Service-Oriented Architecture},%
+descriptionplural={Service-Oriented Architecture\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Service-Oriented Architecture},%
+longplural={Service-Oriented Architectures},%
+short={SOA},%
+shortplural={SOAs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{kpi}{}%
+{%
+\gls@defglossaryentry{kpi}%
+{%
+name={KPI},%
+sort={KPI},%
+type={acronym},%
+first={Key Performance Indicator\glsspace (KPI)},%
+firstplural={Key Performance Indicator\acrpluralsuffix \glsspace (KPI\acrpluralsuffix )},%
+text={KPI},%
+plural={KPI\acrpluralsuffix },%
+description={Key Performance Indicator},%
+descriptionplural={Key Performance Indicator\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Key Performance Indicator},%
+longplural={Key Performance Indicators},%
+short={KPI},%
+shortplural={KPIs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{wfms}{}%
+{%
+\gls@defglossaryentry{wfms}%
+{%
+name={WfMS},%
+sort={WfMS},%
+type={acronym},%
+first={Workflow Management System\glsspace (WfMS)},%
+firstplural={Workflow Management System\acrpluralsuffix \glsspace (WfMS\acrpluralsuffix )},%
+text={WfMS},%
+plural={WfMS\acrpluralsuffix },%
+description={Workflow Management System},%
+descriptionplural={Workflow Management System\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Workflow Management System},%
+longplural={Workflow Management Systems},%
+short={WfMS},%
+shortplural={WfMSs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{po}{}%
+{%
+\gls@defglossaryentry{po}%
+{%
+name={PO},%
+sort={PO},%
+type={acronym},%
+first={Partial Order\glsspace (PO)},%
+firstplural={Partial Order\acrpluralsuffix \glsspace (PO\acrpluralsuffix )},%
+text={PO},%
+plural={PO\acrpluralsuffix },%
+description={Partial Order},%
+descriptionplural={Partial Order\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Partial Order},%
+longplural={Partial Orders},%
+short={PO},%
+shortplural={POs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{ltl}{}%
+{%
+\gls@defglossaryentry{ltl}%
+{%
+name={LTL},%
+sort={LTL},%
+type={acronym},%
+first={Linear Temporal Logic\glsspace (LTL)},%
+firstplural={Linear Temporal Logic\acrpluralsuffix \glsspace (LTL\acrpluralsuffix )},%
+text={LTL},%
+plural={LTL\acrpluralsuffix },%
+description={Linear Temporal Logic},%
+descriptionplural={Linear Temporal Logic\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Linear Temporal Logic},%
+longplural={Linear Temporal Logics},%
+short={LTL},%
+shortplural={LTLs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{ltlf}{}%
+{%
+\gls@defglossaryentry{ltlf}%
+{%
+name={LTL$_f$},%
+sort={LTL$_f$},%
+type={acronym},%
+first={Linear Temporal Logic on Finite Traces\glsspace (LTL$_f$)},%
+firstplural={Linear Temporal Logic on Finite Traces\acrpluralsuffix \glsspace (LTL$_f$\acrpluralsuffix )},%
+text={LTL$_f$},%
+plural={LTL$_f$\acrpluralsuffix },%
+description={Linear Temporal Logic on Finite Traces},%
+descriptionplural={Linear Temporal Logic on Finite Traces\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Linear Temporal Logic on Finite Traces},%
+longplural={Linear Temporal Logic on Finite Tracess},%
+short={LTL$_f$},%
+shortplural={LTL$_f$s},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{rex}{}%
+{%
+\gls@defglossaryentry{rex}%
+{%
+name={RE},%
+sort={RE},%
+type={acronym},%
+first={regular expression\glsspace (RE)},%
+firstplural={regular expression\acrpluralsuffix \glsspace (RE\acrpluralsuffix )},%
+text={RE},%
+plural={RE\acrpluralsuffix },%
+description={regular expression},%
+descriptionplural={regular expression\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={regular expression},%
+longplural={regular expressions},%
+short={RE},%
+shortplural={REs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{fsa}{}%
+{%
+\gls@defglossaryentry{fsa}%
+{%
+name={FSA},%
+sort={FSA},%
+type={acronym},%
+first={finite state automaton\glsspace (FSA)},%
+firstplural={finite state automata\glsspace (FSA\acrpluralsuffix )},%
+text={FSA},%
+plural={FSA\acrpluralsuffix },%
+description={finite state automaton},%
+descriptionplural={finite state automata},%
+symbol={\protect \ensuremath  {A}},%
+symbolplural={\protect \ensuremath  {A}},%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={finite state automaton},%
+longplural={finite state automata},%
+short={FSA},%
+shortplural={FSAs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{fsainit}{}%
+{%
+\gls@defglossaryentry{fsainit}%
+{%
+name={initial state},%
+sort={initial state},%
+type={main},%
+first={initial state},%
+firstplural={initial states},%
+text={initial state},%
+plural={initial states},%
+description={initial state of the automaton},%
+descriptionplural={initial state of the automaton},%
+symbol={\protect \ensuremath  {s_0}},%
+symbolplural={\protect \ensuremath  {s_0}},%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%

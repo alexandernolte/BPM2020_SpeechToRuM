@@ -1,0 +1,138 @@
+\def\tinypicheight {2em}
+\def\supertinypicheight {1.5em}
+\begin{table}[tb]
+\centering
+%\rowcolors{2}{gray!25}{white}
+\begin{tabular}{ c r r l c }
+\toprule
+& & \textbf{Template} & \textbf{Regular expression} & \textbf{Notation}\\  % bcaaccbbbaba
+\midrule
+\multirow{4}{1.5em}{\sidewaysheader{Existence templates}} &
+\multirow{2}{5em}{Cardinality templates} &
+% $\mathit{Existence}(n, \paramx)$ & % [^$2]*($2[^$2]*){$1,}[^$2]*
+% \texttt{[{\nore}x]*(x[{\nore}x]*)\{n,\}+[{\nore}x]*} %
+% \\
+$\Part{\paramx}$ & % \equiv Existence(1, \textsf{x})$
+\texttt{[{\nore}x]*(x[{\nore}x]*)+[{\nore}x]*} &
+\raisebox{-1ex}{\includegraphics[height=\tinypicheight]{figures/declare-constraints/Participation_x.pdf}} \\ & &
+% \textsf{bc\textbf{\uline{x}}ac}\\
+% $\textit{Absence}(m+1, \textsf{x})$ & % [^$2]*($2[^$2]*){0,$max}[^$2]*
+% \texttt{[{\nore}x]*(x[{\nore}x]*)\{0,m\}+[{\nore}x]*} \\% &
+$\Uniq{\paramx}$ & % \equiv Absence(2, \paramx)$ &
+\texttt{[{\nore}x]*(x)?[{\nore}x]*} &
+\raisebox{-1ex}{\includegraphics[height=\tinypicheight]{figures/declare-constraints/AtMostOne_x.pdf}} \\
+\cmidrule{2-5}
+&
+% \textsf{bc\textbf{\uline{x}}c}\\
+\multirow{2}{5em}{Position templates} &
+$\Init{\paramx}$ &
+\texttt{x.*} &
+\raisebox{-1ex}{\includegraphics[height=\tinypicheight]{figures/declare-constraints/Init_x.pdf}} \\ & &
+% \textsf{\textbf{\uline{x}}ccbbbaba}\\
+$\End{\paramx}$ &
+\texttt{.*x} &
+\raisebox{-1ex}{\includegraphics[height=\tinypicheight]{figures/declare-constraints/End_x.pdf}} \\% &
+% \textsf{bcaaccbbbab\textbf{\uline{x}}}\\
+\midrule
+\multirow{14}{1.5em}{\sidewaysheader{Relation templates}} &
+\multirow{4}{5em}{Forward-unidirectional relation templates} &
+$\ResEx{\paramx}{\paramy}) $ &
+\texttt{[{\nore}x]*((x.*y.*)|(y.*x.*))*[{\nore}x]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/RespondedExistence_x_y.pdf}} \\ & &
+% \textsf{\textbf{y}c\textbf{\uline{x}}\uline{x}ccbbb\uline{x}y\uline{x}}\\
+$\Resp{\paramx}{\paramy}$ &
+\texttt{[{\nore}x]*(x.*y)*[{\nore}x]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/Response_x_y.pdf}} \\ & &
+% \textsf{bc\textbf{\uline{x}}\uline{x}cc\textbf{y}bb\textbf{\uline{x}}\textbf{y}}\\
+$\AltResp{\paramx}{\paramy}$ &
+\texttt{[{\nore}x]*(x[{\nore}x]*y[{\nore}x]*)*[{\nore}x]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/AlternateResponse_x_y.pdf}} \\ & &
+% \textsf{bc\textbf{\uline{x}}cc\textbf{y}bb\textbf{\uline{x}}\textbf{y}}\\
+$\ChaResp{\paramx}{\paramy}$ &
+\texttt{[{\nore}x]*(xy[{\nore}x]*)*[{\nore}x]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/ChainResponse_x_y.pdf}} \\
+% \textsf{bc\textbf{\uline{x}}\textbf{y}bb\textbf{\uline{x}}\textbf{y}}\\
+\cmidrule{2-5}
+&
+\multirow{3}{5em}{Backward-unidirectional relation templates} &
+$\Prec{\paramx}{\paramy}$ &
+\texttt{[{\nore}y]*(x.*y)*[{\nore}y]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/Precedence_x_y.pdf}} \\ & &
+% \textsf{c\textbf{x}acc\textbf{\uline{y}}\uline{y}\uline{y}x\uline{y}x}\\
+$\AltPrec{\paramx}{\paramy}$ &
+\texttt{[{\nore}y]*(x[{\nore}y]*y[{\nore}y]*)*[{\nore}y]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/AlternatePrecedence_x_y.pdf}} \\ & &
+% \textsf{ca\textbf{x}cc\textbf{\uline{y}}\textbf{x}\textbf{\uline{y}}x}\\
+$\ChaPrec{\paramx}{\paramy}$ &
+\texttt{[{\nore}y]*(xy[{\nore}y]*)*[{\nore}y]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/ChainPrecedence_x_y.pdf}} \\% &
+% \textsf{c\textbf{x}\textbf{\uline{y}}\textbf{x}\textbf{\uline{y}}x}\\
+\cmidrule{2-5}
+&
+\multirow{4}{5em}{Coupling templates} &
+$\CoExi{\paramx}{\paramy}$ &
+\texttt{[{\nore}xy]*((x.*y.*)|(y.*x.*))*[{\nore}xy]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/CoExistence_x_y.pdf}} \\ & &
+% \textsf{\textbf{\uline{y}}c\textbf{\uline{x}}cc\uline{bbbaba}}\\
+$\Succ{\paramx}{\paramy}$ &
+\texttt{[{\nore}xy]*(x.*y)*[{\nore}xy]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/Succession_x_y.pdf}} \\ & &
+% \textsf{c\textbf{\uline{x}}\uline{x}cc\textbf{\uline{y}}\uline{bbab}}\\
+$\AltSucc{\paramx}{\paramy}$ &
+\texttt{[{\nore}xy]*(x[{\nore}xy]*y[{\nore}xy]*)*[{\nore}xy]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/AlternateSuccession_x_y.pdf}} \\ & &
+% \textsf{c\textbf{\uline{x}}cc\textbf{\uline{y}}\textbf{\uline{x}}\textbf{\uline{y}}}\\
+$\ChaSucc{\paramx}{\paramy}$ &
+\texttt{[{\nore}xy]*(xy[{\nore}xy]*)*[{\nore}xy]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/ChainSuccession_x_y.pdf}} \\% &
+% \textsf{c\textbf{\uline{x}}\textbf{\uline{y}}\textbf{\uline{x}}\textbf{\uline{y}}}\\
+\cmidrule{2-5}
+&
+\multirow{3}{5em}{Negative templates} &
+$\NotChaSucc{\paramx}{\paramy}$ &
+\texttt{[{\nore}x]*(aa*[{\nore}xy][{\nore}x]*)*([{\nore}x]*|x)} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/NotChainSuccession_x_y.pdf}} \\ & &
+% \textsf{bc\uline{x}\textbf{\uline{x}}cc\textbf{y}bbb\uline{x}}\\
+$\NotSucc{\paramx}{\paramy}$ &
+\texttt{[{\nore}x]*(x[{\nore}y]*)*[{\nore}xy]*} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/NotSuccession_x_y.pdf}} \\ & &
+% \textsf{bc\textbf{\uline{x}}\uline{x}cc\uline{x}}\\
+$\NotCoExi{\paramx}{\paramy}$ &
+\texttt{[{\nore}xy]*((x[{\nore}y]*)|(y[{\nore}x]*))?} &
+\raisebox{-1ex}{\includegraphics[height=\supertinypicheight]{figures/declare-constraints/NotCoExistence_x_y.pdf}} \\% &
+% \textsf{c\uline{aa}cc\uline{x}}\\
+\bottomrule
+\end{tabular}
+\caption{Semantics of Declare templates as POSIX \acrlongpl{rex} \cite{Prescher.etal/SIMPDA2014:FromDeclarativeProcesses}}
+\label{tab:model:declareconstraintsandregexps}
+\end{table}
+%
+%\newcommand{\minitab}[2][l]{\begin{tabular}{#1}#2\end{tabular}}
+%\begin{tabular}{|c|c|}
+%\hline
+%\multirow{4}{1in}{Common g text} & Column g2x\\
+%& Column g2y \\
+%& Column g2c \\
+%& Column g2d \\
+%\hline
+%\multirow{3}[6]*{Common g text} & Column g2x\\\cline{2-2}
+%& Column g2y \\\cline{2-2}
+%& Column g2c \\
+%\hline
+%\multirow{4}[8]{1in}{Common g text} & Column g2x\\\cline{2-2}
+%& Column g2y \\\cline{2-2}
+%& Column g2c \\\cline{2-2}
+%& Column g2d \\
+%\hline
+%\multirow{4}*{\minitab[c]{Common \\ g text}} & Column g2x\\
+%& Column g2y \\
+%& Column g2c \\
+%& Column g2d \\
+%\hline
+%\end{tabular}
+%
+\endinput
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Main.tex"
+%%% End: 

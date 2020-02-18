@@ -1,0 +1,17 @@
+preserve.key.case = on
+print.use.tab = off
+suppress.initial.newline = on
+delete.field = {comment}
+delete.field = {note}
+delete.field = {month}
+delete.field = {keywords}
+delete.field = {abstract}
+delete.field = {timestamp}
+delete.field = {owner}
+delete.field = {bibsource}
+delete.field = {ee}
+delete.field = {series}
+delete.field = {crossref}
+delete.field = {url}
+delete.field = {doi}
+delete.field = {isbn}

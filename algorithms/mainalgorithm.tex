@@ -1,0 +1,58 @@
+%
+\begin{algorithm2e}[b!]
+\scriptsize
+\DontPrintSemicolon \SetAlgoVlined
+\KwIn{A \gls{logalph} \glssymbol{logalph}, and a \gls{declare} model \glssymbol{declamodel} defined over \glssymbol{logalph}. \glssymbol{declamodel} is a set of \glspl{con} for which \gls{support}, \gls{conf} and \gls{intf} are given}
+\KwOut{Set of non-conflicting \gls{con} $\goodconset$}
+\BlankLine
+%M <- removeHierarchyRedundancies(M)
+$\declamodel' \leftarrow \mathrm{removeSubsumptionHierarchyRedundancies}(\declamodel)$ \;
+%S <- { C in M : supp(C) = 1.0 }
+$\safeconset \leftarrow \left\lbrace \constraint \in \declamodel' : \supportFunc{\constraint} = 1.0 \right\rbrace$ \tcp*[f]{Non-conflicting constraints} \;
+%U <- M \ S
+$\unsafeconset \leftarrow \declamodel' \setminus \safeconset$ \tcp*[f]{Potentially conflicting constraints} \;
+%
+%A <- < so, {so}, U_{\sigma \in \Sigma} < so, \sigma, so > >
+$\autom \leftarrow \left\langle \logalph, \left\lbrace \autominitstate \right\rbrace, \autominitstate, \left\lbrace \bigcup_{\sigma \in \logalph}{ \left\langle \autominitstate, \sigma, \autominitstate \right\rangle }, \left\lbrace \autominitstate \right\rbrace \right\rbrace \right\rangle$ \tcp*[f]{Automaton accepting any sequence of \glspl{task}} \;
+%R <- {}
+%V <- {}
+$\goodconset \leftarrow \emptyset$ \tcp*[f]{Set of returned \glspl{con}} \;
+$\blackboard \leftarrow \emptyset$ \tcp*[f]{Set of checked \glspl{con}} \;
+%
+%S <- sortByClass(S)
+\BlankLine
+\tcc{Pruning of redundant \glspl{con} from the set of non-conflicting ones}
+$\safeconlist \leftarrow \mathrm{sortBySupportCategoryConfidenceIF}(\safeconset)$ \;
+%for all ( C_S in S ) {
+\ForEach{ $\safecon \in \safeconlist, \quad \mathrm{with} \quad i \in [1, |\safeconlist|]$ }{%
+%	V <- V U C_S
+	$\blackboard \leftarrow \blackboard \bigcup \left\lbrace \safecon \right\rbrace$ \tcp*[f]{Record that $\safecon$ has been checked} \;
+%	if ( L (A) \subseteq L (autom(regExp(C_S))) {
+	$A^{\safecon} \leftarrow \automFunc{\regexpFunc{\safecon}}$ \tcp*[f]{Build the constraint-automaton of $\safecon$} \;
+	\If(\tcp*[f]{If $\safecon$ is not redundant}){ $\languageFunc{\autom} \supset \languageFunc{A^{\safecon}} $ }{
+%		A <- A × autom(regExp(C_S))
+		$\autom \leftarrow \autom \times A^{\safecon}$ \tcp*[f]{Merge the $\safecon$-automaton with the main \gls{fsa}} \;
+%		R <- R U C_S
+		$\goodconset \leftarrow \goodconset \bigcup \left\lbrace \safecon \right\rbrace$ \tcp*[f]{Include $\safecon$ in the set of returned \glspl{con}} \;
+	}
+}
+\BlankLine
+\tcc{Pruning of conflicting \glspl{con}}
+%U <- sortBySupportConfidenceIFClass(U)
+$\unsafeconlist \leftarrow \mathrm{sortBySupportCategoryConfidenceIF}(\unsafeconset)$ \;
+%for all ( C_U in U ) {
+\ForEach{ $\unsafecon \in \unsafeconlist, \quad \mathrm{ with } \quad i \in [1, |\unsafeconlist|]$ }{%
+	 $\mathrm{resolveConflictAndRedundancy}\left( \autom, \goodconset, \unsafecon, \blackboard \right)$
+}
+\BlankLine
+\Return $\mathrm{removeSubsumptionHierarchyRedundancies}(\goodconset)$
+%
+\caption{Procedure $\mathrm{makeConsistent}\left( \declamodel \right)$, returning the suboptimal solution to the problem of finding a minimal set of non-conflicting constraints in a \gls{declare} model.
+\label{alg:main}}
+\end{algorithm2e}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main.tex"
+%%% save-place: t
+%%% End: 

@@ -1,0 +1,155 @@
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conflict resolution problem
+%
+\section{Framing the Problem}
+
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\pow}{\mathcal{P}}
+\newcommand{\ok}{\mathcal{K}}
+
+
+%\todo{MArco: are the notions of confidence, interest factor,
+%  etc. already known to the reader here? It seems not.}
+In \Cref{sec:background}, we have informally introduced the
+issues of consistency and redundancy in declarative process
+discovery. We now specify the problem more precisely.
+%
+Our goal is to define \emph{effective} post-processing techniques that,
+given a previously discovered \gls{declare} model $\declamodel$ possibly containing
+inconsistencies and redundancies, manipulate it by removing
+inconsistencies and reducing redundancies, but still retaining as much as possible its original
+structure.
+In this respect, the post-processing is completely
+agnostic to the process mining algorithm used to generate the model,
+as well as to the input event log.
+
+This latter assumption makes it impossible to understand how much a
+variant of the discovered model ``fits'' with the log. However, we
+can at least assume that each single constraint in $\declamodel$ retains the support,
+confidence, and interest factor that were calculated during the
+discovery phase. These values can be used to decide which constraints
+have to be preferred, and ultimately decide
+whether a variant $\declamodel'$ of $\declamodel$ has to be preferred over another
+one $\declamodel''$. Still, notice that by no
+means such values can be composed to calculate a global
+support/confidence/interest factor for the whole model $\declamodel'$. This is
+only possible if the original log is considered. To see this, consider
+the case of two constraints $\constraint_1, \constraint_2$, with support $s_1,s_2 <
+100\%$. When the two constraints are considered together, the global
+support could range from $0$ to the minimum of $s_1$ and $s_2$, and
+the exact value could only be determined by computing it directly over
+the log.
+
+In principle, we could obtain an optimal solution by exhaustive enumeration,
+executing the following steps.
+\begin{inparaenum}
+\item The vocabulary $\Sigma$ of
+$\declamodel$ is extracted.
+\item The set $\templset[\Sigma]$ of all possible candidate
+constraints is built.
+\item The set $\pow^{\templset[\Sigma]}$ of all possible subsets of
+  $\templset[\Sigma]$, i.e., of all possible \gls{declare}
+  models using constraints in $\templset[\Sigma]$, is computed.
+\item A set $\ok$ of candidate models
+  is obtained from $\pow^{\templset[\Sigma]}$, by filtering away those
+  models that are inconsistent or contain redundant constraints.
+\item A ranking of the models in $\ok$ is established, considering
+  their similarity to the original, discovered model $\declamodel$.
+\end{inparaenum}
+
+However, this exhaustive enumeration is in general unfeasible, given
+the fact that it requires to iterate over the exponentially many
+models in $\pow^{\templset[\Sigma]}$, a too huge state space.
+Consequently, we devise a heuristic algorithm that mediates between
+optimality of the solution, and performance. In summary, its main features are:
+\begin{compactitem}
+\item It produces as output a consistent variant of the initial model
+  $\declamodel$. This is a strict, necessary requirement.
+\item The algorithm works in an incremental fashion, i.e., it constructs the
+  variant of $\declamodel$ by iteratively selecting constraints, and once a
+  constraint is added, it is never retracted from the
+  model. This is done by iterating through candidate constraints in
+  decreasing order of ``suitability'' w.r.t.~the input log, which is
+  computed by considering the support/confidence/interest factor of
+  such constraints. On the one hand, this drives our algorithm to
+  favour more suitable constraints, and remove less suitable
+  constraints in the case of an inconsistency.
+On the other hand, this has a positive effect on performance, and also
+guarantees that the algorithm is deterministic.
+\item Due to incrementality, the algorithm is not guaranteed to
+  produce a final variant that is optimal in size, but we obtain a local minimum. However, our experimental findings show that the
+  algorithm is able to significantly reduce the number of redundant constraints.
+\end{compactitem}
+
+%The rest of this section is dedicated to introduce the details of the algorithm, while Section~\ref{sec:experiments} validates it using real data, showing that it is indeed a very promising approach.
+
+
+
+
+
+% As input of our problem.
+
+% We assume that a \gls{declare} model has been discovered
+
+
+% \textbf{Plan}:
+% \begin{compactenum}
+% \item Problem: discovery of consistent and non-redundant models.
+% \item Why is consistency an issue? Because we mine constraints
+%   separately from each others. Also because we mine constraints using
+%   ``incomplete'' data (a log just represents a portion of all possible
+%   traces that can be seen in the domain), and because even with these
+%   incomplete data, we accept constraints with less than 100\%
+%   support. This means that there could be traces in the log for which
+%   two constraints do not agree (one is ok, the other is violated).
+% \item Why is redundancy an issue? Same first reason above: we mine
+%   constraints separately and we never consider their
+%   interplay. However, we would like to show just ``primitive''
+%   constraints, and not constraints that are derived from the
+%   others. This is the Declare counterpart of the conceptual modelling
+%   principle that only primitive information must be captured in a
+%   model, not derived information.
+% \item The space of the problem is huge. We fix the following
+%   assumption. We want to be 1) mining algorithm agnostic 2) log
+%   agnostic. Therefore we start from a mined Declare model, with the
+%   additional info about support/confidence/... per constraint. All
+%   algorithms provide such infos. We want then to ``fix'' the mined
+%   model by retaining as many constraints as possible, but at the same
+%   time guaranteeing conflict-freedom and no redundancy.
+% \item Deciding how to proceed when fixing the model is very
+%   tricky. On the one hand, we don't want to check the fixed candidates
+%   again over the log - because this is too expensive. But this makes
+%   it impossible to understand the overall support/confidence/... of
+%   the fixed model (explain why it is not possible to obtain this from
+%   the indicators over single constraints). On the other hand we want
+%   to maintain those combination of constraints that ideally maximize
+%   these numbers. This is again tricky: if we move by descending
+%   values, we could force a constraint to stay and drop many other
+%   constraints that are just slightly below it in terms of these
+%   numbers. However, if we don't apply this greedy strategy, then again
+%   the only solution is to compute all the exponentialy many
+%   combinations, and check them one by one. This is not viable.
+% \item We therefore propose a greedy algorithm (explain the features).
+% \end{compactenum}
+
+
+
+
+% \textbf{Hint on why the problem is rather tricky, and a shallow analysis of the \gls{subsum} hierarchy is not enough}:
+% Although a \gls{negacon} (e.g., $\NotCoExi{\taska}{\taskb}$) negates a
+% \gls{corelacon} (e.g., $\CoExi{\taska}{\taskb}$), the conjunction of
+% the two can still be not conflicting: in the example, if the
+% \gls{logalph} contains more \glspl{task} than the ones constrained,
+% $\taska$ and $\taskb$, then all \glspl{evttrace} containing any
+% \gls{task} other than $\taska$ and $\taskb$ still respects both
+% \glspl{con}.
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main.tex"
+%%% save-place: t
+%%% End: 
