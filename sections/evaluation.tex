@@ -7,11 +7,11 @@ In order to improve the current implementation and assess the overall feasibilit
 \label{sec:evaluation:setup}
 For our study we selected a total of eight participants (table \ref{tab:questionnaire}). We selected two participants that only had experience related to business process management (tier 1), two participants that had experience related to business process management and modeling temporal constraints (tier 2), two participants that had experience related to business process management and using DECLARE to model temporal constraints (tier 3) and two participants that had experience related to business process management and using a similar tool to model temporal constraints (tier 4). We chose this differentiation to gain insight about the usability of the tool for individuals with different levels of expertise and to assess potential issues and demands by individuals with different backgrounds.
 
-The study was conducted via Skype by a team consisting of a facilitator and an observer with the facilitator guiding the participant and the observer serving in a supporting role. We used the production and shipping process in a bicycle factory\footnote{The scenario can be found here: https://github.com/alexandernolte/BPM2020_SpeechToRuM/blob/master/study-materials/study-scenario.pdf} as a background for the study because it can be expected that every participant will be somewhat be familiar with a production and shopping process. We also created a help document\footnote{The help document can be found here: https://github.com/alexandernolte/BPM2020_SpeechToRuM/blob/master/study-materials/help-document.pdf} that would explain different constraints that the tool could handle to the participant.
+The study was conducted via Skype by a team consisting of a facilitator and an observer with the facilitator guiding the participant and the observer serving in a supporting role. We used the production and shipping process in a bicycle factory\footnote{The scenario can be found here: https://tinyurl.com/qqzzeow} as a background for the study because it can be expected that every participant will be somewhat be familiar with a production and shopping process. We also created a help document\footnote{The help document can be found here: https://tinyurl.com/qnxrukw} that would explain different constraints that the tool could handle to the participant.
 
 Prior to the study, the facilitator sent a link to the scenario, the help document and a link for the tool the participants. He suggested for them to read the documents and install the tool prior to the study. At the beginning of the study the facilitator introduced the participant to the study procedure and to the tool by showing how to enter a single constraint using speech input. He also asked the participant to think aloud during the study. After potential clarifying questions the participant shared her/his screen, the facilitator started the video recording and began guiding the participant through the prepared scenario. The participants were then asked to carry out multiple tasks starting with reading prepared sentences related to the scenario to enter constraints before forming their own sentences based on predefined parameters and then creating constraints without prior guidance. During this time facilitator and observer noted down any issues the participant mentioned or any situations that appeared as s/he had issues using the tool based on the usability heuristics by Nielsen \cite{nielsen1994enhancing}. At the end of the study the facilitator conducted a short follow-up interview focusing on clarifying questions about the observation or issues the participant had mentioned during the test. He also asked the participant about what s/he \textit{"liked about the tool"}, what s/he \textit{"wished would be different"} and \textit{"under which circumstances s/he would use the tool"}. After the study the participants were asked to complete a short post-questionnaire.
 
-The individual studies lasted between 14 and 35 minutes including interviews. The questionnaires consisted of multi-point Likert scales including the System Usability Scale (SUS) \cite{brooke1996sus} and scales covering satisfaction, expectation confirmation, continuation intention and usefulness which were adapted from Bhattacherjee \cite{bhattacherjee2001understanding} to assess continued use of information systems\footnote{The complete questionnaire can be found here: }.
+The individual studies lasted between 14 and 35 minutes including interviews. The questionnaires consisted of multi-point Likert scales including the System Usability Scale (SUS) \cite{brooke1996sus} and scales covering satisfaction, expectation confirmation, continuation intention and usefulness which were adapted from Bhattacherjee \cite{bhattacherjee2001understanding} to assess continued use of information systems\footnote{The complete questionnaire can be found here: https://tinyurl.com/rwh4r9a}.
 
 \begin{table}[!ht]
 	\caption{Questionnaire results}
@@ -32,29 +32,27 @@ To analyze the collected data the research team first created an affinity diagra
 
 \subsection{Findings}
 \label{sec:evaluation:findings}
-Our findings overall...
-Overall usability is sufficient / good (SUS)
-Minor changes to the interface that were mainly related to the usability (e.g. longer pauses during a sentence would lead to the speech recording to stop and the placement of new elements was somewhat confusing because they were not highlighted)
-Placement of the recognized text appeared to be an issue... People saw it correct once and then did not check again... that was particularly problematic for newcomers because of the following...
-Help document needs improvement for newcomers (P7 had troubles identifying suitable constraint)
+In general our study revealed that the current interface was reasonably usable as evident by an average SUS score of 75 (table \ref{tab:questionnaire}) which can be considered to be a good results compared to the general average of 68 \cite{brooke1996sus}. Our study also pointed to a few usability issues such as \textbf{longer pauses leading to a cancellation of the speech recording} during a sentence and \textbf{added elements not being visually distinct from already existing ones which led to confusion among some participants (\textit{"Where is the activity?", P7}). Moreover the way the recognized text was displayed (figure %enter reference here
+) did not appear to be ideal since participants only referred to it after they had entered the first constraint and then did not check it again for future constraints. This led to confusion in particular among less experienced participants who thought that they did not formulate the constraint correctly while the issue simply was that their verbalized sentence was not correctly recognized. We will discuss the observed differences between participants with different levels of experience in the following.
 
 \subsubsection{Difference between users with different backgrounds}
-Usage differences between the different tiers:
-- all used pre-formulated sentences (either typed or written)
-- most used somewhat unnatural sentences (e.g. activity ... takes place before activity ...)... tried to identify keywords (P7 by trial and error)... only P1 used natural speech
+First it should be noted that all participants used some means to \textbf{write sentences down} before saying them out loud. They either wrote them \textit{"on paper"} (P1), \textit{"typed them on [their] computer"} (P2) or they noted down key parts that they wanted to say (observation of P7). Most participants also used somewhat \textbf{unnatural sentences} when entering constraints (\textit{""}). Some even explicitly tried to identify keywords that the algorithm would pick up and translate into the desired constraint (lets try this with... P7). Only P1 used natural sentences from the start. In the aforementioned regards there was thus not perceivable difference between the behavior of participants from different tiers.
+
+There were however also noticeable differences in addition to the aforementioned issue of participants from tiers 1 and 2 related to them not noticing that the software had not correctly understood the sentence they expressed. It was noticeable that participants from tier 1 and 2 relied more on the visual process model to understand if their constraint had been correctly understood (compared text) while participants from tier 3 and 4 relied more on the textual representation of the respective constraints.
+
+There we
 - newcomers had issues realizing that constrains were incorrectly formulated because their sentence was not correctly understood... thought it was because the transition from text to constraint did not work
 - newcomers relied more on the model (T1 and 2) while participants that knew DECLARE relied more on the text
 - newcomers found it least useful and usable despite them being satisfied
 - professionals found it the most useful and had the highest future intentions to use it
 - pro user expected more constraint types (P5)
+- additional layer of complexity (from natural language to what user thinks is understandable to the machine)
+hard for novices to check correctness (unfamiliar with constraints)... esp. P7 --> save recorded text as well (annotation)... 
 
 \subsubsection{Potential usage scenarios}
+The participants mentioned multiple scenarios during which they would consider speech as useful for entering constraints.
 Usage scenarios:
 - ...
 
 Overall:
 - generally not "natural" enough yet
-- additional layer of complexity (from natural language to what user thinks is understandable to the machine)
-hard for novices to check correctness (unfamiliar with constraints)... esp. P7 --> save recorded text as well (annotation)... 
-
-\label{sec:experiments}
