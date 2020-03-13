@@ -1,4 +1,39 @@
 % !TeX root = ../Main.tex
+% !TeX spellcheck = en_US
+
 \section{Introduction}
 \label{sec:introduction}
-%
+
+Process models are an important means to capture information on organizational processes, serving as a basis for communication and often as the starting point for analysis and improvement~\cite{dumas2013fundamentals}. 
+For processes that are relatively structured, \emph{imperative} process modeling notations, such as the Business Process Model and Notation (BPMN), are most commonly employed. However, other processes, in particular knowledge-intensive ones, are more flexible and, therefore, less structured. An important characteristic of such processes is that it is typically infeasible to specify the entire spectrum of allowed execution orders in advance~\cite{dicicio2015knowledge}, which severely limits the applicability of the imperial process modeling paradigm. Therefore, such processes are better captured using \emph{declarative} process models. These models do not require an explicit definition of  all allowed execution orders, but rather use constraints to define the boundaries of the permissible process behavior \cite{vanderaalst2009declarative}.
+
+Although their benefits are apparent, establishing process models is known to be difficult, especially for domain experts that lack modeling expertise~\cite{friedrich2011process,selway2015formalising}, and can be highly time-consuming~\cite{herbst1999inductive}. 
+Due to these barriers to model creation, processes are often documented using natural language instead~\cite{}.  Recognizing this, several works have been developed that automatically extract process models from natural language texts (cf., \cite{friedrich2011process,schumacher2013extracting,vanderaa2018checking,de2017assisting}). 
+The vast majority of these focus on the generation of imperative process descriptions, whereas only one preliminary approach~\cite{vanderaa2019extracting} targets the extraction of declarative process models.  
+
+In this work, we aim to support  the elicitation of declarative process models based on natural language input. In particular, we present an interactive approach that employs speech recognition and is integrated in a declarative modeling and analysis toolkit. In this manner, we are able to provide the following contributions in comparison to the state of the art~\cite{vanderaa2019extracting}:
+\begin{compactenum}
+	\item greatly increase coverage of declare constraint types covered
+
+	\item handling more flexible input
+	
+	\item no one-shot approach
+	
+	\item additional expressiveness by incorporating conditions from data, time, and resource perspectives
+	
+	\item constraints are now linked to each other, enabling the definition of actual declarative process models, rather than just individual constraints
+	
+	\item directly use the generated process models as input for, e.g., conformance checking, event log generation, and process monitoring
+\end{compactenum}
+
+
+%- finally, all of the above is contained in a tool that uses speech recognition for the efficient elicitation of constraints, employs interaction to resolve ambiguity and enable step-by-step constraint enrichment, both its intermediatry and final output are directly available as part of a state-of-the-art declarative modeling toolkit (RuM). what can the user then do with these models because of this?
+
+\todoinline{describe evaluation results}
+
+\todoinline{describe remainder of paper}
+
+
+
+
+

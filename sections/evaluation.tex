@@ -1,3 +1,60 @@
 % !TeX root = ../Main.tex
 \section{User Evaluation}
+\label{sec:evaluation}
+In order to improve the current implementation and assess the overall feasibility of the developed user interface we conducted a qualitative case study. The aim was to (1) identify means for improving the interface, (2) identify potential issues and demands of individuals with different backgrounds and (3) identify potential usage scenarios. In the following we will first describe the study setup including the data we collected and and our analysis procedure (section \ref{sec:evaluation:setup}) before discussing our findings (section \ref{sec:evaluation:findings}).
+
+\subsection{Study setup}
+\label{sec:evaluation:setup}
+For our study we selected a total of eight participants (table \ref{tab:questionnaire}). We selected two participants that only had experience related to business process management (tier 1), two participants that had experience related to business process management and modeling temporal constraints (tier 2), two participants that had experience related to business process management and using DECLARE to model temporal constraints (tier 3) and two participants that had experience related to business process management and using a similar tool to model temporal constraints (tier 4). We chose this differentiation to gain insight about the usability of the tool for individuals with different levels of expertise and to assess potential issues and demands by individuals with different backgrounds.
+
+The study was conducted via Skype by a team consisting of a facilitator and an observer with the facilitator guiding the participant and the observer serving in a supporting role. We used the production and shipping process in a bicycle factory\footnote{The scenario can be found here: } as a background for the study because it can be expected that every participant will be somewhat be familiar with a production and shopping process. We also created a help document\footnote{The help document can be found here: } that would explain different constraints that the tool could handle to the participant.
+
+Prior to the study, the facilitator sent a link to the scenario, the help document and a link for the tool the participants. He suggested for them to read the documents and install the tool prior to the study. At the beginning of the study the facilitator introduced the participant to the study procedure and to the tool by showing how to enter a single constraint using speech input. He also asked the participant to think aloud during the study. After potential clarifying questions the participant shared her/his screen, the facilitator started the video recording and began guiding the participant through the prepared scenario. The participants were then asked to carry out multiple tasks starting with reading prepared sentences related to the scenario to enter constraints before forming their own sentences based on predefined parameters and then creating constraints without prior guidance. During this time facilitator and observer noted down any issues the participant mentioned or any situations that appeared as s/he had issues using the tool based on the usability heuristics by Nielsen \cite{nielsen1994enhancing}. At the end of the study the facilitator conducted a short follow-up interview focusing on clarifying questions about the observation or issues the participant had mentioned during the test. He also asked the participant about what s/he \textit{"liked about the tool"}, what s/he \textit{"wished would be different"} and \textit{"under which circumstances s/he would use the tool"}. After the study the participants were asked to complete a short post-questionnaire.
+
+The individual studies lasted between 14 and 35 minutes including interviews. The questionnaires consisted of multi-point Likert scales including the System Usability Scale (SUS) \cite{brooke1996sus} and scales covering satisfaction, expectation confirmation, continuation intention and usefulness which were adapted from Bhattacherjee \cite{bhattacherjee2001understanding} to assess continued use of information systems.
+
+\begin{table}[!ht]
+	\caption{Questionnaire results}
+	\label{tab:questionnaire}
+	\begin{tabularx}{\textwidth}{lXXXXX}
+		 & \textbf{all} & \textbf{tier 1 (P6, P7)} & \textbf{tier 2 (P3, P8)} & \textbf{tier 3 (P2, P4)} & \textbf{tier 4 (P1, P5)}\\
+		\midrule
+        \textbf{SUS} & 75.00 & 71.25 & 70.00 & 83.75 & 72.50\\
+        \textbf{Satisfaction} & 3.62 & 3.67 & 3.67 & 3.67 & 3.50\\
+        \textbf{Expectation} & 3.00 & 3.67 & 3.50 & 3.33 & 4.00\\
+        \textbf{Future intentions} & 2.10 & 2.33 & 2.00 & 3.00 & 3.67\\
+        \textbf{Usefulness} & 3.14 & 2.63 & 3.13 & 3.50 & 3.50\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+To analyze the collected data the research team first created an affinity diagram \cite{holtzblatt2004rapid} based on the video recordings, observations and follow-up interviews by creating a single paper note for each issue that was reported. They then clustered the notes based on emerging themes which resulted in 139 notes in 21 distinct clusters. The questionnaire served as an additional qualitative data point during the analysis (table \ref{tab:questionnaire}).
+
+\subsection{Findings}
+\label{sec:evaluation:findings}
+Our findings overall...
+Overall usability is sufficient / good (SUS)
+Minor changes to the interface that were mainly related to the usability (e.g. longer pauses during a sentence would lead to the speech recording to stop and the placement of new elements was somewhat confusing because they were not highlighted)
+Placement of the recognized text appeared to be an issue... People saw it correct once and then did not check again... that was particularly problematic for newcomers because of the following...
+Help document needs improvement for newcomers (P7 had troubles identifying suitable constraint)
+
+\subsubsection{Difference between users with different backgrounds}
+Usage differences between the different tiers:
+- all used pre-formulated sentences (either typed or written)
+- most used somewhat unnatural sentences (e.g. activity ... takes place before activity ...)... tried to identify keywords (P7 by trial and error)... only P1 used natural speech
+- newcomers had issues realizing that constrains were incorrectly formulated because their sentence was not correctly understood... thought it was because the transition from text to constraint did not work
+- newcomers relied more on the model (T1 and 2) while participants that knew DECLARE relied more on the text
+- newcomers found it least useful and usable despite them being satisfied
+- professionals found it the most useful and had the highest future intentions to use it
+- pro user expected more constraint types (P5)
+
+\subsubsection{Potential usage scenarios}
+Usage scenarios:
+- ...
+
+Overall:
+- generally not "natural" enough yet
+- additional layer of complexity (from natural language to what user thinks is understandable to the machine)
+hard for novices to check correctness (unfamiliar with constraints)... esp. P7 --> save recorded text as well (annotation)... 
+
 \label{sec:experiments}

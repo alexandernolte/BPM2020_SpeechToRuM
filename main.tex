@@ -1,4 +1,4 @@
-% !TeX spellcheck = en_GB
+% !TeX spellcheck = en_US
 % !TeX program = pdflatex
 \documentclass{llncs}
 %
@@ -60,6 +60,10 @@
 \usepackage[ruled,linesnumbered,algo2e]{algorithm2e}
 % For strike-through cancellations
 \usepackage[normalem]{ulem}
+% To properly order references
+\usepackage{cite}
+\usepackage{tabularx}
+
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LaTeX handling, dirty tricks, and more
@@ -73,6 +77,11 @@
 %
 \input{addons/glossary}
 %
+
+\newcommand{\todoinline}[1]{\textcolor{red}{\bf {#1}}}
+\renewcommand{\subsectionautorefname}{Section}
+
+
 \begin{document}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,28 +99,30 @@
 % In order to avoid that text be beyond margins
 \begin{sloppypar}
 %
-\title{Tell It with Your Own Words: Defining Declarative Process Models via Speech Recognition
+\title{Say It In Your Own Words: Defining Declarative Process Models Using Speech Recognition
 %\thanks{The research of Fabrizio Maria Maggi has received funding from the Estonian Research Council and by ERDF via the Estonian Centre of Excellence in Computer Science.
 }%
 
 %
 % abbreviated title (for running head) also used for the TOC unless \toctitle is used
-\titlerunning{Ensuring Model Consistency in Declarative Process Discovery}
+%\titlerunning{Ensuring Model Consistency in Declarative Process Discovery}
 %
 \author{{Han~{van~der~Aa}}\inst{1} %
 \and {{Karl~Johannes}~Balder}\inst{2}
 \and \\{{Fabrizio~Maria}~Maggi}\inst{2} %
-\and {Alexander~Nolte}\inst{2}%
+\and {Alexander~Nolte}\inst{2,3}%
 }
 %
 % abbreviated author list (for running head)
 \authorrunning{H.\ {van der Aa}, K.J.\ Balder, F.M.\ Maggi, A.\ Nolte}
 %
-\institute{Humboldt University of Berlin, Germany\\
+\institute{Humboldt-Universit\"at zu Berlin, Germany\\
 \email{han.van.der.aa@hu-berlin.de}
 \and
 University of Tartu, Estonia\\
-\email{\{balder,f.m.maggi,nolte\}@ut.ee}
+\email{\{balder,f.m.maggi,alexander.nolte\}@ut.ee}
+\and
+Carnegie Mellon University, Pittsburgh, PA, USA\\
 }
 %
 % typeset the title of the contribution
@@ -129,7 +140,6 @@ University of Tartu, Estonia\\
 %
 \input{sections/introduction}
 \input{sections/background}
-%\input{sections/preliminaries}
 \input{sections/approach}
 \input{sections/evaluation}
 \input{sections/relatedwork}

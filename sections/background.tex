@@ -2,3 +2,84 @@
 
 \section{Background}
 \label{sec:background}
+
+\subsection{Declarative Process Modeling}
+	\label{sec:bg:declarativemodeling}
+	
+\textbf{	Assigned to Fabrizio.}
+	
+	overview of declare constraints, including MP declare
+		
+\subsection{From Natural Language to Declarative Models}
+	\label{sec:bg:nltodeclarative}
+	
+	\todoinline{describe the goal of such an extraction, which is largely extracting action and determining the interrelations that hold among them}
+	
+	The extraction of declarative constraints from text  is highly challenging due to the inherent flexibility of natural language. This manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of textual descriptions, whereas on the other hand, subtle textual differences can completely change the meaning of the described constraint. These two complimentary challenges can be illustrated as follows: \smallskip
+	
+		\begin{table}
+		\begin{tabular}{cll}
+			\toprule
+			\textbf{ID} & \textbf{Description} \\
+			\midrule
+			$s_1$ & An invoice must be created before the invoice can be approved. \\
+			$s_2$ & A bill shall be created prior to it being approved. \\
+			$s_3$ & Invoice creation must precede its approval. \\
+			$s_4$ & Approval of an invoice must be preceded by its creation. \\
+			$s_5$ & Before an invoice is approved, it must be created. \\
+			\bottomrule
+		\end{tabular}
+					\caption{Different descriptions of \textit{Precedence(create order, approve order)}}
+	\label{tab:challenge1}			
+	\end{table}
+	
+	\noindent\textbf{Variability of textual descriptions.} As shown in \autoref{tab:challenge1}, the same declarative constraint can be described in a broad range of manners. Key sources of such differences include:
+	\begin{compactitem}
+		\item \textbf{Use of synonyms.} The use of synonyms is omnipresent in any unstructured or semi-structured natural language text. The use of synonyms impacts two aspects of constraint descriptions. First, synonymous terms or phrases can be used to refer to what is semantically the same action, e.g., \emph{create invoice} in $s_1$ and \emph{create bill} in $s_2$. Second, they can be used to describe the inter-relations between actions in different manners. E.g., ``\emph{before the invoice can be approved}'' in $s_1$ has the same implications for the declarative constraint as ``\emph{prior to it being approved}'' in $s_2$.
+		
+		\item \textbf{Different grammatical structures.} s1 vs s3
+		
+		\item \textbf{Order reversals.} s4 and s5
+		
+	\end{compactitem}
+		
+	\noindent \todoinline{recap why this makes it then hard}
+	 if all natural language descriptions that an approach needs to consider would be structured in the same manner, there would be no challenge. However, an approach that actually supports the elicitation of declarative constraints has to be accommodating to the different manners in which its users may choose to describe constraints. However, a successful approach must be able to do this while simultaneously being able to recognize subtle distinctions between different constraints, as discussed next.
+
+
+	\noindent\textbf{Subtle differences leading to different constraints.}
+	
+	
+	
+	\begin{compactitem}
+		\item Negation
+		
+		\item Order indicators
+		
+		\item Propositions
+		
+		\item Mandatory versus optional.
+	\end{compactitem}
+	
+		
+	\begin{table}
+		\caption{Subtle differences between constraint descriptions}
+		\label{tab:challenge2}
+		\begin{tabular}{cll}
+			
+		\end{tabular}
+	\end{table}
+	
+	
+
+	
+	
+	- state-of-the-art extraction approach
+	
+	which challenges it handles and which constraints it covers
+	
+	- our delta w.r.t. state of the art
+	
+	
+
+	
