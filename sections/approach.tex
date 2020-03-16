@@ -2,8 +2,8 @@
 \section{Interactive Elicitation of Declarative Models}
 \label{sec:framework}
 
-\autoref{fig:overview} provides an overview of the main components of the Speech2RuM approach. As shown, the user provides input through speech as well as interaction with the Graphical User Interface (GUI). Based on this input, users are able to construct a declarative process model through three main functions: (1) describing constraints in natural language using speech, (2) augmenting constraints with data- and time-perspectives, and (3) optionally editing and connecting the model's constraints. In the remainder of this section, we will describe each of these three components in detail. 
-\todo{do we need to mention how to handle speech or do we put implementation details somewhere else?}
+\autoref{fig:overview} provides an overview of the main components of the Speech2RuM approach. As shown, the user provides input through speech as well as interaction with the Graphical User Interface (GUI). Based on this input, users are able to construct a declarative process model through three main functions: (1) describing constraints in natural language using speech, (2) augmenting constraints with data- and time-perspectives, and (3) optionally editing and connecting the model's constraints. 
+
 
 \begin{figure}[!htb]
 	\includegraphics[width=\textwidth]{figures/overview}
@@ -11,13 +11,15 @@
 	\label{fig:overview}
 \end{figure}
 
+In this section, we outline our conceptual contributions with respect to the first two functions, i.e., for the transformation from natural language text into declarative constraints (\autoref{sec:texttodeclareconstraints}) and into augmentation of constraints with multi-perspective constraints (\autoref{sec:multiperspectiveaugmentation}).
+We cover the implementation of the approach and the user interaction it supports in \autoref{sec:implementation}.
 
 	
 
 \subsection{Constraint generation}
 	\label{sec:texttodeclareconstraints}
 	
-	In this component, our approach aims to turn a recorded sentence (transformed from speech to text using a standard software library~\cite{whattorefhere?}) into one or more declarative constraints. 
+	In this component, our approach aims to turn a constraint description, recorded using speech speech, into one or more declarative constraints. 
 	For this task, we enhanced the existing state-of-the-art approach for the extraction of declarative constraints from natural language text~\cite{vanderaa2019extracting}. 
 	
 	In particular, we take the result of the parsing step of that existing approach as input to the constraint generation approach. Given a sentence $s$, parsing yields  a list $A_s$ of actions described in the sentence and the inter-relations that exist between the actions, i.e., a mapping $rel_s: A_s \times A_s \rightarrow type$, with $type \in \{xor, and, dep\}$. 	
@@ -37,12 +39,14 @@
 		
 		\item \textbf{\textit{AtMostOne}.} If a \PartTmp\ constraint is originally recognized, we subsequently check if $s$ specifies a bound on its number of  executions, i.e., by checking for phrases such as \emph{at most once}, \emph{not more than once}, \emph{one time}. 
 		
-		\item \textbf{\textit{CoExistence} .} 
-		When a sentence has two actions in $A_s$ that are in a relation of type \emph{and} (and without any \emph{dep} relations) are transformed into either a \textit{CoExistence} or a  \textit{NotCoExistence} constraint, depending on whether there is a negation present. 
+		\item \textbf{\textit{CoExistence}.} 
+			\textit{CoExistence} relations are identified for sentences with two actions in an \emph{and} relation, typically extracted from a coordinating conjunction like ``\emph{shipped and paid}''. Furthermore, some notion of obligation should be present, in order to distinguish between actions that \emph{can} happen together and ones that \emph{should}.
 		
-		\item \textbf{\textit{NotCoExistence} .} 
-		
-		\item \textbf{\textit{RespondedExistence}.} Responded existence constraints are similar to the originally extracted \RespTmp\. Their extraction occurs when two actions are in a dependency relation, i.e., $a_1\ dep\ a_2$ for which it holds that the target action, $a_2$, is indicated to be mandatory, e.g., using \emph{must}. The key difference between \RespTmp\ and \ResExTmp\ is that the former includes a notion of order, i.e., $a_1$ precedes $a_2$, whereas no such order is specified for \ResExTmp\ constraints.
+	
+		\item \textbf{\textit{RespondedExistence}.} Responded existence constraints are similar to the originally extracted \RespTmp. Their extraction occurs when two actions are in a dependency relation, i.e., $a_1\ dep\ a_2$ for which it holds that the target action, $a_2$, is indicated to be mandatory, e.g., using \emph{must}. The key difference between \RespTmp\ and \ResExTmp\ is that the former includes a notion of order, i.e., $a_1$ precedes $a_2$, whereas no such order is specified for \ResExTmp\ constraints.
+
+	\item \textbf{\textit{NotCoExistence}.}  This constraint type is identified for negated forms of descriptions of both \emph{CoExistence} and \emph{RespondedExistence} constraints. Semantically, in both cases, the description shall state that two actions should not appear for the same process instance. This is, e.g., seen in \autoref{tab:additionalconstraints}, where ``\emph{If an application is accepted, it cannot be rejected}'' is actually the negative form of a \emph{RespondedExistence} description. 
+
 		
 	\item \textbf{\textit{ChainPrecedence} and \textit{ChainResponse}.} These constraint types are specializations of \PrecTmp\ \RespTmp\ constraints. Chain constraints are recognized by the presence of a temporal preposition that indicates immediacy. Generally, such a preposition is associated with the verb of either an action $a_1$ or $a_2$ in a relation $a_1\ dep\ a_2$. For this, we consider the preposition  \emph{immediately} and several of its synonyms, i.e., \emph{instantly}, \emph{directly}, and \emph{promptly}. 
 	\end{compactitem}
@@ -52,14 +56,15 @@
 		\caption{Additional constraint types in Speech2RuM}
 		\label{tab:additionalconstraints}
 		\begin{tabularx}{\textwidth}{lX}
+			\toprule
 			\textbf{Constraint}  &  \textbf{Example}\\
 			\midrule
 		\PartTmp & An invoice must be created\\
 		\textbf{Absence?} &  Dogs are \uline{not} allowed in the restaurant. \\
 			   \UniqTmp & An invoice should be paid \uline{at most once}. \\
 			\CoExiTmp &  Order shipment and invoice payment \uline{should occur together}.\\
-			\NotCoExiTmp & If an application is accepted, it cannot be rejected. \\
 			\ResExTmp &  If a product is produced, it \uline{must be tested}.\\
+				\NotCoExiTmp & If an application is accepted, it cannot be rejected. \\
 			\ChaPrecTmp  &  After an order is received, it may  \uline{immediately} be refused.\\
 			\ChaRespTmp  &  After an order is received, it must \uline{directly} be  checked.\\
 						
@@ -82,6 +87,42 @@
 \subsection{Multi-Perspective Augmentation}
 	\label{sec:multiperspectiveaugmentation}
 	
+
+	Three types of conditions: activation, correlation, and time conditions.
 	
-\subsection{Model Editing and Integration}
-	\label{sec:editingandintegration}	
+	we do not need to recognize which is being described
+	
+	
+	\mypar{Activation conditions} Activation conditions define constraints on attribute values associated with the \emph{activation} activity of a constraint. They denote specific requirements that must be met in order for a constraint to be applicable, e.g., stating that Response(receive loan application, check loan application) should only apply when the amount associated with the application is above 50 000EUR.
+	
+	Our approach is able to handle input that follows the patterns shown in \autoref{tab:activiationpatterns}. 
+	
+	\begin{table}[!h]
+		\caption{Condition patterns supported by Speech2RuM}
+		\label{tab:activiationpatterns}
+		\begin{tabular}{lll}
+			\toprule
+			\textbf{Type} & \textbf{Pattern} & \textbf{Semantics} \\ 
+			\midrule
+			Activation + Target& example greater \\
+			Activation + Target &example lower \\
+			Activation + Target 	&example negated \\
+			Activation  + Target	& example categorical \\
+			Correlation & exampl1 \\
+			Correlation & Example2 \\
+			Time \\
+			\bottomrule
+			
+		\end{tabular}
+	\end{table}	
+
+		
+
+	
+	
+	\mypar{Correlation conditions}
+	
+	
+	\mypar{Time conditions}
+	
+	

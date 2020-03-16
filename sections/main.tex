@@ -1,0 +1,190 @@
+% !TeX spellcheck = en_US
+% !TeX program = pdflatex
+\documentclass{llncs}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package loading
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Allows for index generation
+\usepackage{makeidx}
+% For language-specific hyphenations etc.
+\usepackage[british,english]{babel}
+% To determine characteristics of float environments
+\usepackage{floatrow}
+% For subfigures
+\usepackage{subfig}
+% For nice links
+\usepackage{url}
+% For playing with colors in tabular environments
+\usepackage{colortbl}
+% For math symbols, such as \nexists
+\usepackage{amssymb}
+% For advanced graphics
+\usepackage{graphicx}
+% For equations, arrays of equations, defining operator names, etc.
+\usepackage{amsmath}
+% For cursive math
+\usepackage{mathrsfs}
+% For enumerating the line numbers
+\usepackage[left]{lineno}
+% For side notes, missing figures and inline to-do's
+\usepackage[textsize=scriptsize,colorinlistoftodos]{todonotes}
+% For specifying kewords and acronyms
+\usepackage[nonumberlist,acronym,sanitize=none]{glossaries}
+\glsdisablehyper
+% For commenting out some parts of the text
+\usepackage{comment}
+% For building hyperlinks
+\usepackage{hyperref}
+% For smart references
+\usepackage{cleveref}
+\crefname{algocf}{alg.}{algs.}
+\Crefname{algocf}{Algorithm}{Algorithms}
+% TikZ/Pgf advanced graphics
+\usepackage{tkz-base}
+\usetikzlibrary{decorations.pathmorphing,trees}
+% To use inline and other fancy list-like environments (e.g., inparaenum)
+\usepackage{paralist}
+% To divide a text line into multiple columns
+\usepackage{multicol}
+% To create good-looking book-style tables
+\usepackage{booktabs}
+% To play around with list environments
+\usepackage{enumitem}
+% To create multirow cells in tables
+\usepackage{multirow}
+% To create rotated cells in tables
+\usepackage{rotating}
+% To make algorithmic nice-looking pseudocode
+\usepackage[ruled,linesnumbered,algo2e]{algorithm2e}
+% For strike-through cancellations
+\usepackage[normalem]{ulem}
+% To properly order references
+\usepackage{cite}
+\usepackage{tabularx}
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX handling, dirty tricks, and more
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{addons/commands}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Used keywords, symbols, and typesetting commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{addons/glossary}
+%
+
+\newcommand{\todoinline}[1]{\textcolor{red}{\bf {#1}}}
+\renewcommand{\subsectionautorefname}{Section}
+\newcommand{\lnext}{\ensuremath{\mathbf{X}}}
+\newcommand{\lwnext}{\ensuremath{\mathbf{\bar{X}}}}
+\newcommand{\luntil}{\ensuremath{\mathbf{U}}}
+\newcommand{\lsince}{\ensuremath{\mathbf{S}}}
+\newcommand{\lrelease}{\ensuremath{\mathbf{R}}}
+\newcommand{\lwuntil}{\ensuremath{\mathbf{W}}}
+\newcommand{\lglobally}{\ensuremath{\mathbf{G}}}
+\newcommand{\lfuture}{\ensuremath{\mathbf{F}}}
+\newcommand{\tnext}{\ensuremath{\mathbf{X}_{I}}}
+\newcommand{\twnext}{\ensuremath{\mathbf{\bar{X}_I}}}
+\newcommand{\tuntil}{\ensuremath{\mathbf{U}_{I}}}
+\newcommand{\tsince}{\ensuremath{\mathbf{S}_{I}}}
+\newcommand{\trelease}{\ensuremath{\mathbf{R}_{I}}}
+\newcommand{\tglobally}{\ensuremath{\mathbf{G}_{I}}}
+\newcommand{\lonce}{\ensuremath{\mathbf{O}}}
+\newcommand{\tonce}{\ensuremath{\mathbf{O}_{I}}}
+\newcommand{\lyesterday}{\ensuremath{\mathbf{Y}}}
+\newcommand{\tyesterday}{\ensuremath{\mathbf{Y}_{I}}}
+\newcommand{\lhistorically}{\ensuremath{\mathbf{H}}}
+\newcommand{\thistorically}{\ensuremath{\mathbf{H}_{I}}}
+\newcommand{\tfuture}{\ensuremath{\mathbf{F}_{I}}}
+\newcommand{\responseSA}{{\sc Response(Submit Loan Application, Assess Application)}}
+\newcommand{\responseAS}{{\sc Response(Assess Application, Submit Loan Application)}}
+\newcommand{\responsesa}{{\sc Response(S,A)}}
+\newcommand{\responseas}{{\sc Response(A,S)}}
+\newcommand{\response}{{\sc Response}}
+\newcommand{\MPDeclare}{{\sc MP-Declare}}
+\newcommand{\Declare}{{\sc Declare}}
+%\newcommand{\Submit}{{\sc Submit Loan Application}}
+\newcommand{\Assess}{{\sc Assess Application}}
+\newcommand{\Notify}{{\sc Notify Outcome}}
+\newcommand{\Career}{{\sc Check Career}}
+\newcommand{\Medical}{{\sc Check Medical History}} 
+
+\begin{document}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Used acronyms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{addons/acronyms}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Start of the contributions
+\mainmatter
+% In order to avoid that text be beyond margins
+\begin{sloppypar}
+%
+\title{Say It In Your Own Words: Defining Declarative Process Models Using Speech Recognition
+%\thanks{The research of Fabrizio Maria Maggi has received funding from the Estonian Research Council and by ERDF via the Estonian Centre of Excellence in Computer Science.
+}%
+
+%
+% abbreviated title (for running head) also used for the TOC unless \toctitle is used
+%\titlerunning{Ensuring Model Consistency in Declarative Process Discovery}
+%
+\author{{Han~{van~der~Aa}}\inst{1} %
+\and {{Karl~Johannes}~Balder}\inst{2}
+\and \\{{Fabrizio~Maria}~Maggi}\inst{2} %
+\and {Alexander~Nolte}\inst{2,3}%
+}
+%
+% abbreviated author list (for running head)
+\authorrunning{H.\ {van der Aa}, K.J.\ Balder, F.M.\ Maggi, A.\ Nolte}
+%
+\institute{Humboldt-Universit\"at zu Berlin, Germany\\
+\email{han.van.der.aa@hu-berlin.de}
+\and
+University of Tartu, Estonia\\
+\email{\{balder,f.m.maggi,alexander.nolte\}@ut.ee}
+\and
+Carnegie Mellon University, Pittsburgh, PA, USA\\
+}
+%
+% typeset the title of the contribution
+\maketitle
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{sections/abstract}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/approach}
+\input{sections/evaluation}
+\input{sections/relatedwork}
+\input{sections/conclusion}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\bibliographystyle{splncs03}
+%\bibliography{bibliography/CDC-Bibliography,bibliography/DiCiccio,bibliography/Maggi}
+\bibliography{Bibliography}
+%\bibliography{Bibliography}
+%
+\end{sloppypar}
+\end{document} 
