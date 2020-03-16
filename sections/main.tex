@@ -9,7 +9,7 @@
 % Allows for index generation
 \usepackage{makeidx}
 % For language-specific hyphenations etc.
-%\usepackage[british,english]{babel}
+\usepackage[british,english]{babel}
 % To determine characteristics of float environments
 \usepackage{floatrow}
 % For subfigures
@@ -36,7 +36,7 @@
 % For commenting out some parts of the text
 \usepackage{comment}
 % For building hyperlinks
-\usepackage[hidelinks]{hyperref}
+\usepackage{hyperref}
 % For smart references
 \usepackage{cleveref}
 \crefname{algocf}{alg.}{algs.}
@@ -78,9 +78,7 @@
 \input{addons/glossary}
 %
 
-\newcommand{\mypar}[1]{\smallskip\noindent\textbf{#1.}}
 \newcommand{\todoinline}[1]{\textcolor{red}{\bf {#1}}}
-\renewcommand{\sectionautorefname}{Section}
 \renewcommand{\subsectionautorefname}{Section}
 \newcommand{\lnext}{\ensuremath{\mathbf{X}}}
 \newcommand{\lwnext}{\ensuremath{\mathbf{\bar{X}}}}
@@ -175,7 +173,6 @@ Carnegie Mellon University, Pittsburgh, PA, USA\\
 \input{sections/introduction}
 \input{sections/background}
 \input{sections/approach}
-\input{sections/implementation}
 \input{sections/evaluation}
 \input{sections/relatedwork}
 \input{sections/conclusion}
