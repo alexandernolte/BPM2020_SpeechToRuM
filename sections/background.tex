@@ -261,7 +261,7 @@ The activation condition is a relation (over the variables corresponding to the 
 The correlation condition is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, where $r_c$ is a relation involving, again, variables corresponding to the (global) attributes in the event log but, in this case, relating the payload of $A$ and the payload of $B$.
 A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve attributes of the activation.
 
-In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever {\sc Submit Loan Application}\ occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \Assess\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
+%In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever {\sc Submit Loan Application}\ occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \Assess\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
 
 Finally, in \MPDeclare, also a time condition can be specified through an interval ($I=[\tau_0,\tau_1)$) indicating the minimum and the maximum temporal distance allowed between the occurrence of the activation and the occurrence of the corresponding target.
 %In the following, we explain in detail the intuitive meaning of some of the constraints in Table~\ref{tbl:timed-mfotl}. We indicate with $\tau_A$ and $\tau_B$ the timestamps of $A$ and $B$, respectively.
@@ -275,9 +275,9 @@ Finally, in \MPDeclare, also a time condition can be specified through an interv
 \subsection{From Natural Language to Declarative Models}
 \label{sec:bg:nltodeclarative}
 
-A crucial component of our work involves the extraction of declarative constraints from natural language, referred to as a textual description in the remainder. This extraction step involves the identification of the described actions (a.k.a. activities), such as \emph{create invoice} and \emph{approve invoice} in $s_1$ of \autoref{tab:challenge1}, as well as the identification of the extract relation described for these actions, e.g., corresponding to a precedence or response constraint. 
+A crucial component of our work involves the extraction of declarative constraints from natural language, referred to as a textual description in the remainder. This extraction step involves the identification of the described actions (a.k.a. activities), such as \emph{create invoice} and \emph{approve invoice} in $s_1$ of \autoref{tab:challenge1}, as well as the identification of the extract relation described for these actions, e.g., corresponding to a precedence or response constraint.
 
-Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of textual descriptions, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint. These two complimentary challenges can be illustrated as follows: 
+Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of textual descriptions, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint. These two complimentary challenges can be illustrated as follows:
 
 \begin{table}
 	\begin{tabular}{cll}
@@ -299,10 +299,10 @@ Due to the inherent flexibility of natural language, this extraction step can be
 \begin{compactitem}
 	\item \textbf{Synonyms.} Synonyms are omnipresent in any unstructured or semi-structured natural language text. Their presence impacts two aspects of constraint descriptions. First, synonymous terms or phrases can be used to refer to what is semantically the same action, e.g., \emph{create invoice} in $s_1$ and \emph{create bill} in $s_2$. Second, they can be used to describe the inter-relations between actions in different manners. E.g., ``\emph{before the invoice can be approved}'' in $s_1$ has the same implications for the declarative constraint as ``\emph{prior to it being approved}'' in $s_2$.
 	
-	\item \textbf{Different grammatical structures.} Textual descriptions of constraints can have widely different grammatical structures. Given that such a description captures a number of actions and their inter-relations, a particularly important distinction is to be made between descriptions that use \emph{verbs} to denote actions, e.g., ``\emph{An invoice must be created}'' in $s_1$, versus those that use \emph{nouns} to denote actions, e.g., ``\emph{invoice creation}'' in $s_3$. 
+	\item \textbf{Different grammatical structures.} Textual descriptions of constraints can have widely different grammatical structures. Given that such a description captures a number of actions and their inter-relations, a particularly important distinction is to be made between descriptions that use \emph{verbs} to denote actions, e.g., ``\emph{An invoice must be created}'' in $s_1$, versus those that use \emph{nouns} to denote actions, e.g., ``\emph{invoice creation}'' in $s_3$.
 	%		The latter cases are more difficult to handle, given that most work on the extraction of process information from text only uses verb-based identification of actions~\cite{vanderaa2019extracting}.
 	%		
-	\item \textbf{Description order.} Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or the reverse order, such as $s_4$ and $s_5$. 
+	\item \textbf{Description order.} Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or the reverse order, such as $s_4$ and $s_5$.
 	
 	
 	
@@ -335,7 +335,7 @@ Small textual differences can have a considerable impact on the semantics of a c
 
 
 \begin{compactitem}
-	\item \textbf{Obligation.} The difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this action \emph{must} occur, indicating an obligation, whereas the latter specify that it \emph{can} occur. As such, the activation and the target of the constraint are swapped. 
+	\item \textbf{Obligation.} The difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this action \emph{must} occur, indicating an obligation, whereas the latter specify that it \emph{can} occur. As such, the activation and the target of the constraint are swapped.
 	
 	
 	\item \textbf{Order indicators.} As discussed before, constraints can be described in chronological and non-chronological orders. This difference is often signaled through small textual clues,  typically through the  use of temporal prepositions. This is seen for description $s_8$, where the use of \emph{first} completely reverses the meaning of the described constraint.
@@ -348,9 +348,9 @@ Small textual differences can have a considerable impact on the semantics of a c
 
 \mypar{State of the art}
 So far, only one approach has been developed to automatically extract declarative process constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. The approach aims to handle the aforementioned extraction challenges, in particular based on a unique approach to the extraction of noun-based actions. Its evaluation results show that it is able to handle a reasonable variety in its input.
-Recognizing its potential, we build on this approach. Especially using its technique for activity extraction and employing it for the extraction of the aforementioned five constraint templates. 
+Recognizing its potential, we build on this approach. Especially using its technique for activity extraction and employing it for the extraction of the aforementioned five constraint templates.
 
-Nevertheless, due to its limitations, we extend the state-of-the-art approach in two main manners: (1) we generalized some of the pattern recognition mechanisms in order to handle more flexible input, (2) we cover eight additional constraint templates, and (3) we add support for the identification of multi-perspective constraints. 
+Nevertheless, due to its limitations, we extend the state-of-the-art approach in two main manners: (1) we generalized some of the pattern recognition mechanisms in order to handle more flexible input, (2) we cover eight additional constraint templates, and (3) we add support for the identification of multi-perspective constraints.
 
 
 
