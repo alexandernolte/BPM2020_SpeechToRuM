@@ -16,7 +16,7 @@ execution. The possible orderings of activities are implicitly specified by
 constraints and anything that does not violate them is possible during execution.
 \MPDeclare\ is the Multi-Perspective extension of \Declare\ that was first introduced in \cite{Burattin2015} and can express costraints over perspectives of a process like data, time and resource.
 
-To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a case an \emph{ordered} sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity} (i.e., a well-defined step in a business process), has a \emph{timestamp} indicating when the event occurs and can have additional \emph{data elements} collected into a \emph{payload}. Consider, for example, the execution of an event \emph{ship order} (O) and suppose that, after the execution of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
+To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a \emph{case} an ordered sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity} (i.e., a well-defined step in a business process), has a \emph{timestamp} indicating when the event occurs and can have additional \emph{data attributes} collected into a \emph{payload}. Consider, for example, the occurrence of an event \emph{ship order} (O) and suppose that, after the occurrence of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
 In this paper, we assume that all attributes are globally visible and can be accessed/manipulated by all activity instances executed inside the case.
 
 
@@ -103,10 +103,12 @@ operators have the following intuitive meaning: formula $\lfuture \phi_1$ means
 that $\phi_1$ holds sometime in the future, $\lnext \phi_1$ means that $\phi_1$
 holds in the next position, $\lglobally \phi_1$ says that $\phi_1$ holds forever in the future, and, lastly,
 $\phi_1 \luntil \phi_2$ means that sometime in the future $\phi_2$ will hold and
-until that moment $\phi_1$ holds (with $\phi_1$ and $\phi_2$ LTL formulas). The $\lonce$, and $\lyesterday$ LTL (past)
+until that moment $\phi_1$ holds (with $\phi_1$ and $\phi_2$ LTL formulas).  The $\lonce$, $\lyesterday$, and $\lsince$ LTL (past)
 operators have the following meaning: $\lonce \phi_1$ means
-that $\phi_1$ holds sometime in the past, and $\lyesterday \phi_1$ means that $\phi_1$
-holds in the previous position.
+that $\phi_1$ holds sometime in the past, $\lyesterday \phi_1$ means that $\phi_1$
+holds in the previous position, and, lastly, $\phi_1 \lsince \phi_2$ means that sometime in the past $\phi_2$
+holds and since that moment $\phi_1$ holds.
+
 %Since processes are specified as a set of constraints which actually constrain the
 % process to be executed in a specific way, DECLARE is also a
 % $constraint$-$based$ language.
@@ -174,26 +176,23 @@ occurrence imposes, because of that constraint, some obligations on other events
 in the same trace. For example, $a$ is an activation for the \emph{response}
 constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template the corresponding activation is specified.
 
-An activation of a constraint can be a \emph{fulfillment} or a \emph{violation}
-for that constraint. When a trace is perfectly compliant with respect to a constraint,
-every activation of the constraint in the trace leads to a fulfillment.
-Consider, again, the response constraint $\lglobally(a \rightarrow \lfuture b)$. In trace $\textbf{t}_1$, the
-constraint is activated and fulfilled twice, whereas, in trace $\textbf{t}_3$,
-the same constraint is activated and fulfilled only once. On the other hand,
-when a trace is not compliant with respect to a constraint, an activation of the
-constraint in the trace can lead to a fulfillment but also to a violation (at
-least one activation leads to a violation). In trace $\textbf{t}_4$, for
-example, the response constraint $\lglobally(a \rightarrow \lfuture b)$ is activated twice, but the first activation leads to a
-fulfillment (eventually $b$ occurs) and the second activation
-leads to a violation ($b$ does not occur subsequently). An algorithm to
-discriminate between fulfillments and violations for a constraint in a trace is
-presented in \cite{Burattin2012}.
-%\tablename~\ref{tbl:timed-ltl} reports the activations for the main Declare templates.
-
-%In \cite{Burattin2012}, the authors also define two metrics to measure the conformance of an event log with respect to~a constraint in terms of violations and fulfillments, called \emph{violation ratio} and \emph{fulfillment ratio} of the constraint in the log. These metrics are valued 0 if the log contains no activations of the considered constraint. Otherwise, they are evaluated as the percentage of violations and fulfillments of the constraint over the total number of activations.
+%An activation of a constraint can be a \emph{fulfillment} or a \emph{violation}
+%for that constraint. When a trace is perfectly compliant with respect to a constraint,
+%every activation of the constraint in the trace leads to a fulfillment.
+%Consider, again, the response constraint $\lglobally(a \rightarrow \lfuture b)$. In trace $\textbf{t}_1$, the
+%constraint is activated and fulfilled twice, whereas, in trace $\textbf{t}_3$,
+%the same constraint is activated and fulfilled only once. On the other hand,
+%when a trace is not compliant with respect to a constraint, an activation of the
+%constraint in the trace can lead to a fulfillment but also to a violation (at
+%least one activation leads to a violation). In trace $\textbf{t}_4$, for
+%example, the response constraint $\lglobally(a \rightarrow \lfuture b)$ is activated twice, but the first activation leads to a
+%fulfillment (eventually $b$ occurs) and the second activation
+%leads to a violation ($b$ does not occur subsequently). An algorithm to
+%discriminate between fulfillments and violations for a constraint in a trace is
+%presented in \cite{Burattin2012}.
 
 
-Tools implementing process mining approaches based on \Declare\ are presented in \cite{DBLP:conf/bpm/Maggi13}. The tools are implemented as plug-ins of the process mining framework ProM.
+%Tools implementing process mining approaches based on \Declare\ are presented in \cite{DBLP:conf/bpm/Maggi13}. The tools are implemented as plug-ins of the process mining framework ProM.
 
 
 \begin{table*}[t!]
@@ -262,13 +261,12 @@ The semantics of \MPDeclare\ is expressed in Metric First-Order Linear Temporal 
 %To define the new semantics for Declare, we have to contextualize the definitions given in Section \ref{sec:mfotl} in XES. Consider, for example, that the execution of an activity $pay$ is recorded in an event log and, after the execution of $pay$ at timestamp $\tau_i$, the attributes $originator$, $amount$, and $z$ have values $John$, $100$, and $July$. In this case, the valuation of $(activityName,originator,amount,z)$ is $(pay,John,100,July)$ in $\tau_i$. Considering that in XES, by definition, the activity name is a special attribute always available, if $(pay,John,100,July)$ is the valuation of $(activityName,originator,amount,z)$, we say that, when $pay$ occurs, two special relations are valid $event(pay)$ and $p_{pay}(John,100,July)$. In the following, we identify $event(pay)$ with the event itself $pay$ and we call $(John,100,July)$, the \emph{payload} of $pay$.
 %\emph{ship order}
 
-%Note that all the templates in \MPDeclare\ in Table~\ref{tbl:timed-mfotl} have two parameters, an activation and a target (see also \tablename~\ref{tbl:timed-ltl}). 
+%Note that all the templates in \MPDeclare\ in Table~\ref{tbl:timed-mfotl} have two parameters, an activation and a target (see also \tablename~\ref{tbl:timed-ltl}).
 The standard semantics of \Declare\ is extended by requiring two additional conditions on data, i.e., the \emph{activation condition} $\varphi_a$ and the \emph{correlation condition} $\varphi_c$, and a time condition. As an example, we consider the response constraint ``\emph{ship order} is always eventually followed by \emph{send invoice}'' having \emph{ship order} as activation and \emph{send invoice}\ as target.
-The activation condition is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, and the amount of the loan is higher than $\euro{100}$ euros and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but the amount is lower than $\euro{100}$ euros or the customer type is different from \emph{gold}, the constraint is not activated.
+The activation condition is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, and the amount of the order is higher than $\euro{100}$ euros and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but the amount is lower than $\euro{100}$ euros or the customer type is different from \emph{gold}, the constraint is not activated.
 
 
-The correlation condition is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, where $r_c$ is a relation between the payload of $A$ and the payload of $B$.
-A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
+The correlation condition is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold. A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
 
 %In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever \emph{ship order} occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \emph{send invoice}\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
 
@@ -284,7 +282,7 @@ Finally, in \MPDeclare, also a time condition can be specified through an interv
 \subsection{From Natural Language to Declarative Models}
 \label{sec:bg:nltodeclarative}
 
-A crucial component of our work involves the extraction of declarative constraints from natural language, referred to as a textual description in the remainder. This extraction step involves the identification of the described actions (activities), such as \emph{create invoice} and \emph{approve invoice} in $s_1$ of \autoref{tab:challenge1}, as well as the identification of the extract relation described for these actions, e.g., corresponding to a precedence or response constraint.
+A crucial component of our work involves the extraction of declarative constraints from natural language, referred to as a textual description in the remainder. This extraction step involves the identification of the described actions (activities), such as \emph{create invoice} and \emph{approve invoice} in $s_1$ of \autoref{tab:challenge1}, as well as the identification of the relation connecting these actions, e.g., corresponding to a precedence or response constraint.
 
 Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of textual descriptions, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint. These two complimentary challenges can be illustrated as follows:
 
@@ -319,7 +317,7 @@ Due to the inherent flexibility of natural language, this extraction step can be
 	
 \end{compactitem}
 
-\noindent  To achieve our goal of supporting users in the elicitation of declarative process models, we do must not limit the user too much in terms of the input that they can provide. Rather, it has to be accommodating to the different manners in which its users may choose to describe constraints. However, a successful approach must be able to do this while simultaneously being able to recognize subtle distinctions between different constraints, as discussed next.
+\noindent  To achieve our goal of supporting users in the elicitation of declarative process models, we must not limit the user too much in terms of the input that they can provide. Rather, it has to be accommodating to the different manners in which users may choose to describe constraints. However, a successful approach must be able to do this while simultaneously being able to recognize subtle distinctions between different constraints, as discussed next.
 
 \mypar{Subtle differences leading to different constraints.}
 Small textual differences can have a considerable impact on the semantics of a constraint description and, thus, on the constraints that should be extracted from them. To illustrate this, consider the descriptions in \autoref{tab:challenge2}. In comparison to description $s_6$, the three other descriptions each differ by only a single word. However, as shown in the right-hand column, the described constraints vary greatly. This is due to the following factors:
@@ -344,22 +342,22 @@ Small textual differences can have a considerable impact on the semantics of a c
 
 
 \begin{compactitem}
-	\item \textbf{Obligation.} The difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this action \emph{must} occur, indicating an obligation, whereas the latter specify that it \emph{can} occur. As such, the activation and the target of the constraint are swapped.
+	\item \textbf{Obligation.} The difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this action \emph{must} occur, indicating an obligation, whereas the latter specifies that it \emph{can} occur. As such, the activation and the target of the constraint are swapped.
 	
 	
 	\item \textbf{Order indicators.} As discussed before, constraints can be described in chronological and non-chronological orders. This difference is often signaled through small textual clues,  typically through the  use of temporal prepositions. This is seen for description $s_8$, where the use of \emph{first} completely reverses the meaning of the described constraint.
 	
-	\item \textbf{Negation.} Finally, it should be clear that the presence of negation drastically changes the meaning of a constraint, as seen for $s_9$. \todoinline{what to say about NotSuccession?}
+	\item \textbf{Negation.} Finally, it should be clear that the presence of negation drastically changes the meaning of a constraint, as seen for $s_9$. The addition of \emph{not} to description $s_6$ changes the original Response constraint into a Not Succession. \todoinline{what to say about NotSuccession? I have added one sentence. Is it ok?}
 	
 \end{compactitem}
 
 
 
 \mypar{State of the art}
-So far, only one approach has been developed to automatically extract declarative process constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. The approach aims to handle the aforementioned extraction challenges, in particular based on a unique approach to the extraction of noun-based actions. Its evaluation results show that it is able to handle a reasonable variety in its input.
-Recognizing its potential, we build on this approach. Especially using its technique for activity extraction and employing it for the extraction of the aforementioned five constraint templates.
+So far, only one approach has been developed to automatically extract declarative process constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. The approach aims at handling the aforementioned extraction challenges, in particular based on a unique approach to the extraction of noun-based actions. \todo{not very clear} Its evaluation results show that it is able to handle a reasonable variety of inputs.
+Recognizing its potential, we build on this approach. In particular, we use this technique for activity extraction and employ it for the extraction of the aforementioned five constraint templates.
 
-Nevertheless, due to its limitations, we extend the state-of-the-art approach in two main manners: (1) we generalized some of the pattern recognition mechanisms in order to handle more flexible input, (2) we cover eight additional constraint templates, and (3) we add support for the identification of multi-perspective constraints.
+Nevertheless, due to its limitations, we extend this approach in two main manners: (1) we generalized some of the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for the identification of multi-perspective constraints.
 
 
 
