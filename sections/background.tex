@@ -2,9 +2,22 @@
 
 \section{Background}
 \label{sec:background}
+\todoinline{We have to decide which constraints we want to show here. I think that the constraints shown in this section are not the same as the ones mentioned later.}
+
+In this section, we first introduce \Declare\ and \MPDeclare\ and then we explain the basic approach to translate natural language texts into declarative constraints.
 
 \subsection{Declarative Process Modeling}
 \label{sec:bg:declarativemodeling}
+\Declare\ is a declarative process modeling language originally introduced by
+Pesic and van der Aalst in \cite{Pesic2007:DECLARE}. Instead of explicitly
+specifying the flow of the interactions among process activities, \Declare\
+describes a set of constraints that must be satisfied throughout the process
+execution. The possible orderings of activities are implicitly specified by
+constraints and anything that does not violate them is possible during execution.
+\MPDeclare\ is the Multi-Perspective extension of \Declare\ that was first introduced in \cite{Burattin2015} and can express costraints over perspectives of a process like data, time and resource.
+
+To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a case an \emph{ordered} sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity} (i.e., a well-defined step in a business process), has a \emph{timestamp} indicating when the event occurs and can have additional \emph{data elements} collected into a \emph{payload}. Consider, for example, the execution of an event \emph{ship order} (O) and suppose that, after the execution of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
+In this paper, we assume that all attributes are globally visible and can be accessed/manipulated by all activity instances executed inside the case.
 
 
 \begin{table}[tb]
@@ -58,24 +71,20 @@
 
 \subsubsection{Declare}
 \label{sec:declare}
-\Declare\ is a declarative process modeling language originally introduced by
-Pesic and van der Aalst in \cite{Pesic2007:DECLARE}. Instead of explicitly
-specifying the flow of the interactions among process activities, \Declare\
-describes a set of constraints that must be satisfied throughout the process
-execution. The possible orderings of activities are implicitly specified by
-constraints and anything that does not violate them is possible during execution. In
-comparison with procedural approaches that produce ``closed'' models, i.e., all
-that is not explicitly specified is forbidden, \Declare\ models are ``open'' and
-tend to offer more possibilities for the execution. In this way, \Declare\ enjoys
-flexibility and is very suitable
-for highly dynamic processes characterized by high complexity and variability
-due to the changeability of their execution environments.
+
+%In
+%comparison with imperative approaches that produce ``closed'' models, i.e., all
+%that is not explicitly specified is forbidden, \Declare\ models are ``open'' and
+%tend to offer more possibilities for the execution. In this way, \Declare\ enjoys
+%flexibility and is very suitable
+%for highly dynamic processes characterized by high complexity and variability
+%due to the changeability of their execution environments.
 
 A \Declare\ model consists of a set of constraints applied to
 activities. Constraints, in turn, are based on templates. Templates
 are patterns that define parameterized classes of properties, and
 constraints are their concrete instantiations  (we indicate template parameters with capital letters and concrete activities in their instantiations with lower case letters).
-They have a graphical representation understandable to the user and
+They have a graphical representation and
 their semantics can be formalized using different logics
 \cite{Montali2010:Choreographies}, the main one being LTL over finite
 traces, making them verifiable and executable.  Each constraint
@@ -142,11 +151,12 @@ holds in the previous position.
 %chain precedence}, \emph{A} and \emph{B} cannot occur one immediately after the
 %other.
 
-The major benefit of using templates is that analysts do not have to be aware of the underlying logic-based formalization to understand the models. They work with the graphical representation of templates, while the underlying formulas remain hidden.
+%The major benefit of using templates is that analysts do not have to be aware of the underlying logic-based formalization to understand the models. They work with the graphical representation of templates, while the underlying formulas remain hidden.
 %Declare is very suitable for specifying compliance models that are used to check if the behavior of a
 %system complies with desired regulations. The compliance model defines the constraints
 %related to a single process instance, and the overall expectation is that all
 %instances comply with the model.
+
 Consider, for example, the \emph{response} constraint $\lglobally(a \rightarrow \lfuture b)$. This constraint indicates that if $a$ {\it occurs}, $b$ must
 eventually {\it follow}.
 Therefore, this constraint is satisfied for traces such as $\textbf{t}_1$ =
@@ -239,29 +249,28 @@ Tools implementing process mining approaches based on \Declare\ are presented in
 
 \subsubsection{Multi-Perspective Declare}
 \label{sec:semantics}
-In this section, we illustrate a multi-perspective version of \Declare\ (\MPDeclare) introduced in \cite{Burattin2015}.
 % The version is
 %similar to the ones in \cite{timeddeclare,DBLP:conf/ispw/MasellisMM14}, but we enrich it by allowing both time and data perspective. To do this, we use
-This semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL) and is shown in Table~\ref{tbl:timed-mfotl}. We describe here the semantics informally and we refer the interested reader to \cite{Burattin2015} for more details.
+The semantics of \MPDeclare\ is expressed in Metric First-Order Linear Temporal Logic (MFOTL) and is shown in Table~\ref{tbl:timed-mfotl}. We describe here the semantics informally and we refer the interested reader to \cite{Burattin2015} for more details.
 %While many reasoning
 %tasks are clearly undecidable for MFOTL, this logic is appropriate to unambiguously
 %describe the semantics of the Multi-Perspective Declare~constraints we can use for conformance checking in our proposed algorithms.
-To explain the semantics, we have to introduce some preliminary notions.
+%To explain the semantics, we have to introduce some preliminary notions.
 
-The first concept we use here is the one of \emph{payload} of an event. Consider, for example, that the execution of an activity {\sc Submit Loan Application}\ (S) is recorded in an event log and, after the execution of S at timestamp $\tau_{S}$, the attributes $Salary$ and $Amount$ have values $12\,500$ and $55\,000$. In this case, we say that, when S occurs, two special relations are valid $event$(S) and $p_{S}(12\,500,55\,000)$. In the following, we identify $event$(S) with the event itself S and we call $(12\,500,55\,000)$, the \emph{payload} of S.
 
 
 %To define the new semantics for Declare, we have to contextualize the definitions given in Section \ref{sec:mfotl} in XES. Consider, for example, that the execution of an activity $pay$ is recorded in an event log and, after the execution of $pay$ at timestamp $\tau_i$, the attributes $originator$, $amount$, and $z$ have values $John$, $100$, and $July$. In this case, the valuation of $(activityName,originator,amount,z)$ is $(pay,John,100,July)$ in $\tau_i$. Considering that in XES, by definition, the activity name is a special attribute always available, if $(pay,John,100,July)$ is the valuation of $(activityName,originator,amount,z)$, we say that, when $pay$ occurs, two special relations are valid $event(pay)$ and $p_{pay}(John,100,July)$. In the following, we identify $event(pay)$ with the event itself $pay$ and we call $(John,100,July)$, the \emph{payload} of $pay$.
+%\emph{ship order}
+
+%Note that all the templates in \MPDeclare\ in Table~\ref{tbl:timed-mfotl} have two parameters, an activation and a target (see also \tablename~\ref{tbl:timed-ltl}). 
+The standard semantics of \Declare\ is extended by requiring two additional conditions on data, i.e., the \emph{activation condition} $\varphi_a$ and the \emph{correlation condition} $\varphi_c$, and a time condition. As an example, we consider the response constraint ``\emph{ship order} is always eventually followed by \emph{send invoice}'' having \emph{ship order} as activation and \emph{send invoice}\ as target.
+The activation condition is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, and the amount of the loan is higher than $\euro{100}$ euros and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but the amount is lower than $\euro{100}$ euros or the customer type is different from \emph{gold}, the constraint is not activated.
 
 
-Note that all the templates in \MPDeclare\ in Table~\ref{tbl:timed-mfotl} have two parameters, an activation and a target (see also \tablename~\ref{tbl:timed-ltl}). The standard semantics of \Declare\ is extended by requiring two additional conditions on data, i.e., the \emph{activation condition} $\varphi_a$ and the \emph{correlation condition} $\varphi_c$, and a time condition. As an example, we consider the response constraint ``activity {\sc Submit Loan Application}\ is always eventually followed by activity \Assess'' having {\sc Submit Loan Application}\ as activation and \Assess\ as target.
-The activation condition is a relation (over the variables corresponding to the global attributes in the event log) that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever {\sc Submit Loan Application}\ occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, eventually an assessment of the application must follow. In case {\sc Submit Loan Application}\ occurs but the amount is lower than $50\,000$ euros or the applicant has a salary higher than $24\,000$ euros per year, the constraint is not activated.
+The correlation condition is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, where $r_c$ is a relation between the payload of $A$ and the payload of $B$.
+A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
 
-
-The correlation condition is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, where $r_c$ is a relation involving, again, variables corresponding to the (global) attributes in the event log but, in this case, relating the payload of $A$ and the payload of $B$.
-A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve attributes of the activation.
-
-%In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever {\sc Submit Loan Application}\ occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \Assess\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
+%In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever \emph{ship order} occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \emph{send invoice}\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
 
 Finally, in \MPDeclare, also a time condition can be specified through an interval ($I=[\tau_0,\tau_1)$) indicating the minimum and the maximum temporal distance allowed between the occurrence of the activation and the occurrence of the corresponding target.
 %In the following, we explain in detail the intuitive meaning of some of the constraints in Table~\ref{tbl:timed-mfotl}. We indicate with $\tau_A$ and $\tau_B$ the timestamps of $A$ and $B$, respectively.
@@ -275,7 +284,7 @@ Finally, in \MPDeclare, also a time condition can be specified through an interv
 \subsection{From Natural Language to Declarative Models}
 \label{sec:bg:nltodeclarative}
 
-A crucial component of our work involves the extraction of declarative constraints from natural language, referred to as a textual description in the remainder. This extraction step involves the identification of the described actions (a.k.a. activities), such as \emph{create invoice} and \emph{approve invoice} in $s_1$ of \autoref{tab:challenge1}, as well as the identification of the extract relation described for these actions, e.g., corresponding to a precedence or response constraint.
+A crucial component of our work involves the extraction of declarative constraints from natural language, referred to as a textual description in the remainder. This extraction step involves the identification of the described actions (activities), such as \emph{create invoice} and \emph{approve invoice} in $s_1$ of \autoref{tab:challenge1}, as well as the identification of the extract relation described for these actions, e.g., corresponding to a precedence or response constraint.
 
 Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of textual descriptions, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint. These two complimentary challenges can be illustrated as follows:
 
