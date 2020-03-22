@@ -2,6 +2,8 @@
 \section{Interactive Elicitation of Declarative Models}
 \label{sec:framework}
 
+\todo{Han: this section probably should have a different name}
+
 \autoref{fig:overview} provides an overview of the main components of the Speech2RuM approach. As shown, the user provides input through speech as well as interaction with the Graphical User Interface (GUI). Based on this input, users are able to construct a declarative process model through three main functions: (1) describing constraints in natural language using speech, (2) augmenting constraints with data- and time-perspectives, and (3) optionally editing and connecting the model's constraints. 
 
 
@@ -87,42 +89,44 @@ We cover the implementation of the approach and the user interaction it supports
 \subsection{Multi-Perspective Augmentation}
 	\label{sec:multiperspectiveaugmentation}
 	
+	Our approach supports the augmentation of declarative constraints with conditions on the data and temporal perspectives, allowing \Declare\ constraints to be turned into \MPDeclare\ ones. Our approach allows users to express three types of conditions through speech input, i.e., 
+	\emph{activation}, \emph{correlation}, and \emph{time} conditions (see \autoref{sec:bg:declarativemodeling}).
+	
+	Since the user indicates which of these three will be added prior to recording its description, our approach is automatically aware of the type.
+	We note that descriptions of conditions likely reflect textual fragments, rather than full sentences. Furthermore, given that these are short statements, the expected variance is considerably lower than for descriptions of declarative constraints. For these reasons, our approach to extract conditions is based on pattern matching as opposed to the grammatical parsing used in \autoref{sec:texttodeclareconstraints}. 
+	
+	
+	\mypar{Activation conditions} Activation conditions denote specific requirements that must be met in order for a constraint to be applicable, e.g., stating that \textit{Response(receive loan application, check loan application)} should only apply when the amount associated with \emph{receive loan application} activity is above 50 000. 
+	
+	Our approach allows users to express complex conditions, i.e., conditions that concatenate multiple logical statements, such as ``\emph{The amount is higher than 50 000 and the color is not red}''.  
+	Therefore, given an input string $S$, our approach first splits $S$ into sub-strings, denoted by $split(S)$. This is done by recognizing the presence of coordinating conjunctions (\emph{and} and \emph{or}) and dividing $S$ accordingly. 
+	
+	Each sub-string $s \in split(S)$ is expected to correspond to an individual expression, which together shall be joined using logical $\wedge$ and $\vee$ operators. 
+	On each $s \in split(S)$, we use pattern matching based on the patterns depicted in \autoref{tab:activiationpatterns}. In this manner, we are able to handle conditions related to both numerical, (e.g., \emph{amount} and \emph{length}) and categorical attributes (e.g., \emph{color} and \emph{customer type}).
+	
+		\begin{table}[!h]
+			\caption{Supported patterns for activation conditions}
+			\label{tab:activiationpatterns}
+			\begin{tabularx}{\linewidth}{clX}
+				\toprule
+				\textbf{Condition} & \textbf{Pattern} & \textbf{Example} \\
+				\midrule 
+				$>$ or $\geq$  & [greater$|$higher$|$more] than [or equal to] & \emph{Amount higher than 50 000.}\\ 
+				$<$ or $\leq$ & [smaller$|$lower$|$less] than [or equal to] & \emph{Quantity is less than or equal to 12.}\\ 
+				$=$ or $\neq$ & is [not] [equal to] & \emph{The color is not red.} \\
+				$\in$ or $\notin$ & is [not] in [\emph{list}] & \emph{Size is not in small, medium, large.} \\
+				\bottomrule
+			\end{tabularx}
+		\end{table}	
+	
 
-	Three types of conditions: activation, correlation, and time conditions.
-	
-	we do not need to recognize which is being described
-	
-	
-	\mypar{Activation conditions} Activation conditions define constraints on attribute values associated with the \emph{activation} activity of a constraint. They denote specific requirements that must be met in order for a constraint to be applicable, e.g., stating that Response(receive loan application, check loan application) should only apply when the amount associated with the application is above 50 000EUR.
-	
-	Our approach is able to handle input that follows the patterns shown in \autoref{tab:activiationpatterns}. 
-	
-	\begin{table}[!h]
-		\caption{Condition patterns supported by Speech2RuM}
-		\label{tab:activiationpatterns}
-		\begin{tabular}{lll}
-			\toprule
-			\textbf{Type} & \textbf{Pattern} & \textbf{Semantics} \\ 
-			\midrule
-			Activation + Target& example greater \\
-			Activation + Target &example lower \\
-			Activation + Target 	&example negated \\
-			Activation  + Target	& example categorical \\
-			Correlation & exampl1 \\
-			Correlation & Example2 \\
-			Time \\
-			\bottomrule
-			
-		\end{tabular}
-	\end{table}	
+\mypar{Correlation conditions}
+Correlation conditions must be met when the \emph{target} of a declarative constraint is executed. These express relations that must exist between attributes associated with the activation and the target, e.g., that the employee \emph{receiving} a loan application should not be the same as the employee that \emph{checks} it.
 
-		
+Our approach handles two patterns here, either allowing a user to express that an attribute should be equal for both activities, e.g., ``\emph{The color is the same}'' or that they not equal, e.g., ``\emph{The applicant is different}''. \todo{Han: should we justify why we have such simple patterns? Is this simply expressivene enough?}
 
-	
-	
-	\mypar{Correlation conditions}
-	
-	
-	\mypar{Time conditions}
+
+\mypar{Time conditions}
+
 	
 	
