@@ -1,8 +1,7 @@
 % !TeX root = ../Main.tex
-\section{Interactive Elicitation of Declarative Models}
+\section{Conceptual Approach}
 \label{sec:framework}
 
-\todo{Han: this section probably should have a different name}
 
 \autoref{fig:overview} provides an overview of the main components of the Speech2RuM approach. As shown, the user provides input through speech as well as interaction with the Graphical User Interface (GUI). Based on this input, users are able to construct a declarative process model through three main functions: (1) describing constraints in natural language using speech, (2) augmenting constraints with data- and time-perspectives, and (3) optionally editing and connecting the model's constraints. 
 
@@ -13,7 +12,7 @@
 	\label{fig:overview}
 \end{figure}
 
-In this section, we outline our conceptual contributions with respect to the first two functions, i.e., for the transformation from natural language text into declarative constraints (\autoref{sec:texttodeclareconstraints}) and into augmentation of constraints with multi-perspective constraints (\autoref{sec:multiperspectiveaugmentation}).
+In this section, we outline our conceptual contributions with respect to the first two functions, i.e., for the transformation from natural language text into declarative constraints (\autoref{sec:texttodeclareconstraints}) and for the augmentation of constraints with multi-perspective conditions (\autoref{sec:multiperspectiveaugmentation}).
 We cover the implementation of the approach and the user interaction it supports in \autoref{sec:implementation}.
 
 	
@@ -123,10 +122,28 @@ We cover the implementation of the approach and the user interaction it supports
 \mypar{Correlation conditions}
 Correlation conditions must be met when the \emph{target} of a declarative constraint is executed. These express relations that must exist between attributes associated with the activation and the target, e.g., that the employee \emph{receiving} a loan application should not be the same as the employee that \emph{checks} it.
 
-Our approach handles two patterns here, either allowing a user to express that an attribute should be equal for both activities, e.g., ``\emph{The color is the same}'' or that they not equal, e.g., ``\emph{The applicant is different}''. \todo{Han: should we justify why we have such simple patterns? Is this simply expressivene enough?}
+Our approach handles two patterns here, either allowing a user to express that an attribute should be equal for both activities, e.g., ``\emph{The color is the same}'' or that they not equal, e.g., ``\emph{The applicant is different}''. \todo{Han: should we justify why we have such simple patterns? Is this simply expressive enough?}
 
 
-\mypar{Time conditions}
+\mypar{Time conditions} A time conditions bounds the time between the occurrence of the activation and a target of a declarative constraint, e.g., stating that a response should occur within 5 days of the activation. 
+As shown in \autoref{tab:timepatterns}, we allow users to specify time conditions according to three general patterns. The first pattern only specifies an upper bound on the duration, whereas the other two patterns specify ranges. Note that our approach accepts time conditions specified using seconds, minutes, hours, and days. Furthermore, when specifying a range, the time unit can be different for the lower and the upper bound, as seen for the third pattern in the table.
 
+		\begin{table}[!h]
+	\caption{Supported patterns for time conditions}
+	\label{tab:timepatterns}
+	\begin{tabularx}{\linewidth}{clX}
+		\toprule
+		\textbf{Condition} & \textbf{Pattern} & \textbf{Example} \\
+		\midrule 
+		$time \leq x$  & [in$|$at most$|$no later than] [x] & \emph{At most 3 hours} \\ 
+		$x \leq time\leq y$  & between [x] and [y] & \emph{Between 3 and 5 days} \\
+		$x \leq time\leq y$  & not [before$|$earlier than] [x] and & \emph{Not before 3 hours and within} \\ 
+		& [within$|$not later than$|$not after] [y] & \emph{4 days}\\
+		
+		
+		
+		\bottomrule
+	\end{tabularx}
+\end{table}	
 	
 	
