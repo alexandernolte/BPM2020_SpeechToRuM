@@ -246,30 +246,15 @@ Due to the inherent flexibility of natural language, this extraction step can be
 	\label{tab:challenge1}			
 \end{table}
 
-\mypar{Variability of textual descriptions.} As shown in \autoref{tab:challenge1}, the same declarative constraint can be described in a broad range of manners. Key types of differences occur due to:
+\mypar{Variability of textual descriptions} As shown in \autoref{tab:challenge1}, the same declarative constraint can be described in a broad range of manners. Key types of differences occur due to:
 the use of synonyms (e.g., \emph{create invoice} in $s_1$  and \emph{create bill} in $s_2$) and due to different grammatical structures (e.g., $s_1$ uses verbs to denote activities, whereas $s_3$ uses nouns, like ``\emph{invoice creation}'').
 Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or the reverse order, such as $s_4$ and $s_5$.
 
 To achieve our goal of supporting users in the elicitation of declarative process models, we must not limit the user too much in terms of the input that they can provide. Rather, it has to be accommodating to the different manners in which users may choose to describe constraints. However, a successful approach must be able to do this while simultaneously being able to recognize subtle distinctions between different constraints, as discussed next.
 
 
-%\begin{compactitem}
-%	\item \textbf{Synonyms.} Synonyms are omnipresent in any unstructured or semi-structured natural language text. Their presence impacts two aspects of constraint descriptions. First, synonymous terms or phrases can be used to refer to what is semantically the same action, e.g., \emph{create invoice} in $s_1$ and \emph{create bill} in $s_2$. Second, they can be used to describe the inter-relations between actions in different manners. E.g., ``\emph{before the invoice can be approved}'' in $s_1$ has the same implications for the declarative constraint as ``\emph{prior to it being approved}'' in $s_2$.
-%	
-%	\item \textbf{Different grammatical structures.} Textual descriptions of constraints can have widely different grammatical structures. Given that such a description captures a number of actions and their inter-relations, a particularly important distinction is to be made between descriptions that use \emph{verbs} to denote actions, e.g., ``\emph{An invoice must be created}'' in $s_1$, versus those that use \emph{nouns} to denote actions, e.g., ``\emph{invoice creation}'' in $s_3$.
-%	%		The latter cases are more difficult to handle, given that most work on the extraction of process information from text only uses verb-based identification of actions~\cite{vanderaa2019extracting}.
-%	%		
-%	\item \textbf{Description order.} Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or the reverse order, such as $s_4$ and $s_5$.
-%	
-	
-	
-	
-	
-%\end{compactitem}
 
-%\noindent  To achieve our goal of supporting users in the elicitation of declarative process models, we must not limit the user too much in terms of the input that they can provide. Rather, it has to be accommodating to the different manners in which users may choose to describe constraints. However, a successful approach must be able to do this while simultaneously being able to recognize subtle distinctions between different constraints, as discussed next.
-
-\mypar{Subtle differences leading to different constraints.}
+\mypar{Subtle differences leading to different constraints}
 Small textual differences can have a considerable impact on the semantics of a constraint description and, thus, on the constraints that should be extracted from them. To illustrate this, consider the descriptions in \autoref{tab:challenge2}. In comparison to description $s_6$, the three other descriptions each differ by only a single word. However, as shown in the right-hand column, the described constraints vary greatly. 
 For instance, 
 the difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this \emph{must} occur, indicating an obligation, whereas the latter specifies that it \emph{can} occur. 
@@ -294,22 +279,9 @@ Further, the direction in which a constraint is described is often signaled thro
 	\end{tabular}
 \end{table}
 
-%
-%\begin{compactitem}
-%	\item \textbf{Obligation.} The difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this action \emph{must} occur, indicating an obligation, whereas the latter specifies that it \emph{can} occur. As such, the activation and the target of the constraint are swapped.
-%	
-%	
-%	\item \textbf{Order indicators.} As discussed before, constraints can be described in chronological and non-chronological orders. This difference is often signaled through small textual clues,  typically through the  use of temporal prepositions. This is seen for description $s_8$, where the use of \emph{first} completely reverses the meaning of the described constraint.
-%	
-%	\item \textbf{Negation.} Finally, it should be clear that the presence of negation drastically changes the meaning of a constraint, as seen for $s_9$. The addition of \emph{not} to description $s_6$ changes the original Response constraint into a Not Succession. \todoinline{what to say about NotSuccession? I have added one sentence. Is it ok?}
-%	
-%\end{compactitem}
-
-
 
 \mypar{State of the art}
 So far, only one approach has been developed to automatically extract declarative process constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. 
-%The approach aims at handling the aforementioned extraction challenges, in particular based on a unique approach to the extraction of noun-based actions. \todo{not very clear} 
 Its evaluation results show that it is able to handle a reasonable variety of inputs.
 Recognizing its potential, we build on this approach. In particular, we use this technique for activity extraction and employ it for the extraction of the aforementioned five constraint templates.
 

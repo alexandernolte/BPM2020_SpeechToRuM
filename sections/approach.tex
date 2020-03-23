@@ -32,7 +32,28 @@ We cover the implementation of the approach and the user interaction it supports
 		\label{fig:semanticcomponents}
 	\end{figure}
 	
-%By building on this parsing step, we extended the existing constraing generation step by: (1) covering considerably more constraints and (2) being able to deal with more flexibility in the input.
+
+	\begin{table}[!ht]
+	\caption{Additional constraint types in Speech2RuM}
+	\label{tab:additionalconstraints}
+	\begin{tabularx}{\textwidth}{lX}
+		\toprule
+		\textbf{Constraint}  &  \textbf{Example}\\
+		\midrule
+		Participation & \textit{An invoice must be created}\\
+		Absence &  \textit{Dogs are \uline{not} allowed in the restaurant.} \\
+		AtMostOne & \textit{An invoice should be paid \uline{at most once}.} \\
+		CoExistence &  \textit{Order shipment and invoice payment \uline{should occur together}.}\\
+		RespondedExistence &  \textit{If a product is produced, it \uline{must be tested}.}\\
+		NotCoExistence & \textit{If an application is accepted, it cannot be rejected.} \\
+ChainPrecedence &  \textit{After an order is received, it may  \uline{immediately} be refused.}\\
+		ChainResponse &  \textit{After an order is received, it must \uline{directly} be  checked.}\\
+		
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+
 
 	By building on this parsing step and the existing constraint-generation approach, we have added support to handle the additional constraint types presented in \autoref{tab:additionalconstraints}. 	Based on a set of activities $A_s$ and a relation $rel_s$ extracted for a sentence $s$, these additional types are handled as follows:
 	\begin{compactitem}
@@ -52,36 +73,9 @@ We cover the implementation of the approach and the user interaction it supports
 	\item \textbf{\textit{ChainPrecedence} and \textit{ChainResponse}.} These constraint types are specializations of \PrecTmp\ \RespTmp\ constraints. Chain constraints are recognized by the presence of a temporal preposition that indicates immediacy. Generally, such a preposition is associated with the verb of either an action $a_1$ or $a_2$ in a relation $a_1\ dep\ a_2$. For this, we consider the preposition  \emph{immediately} and several of its synonyms, i.e., \emph{instantly}, \emph{directly}, and \emph{promptly}. 
 	\end{compactitem}
 	
-
-	\begin{table}[!ht]
-		\caption{Additional constraint types in Speech2RuM}
-		\label{tab:additionalconstraints}
-		\begin{tabularx}{\textwidth}{lX}
-			\toprule
-			\textbf{Constraint}  &  \textbf{Example}\\
-			\midrule
-		\PartTmp & An invoice must be created\\
-		\textbf{Absence?} &  Dogs are \uline{not} allowed in the restaurant. \\
-			   \UniqTmp & An invoice should be paid \uline{at most once}. \\
-			\CoExiTmp &  Order shipment and invoice payment \uline{should occur together}.\\
-			\ResExTmp &  If a product is produced, it \uline{must be tested}.\\
-				\NotCoExiTmp & If an application is accepted, it cannot be rejected. \\
-			\ChaPrecTmp  &  After an order is received, it may  \uline{immediately} be refused.\\
-			\ChaRespTmp  &  After an order is received, it must \uline{directly} be  checked.\\
-						
-			\bottomrule
-		\end{tabularx}
-	\end{table}
+		\noindent Note that if a sentence does not yield constraints for these additional types, constraint generation proceeds to extract the six constraint types covered by the original approach. 
 	
-	\noindent Note that if a sentence does not yield constraints for these additional types, constraint generation proceeds to extract the six constraint types covered by the original approach. 
 
-
-	
-%	\noindent\textbf{Input flexibility.}
-%	
-%	- improved pattern recognition. E.g., past tense versus present tense
-%
-%	- always?	
 	
 	
 
