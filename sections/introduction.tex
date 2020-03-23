@@ -15,19 +15,8 @@ generation of imperative process models from natural language descriptions  (cf.
 
 In this work, we go beyond this state-of-the-art by presenting and evaluating an interactive approach, which takes vocal statements from the user as input, and employs speech recognition to convert them into the closest (set of) \Declare\ constraint(s). 
 The approach has been integrated in a declarative modeling and analysis toolkit. With this tool, the user is not required to have any experience in temporal logics nor to be familiar with the graphical notation of \Declare\ constraints, but can express temporal properties using her/his own words. The temporal properties that can be modeled with the tool cover the entire Multi-Perspective Declare (\MPDeclare) language that cannot only express control-flow properties, but also conditions on the data, time, and resource perspectives.
-A further important contribution of the paper is that the evaluation presented in this paper can be considered the first test  of the usability of speech recognition in business process modeling.
-\todoinline{describe evaluation results in 2 sentences}
-
-%To summarize, we are able to provide the following contributions in comparison to the state of the art:
-%\begin{compactenum}
-%	\item we greatly increase the coverage of \Declare\ constraint types wrt.~\cite{vanderaa2019extracting};
-%	\item we handle more flexible inputs so that more expressions can be recognized by the speech recognition component;
-%    \item constraints are now linked to each other, enabling the definition of actual declarative process models, rather than just individual constraints;	
-%    \item no one-shot approach;  \todo{what does this mean?}
-%	\item we ensure additional expressiveness by incorporating conditions from data, time, and resource perspectives
-%	\item the generated process models can be directly used as input for, e.g., conformance checking, log generation, and process monitoring (being the modeler integrated in an analysis toolkit);
-%    \item we test the usability of speech recognition in business process modeling.
-%\end{compactenum}
+A further important contribution of the paper is that the user evaluation presented in this paper can be considered the first test  of the usability of speech recognition in business process modeling.
+This evaluation revealed that participants found that the tool would improve their efficiency, particularly in mobile settings. However, it also pointed towards a learning curve, especially for less experienced users. Based on the obtained feedback, we were able to make various improvements to the user interface.
 
 The remainder of the paper is structured as follows. \autoref{sec:background} introduces \MPDeclare\ and discusses the challenges associated with the transformation of natural language into declarative constraints. \autoref{sec:framework} presents our conceptual contributions with respect to the generation of declarative constraints and multi-perspective conditions based on natural language input, while \autoref{sec:implementation} presents the implemented toolkit. \autoref{sec:evaluation} discusses the user evaluation we conducted to assess the usability of our tool. Finally, \autoref{sec:relatedwork} considers related streams of research, before concluding in \autoref{sec:conclusion}.
 
