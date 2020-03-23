@@ -129,54 +129,54 @@ in the same trace. For example, $a$ is an activation for the \emph{response}
 constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template the corresponding activation is specified.
 
 
-
-\begin{table*}[t!]
-	\caption{Semantics for \MPDeclare\ constraints \label{tbl:timed-mfotl}}
-	\centering
-	\scriptsize{
-		\begin{tabular}{ll}
-			\toprule
-			\textbf{Template} & \textbf{MFOTL Semantics} \\
-			%\midrule
-			%existence & $\tfuture (A \wedge \exists x.\varphi_a(x)) $ \\
-			%absence & $\neg \tfuture (A \wedge \exists x.\varphi_a(x))$ \\
-			%exclusive existence & $-$ & $\tfuture A \wedge \neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
-			%exclusive allowance & $\neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
-			%exactly(1) & $\lfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ & $\tfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ \\
-			%\midrule
-			\midrule
-			responded existence  & $\lglobally( \forall x.((A \wedge \varphi_a(x)) \rightarrow (\tonce (B   \wedge \exists y.\varphi_c(x,y)) \vee \tfuture (B \wedge \exists y.\varphi_c(x,y)))))$ \\
-			%co-existence & $\lfuture A \leftrightarrow \lfuture A$ & $\lglobally(A \leftrightarrow (\tonce B \vee \tfuture B))$ \\
-			\midrule
-			response &  $\lglobally( \forall x. ((A \wedge \varphi_a(x)) \rightarrow \tfuture (B \wedge \exists y.\varphi_c(x,y))))$ \\
-			alternate response  & $ \lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \lnext(\neg (A \wedge \varphi_a(x)) \tuntil (B \wedge \exists y.\varphi_c(x,y)))))$ \\
-			%chain response & $\lglobally(A \rightarrow \lnext B)$ & $\lglobally(A \rightarrow (\lnext B \wedge (\neg B \tuntil B)))$ \\
-			chain response &  $\lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \tnext (B \wedge \exists y.\varphi_c(x,y)))$ \\
-			\midrule
-			%precedence & $\neg B~ \lwuntil A$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( (\neg B~ \lwuntil A) \vee \tfuture B)$ \\
-			precedence &  $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \tonce (A \wedge \exists y.\varphi_c(x,y)))$ \\
-			%alternate precedence & $(\neg B\luntil A) \vee ( B \rightarrow \lnext(\neg B \luntil A))$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( \lglobally(\neg B) \vee (\neg A \tuntil B))$ \\
-			alternate precedence & $ \lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \lyesterday(\neg (B \wedge \varphi_a(x)) \tsince (A \wedge \exists y.\varphi_c(x,y))))$ \\
-			%chain precedence & $\lglobally(\lnext B \rightarrow A)$ & $\lglobally(A \rightarrow ( (\lnext \neg B) \vee (\lnext B \wedge (\neg B \tuntil B)))$ \\
-			chain precedence & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \tyesterday (A \wedge \exists y.\varphi_c(x,y)))$ \\
-			\midrule
-			%succession & $\lglobally(B \rightarrow \lonce A) ~ \wedge \lglobally(A \rightarrow \lfuture B)$ & $\lglobally(B \rightarrow \tonce A) ~ \wedge ~ \lglobally(A \rightarrow \tfuture B) $ \\
-			%\multirow{2}{*}{alternate succession} & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A)) ~ \wedge$ & $\lglobally(B \rightarrow \lyesterday(\neg B \tsince A)) ~ %\wedge$ \\
-			% & $  \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $\lglobally(A \rightarrow \lnext(\neg A \tuntil B))$ \\
-			%chain succession & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ & $\lglobally(B \rightarrow \tyesterday A) ~ \wedge \lglobally(A \rightarrow \tnext B)$ \\
-			% \midrule
-			not responded existence  &
-			$\lglobally( \forall x.((A \wedge \varphi_a(x)) \rightarrow \neg (\tonce (B   \wedge \exists y.\varphi_c(x,y)) \vee \tfuture (B \wedge \exists y.\varphi_c(x,y)))))$ \\
-			not response  & $\lglobally( \forall x. ((A \wedge \varphi_a(x)) \rightarrow \neg \tfuture (B \wedge \exists y.\varphi_c(x,y))))$ \\
-			not precedence & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \neg \tonce (A \wedge \exists y.\varphi_c(x,y)))$ \\
-			%not succession & $\lglobally(A \rightarrow \neg (\lfuture B))$ & $\lglobally(A \rightarrow \neg (\tfuture B))$ \\
-			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B \wedge (\neg B \tuntil B)))$ \\
-			not chain response  & $\lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \neg \tnext (B \wedge \exists y.\varphi_c(x,y)))$ \\
-			not chain precedence  & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \neg \tyesterday (A \wedge \exists y.\varphi_c(x,y)))$ \\
-			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\tnext B))$ \\
-			\bottomrule
-	\end{tabular}}
-\end{table*}
+%
+%\begin{table*}[t!]
+%	\caption{Semantics for \MPDeclare\ constraints \label{tbl:timed-mfotl}}
+%	\centering
+%	\scriptsize{
+%		\begin{tabular}{ll}
+%			\toprule
+%			\textbf{Template} & \textbf{MFOTL Semantics} \\
+%			%\midrule
+%			%existence & $\tfuture (A \wedge \exists x.\varphi_a(x)) $ \\
+%			%absence & $\neg \tfuture (A \wedge \exists x.\varphi_a(x))$ \\
+%			%exclusive existence & $-$ & $\tfuture A \wedge \neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
+%			%exclusive allowance & $\neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
+%			%exactly(1) & $\lfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ & $\tfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ \\
+%			%\midrule
+%			\midrule
+%			responded existence  & $\lglobally( \forall x.((A \wedge \varphi_a(x)) \rightarrow (\tonce (B   \wedge \exists y.\varphi_c(x,y)) \vee \tfuture (B \wedge \exists y.\varphi_c(x,y)))))$ \\
+%			%co-existence & $\lfuture A \leftrightarrow \lfuture A$ & $\lglobally(A \leftrightarrow (\tonce B \vee \tfuture B))$ \\
+%			\midrule
+%			response &  $\lglobally( \forall x. ((A \wedge \varphi_a(x)) \rightarrow \tfuture (B \wedge \exists y.\varphi_c(x,y))))$ \\
+%			alternate response  & $ \lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \lnext(\neg (A \wedge \varphi_a(x)) \tuntil (B \wedge \exists y.\varphi_c(x,y)))))$ \\
+%			%chain response & $\lglobally(A \rightarrow \lnext B)$ & $\lglobally(A \rightarrow (\lnext B \wedge (\neg B \tuntil B)))$ \\
+%			chain response &  $\lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \tnext (B \wedge \exists y.\varphi_c(x,y)))$ \\
+%			\midrule
+%			%precedence & $\neg B~ \lwuntil A$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( (\neg B~ \lwuntil A) \vee \tfuture B)$ \\
+%			precedence &  $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \tonce (A \wedge \exists y.\varphi_c(x,y)))$ \\
+%			%alternate precedence & $(\neg B\luntil A) \vee ( B \rightarrow \lnext(\neg B \luntil A))$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( \lglobally(\neg B) \vee (\neg A \tuntil B))$ \\
+%			alternate precedence & $ \lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \lyesterday(\neg (B \wedge \varphi_a(x)) \tsince (A \wedge \exists y.\varphi_c(x,y))))$ \\
+%			%chain precedence & $\lglobally(\lnext B \rightarrow A)$ & $\lglobally(A \rightarrow ( (\lnext \neg B) \vee (\lnext B \wedge (\neg B \tuntil B)))$ \\
+%			chain precedence & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \tyesterday (A \wedge \exists y.\varphi_c(x,y)))$ \\
+%			\midrule
+%			%succession & $\lglobally(B \rightarrow \lonce A) ~ \wedge \lglobally(A \rightarrow \lfuture B)$ & $\lglobally(B \rightarrow \tonce A) ~ \wedge ~ \lglobally(A \rightarrow \tfuture B) $ \\
+%			%\multirow{2}{*}{alternate succession} & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A)) ~ \wedge$ & $\lglobally(B \rightarrow \lyesterday(\neg B \tsince A)) ~ %\wedge$ \\
+%			% & $  \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $\lglobally(A \rightarrow \lnext(\neg A \tuntil B))$ \\
+%			%chain succession & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ & $\lglobally(B \rightarrow \tyesterday A) ~ \wedge \lglobally(A \rightarrow \tnext B)$ \\
+%			% \midrule
+%			not responded existence  &
+%			$\lglobally( \forall x.((A \wedge \varphi_a(x)) \rightarrow \neg (\tonce (B   \wedge \exists y.\varphi_c(x,y)) \vee \tfuture (B \wedge \exists y.\varphi_c(x,y)))))$ \\
+%			not response  & $\lglobally( \forall x. ((A \wedge \varphi_a(x)) \rightarrow \neg \tfuture (B \wedge \exists y.\varphi_c(x,y))))$ \\
+%			not precedence & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \neg \tonce (A \wedge \exists y.\varphi_c(x,y)))$ \\
+%			%not succession & $\lglobally(A \rightarrow \neg (\lfuture B))$ & $\lglobally(A \rightarrow \neg (\tfuture B))$ \\
+%			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B \wedge (\neg B \tuntil B)))$ \\
+%			not chain response  & $\lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \neg \tnext (B \wedge \exists y.\varphi_c(x,y)))$ \\
+%			not chain precedence  & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \neg \tyesterday (A \wedge \exists y.\varphi_c(x,y)))$ \\
+%			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\tnext B))$ \\
+%			\bottomrule
+%	\end{tabular}}
+%\end{table*}
 
 
 
@@ -184,7 +184,11 @@ constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because t
 \subsubsection{Multi-Perspective Declare}
 \label{sec:semantics}
 \MPDeclare extends \Declare\ with additional perspectives. 
-Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL) and is shown in Table~\ref{tbl:timed-mfotl}. We describe here the semantics informally and we refer the interested reader to \cite{Burattin2015} for more details.\todo{Han: If we say anyway that we describe semantics informally, can't we drop Table 2?}
+%Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL).
+We here describe its semantics informally and refer the interested reader to \cite{Burattin2015} for more details.
+
+% and is shown in Table~\ref{tbl:timed-mfotl}. We describe here the semantics informally and we refer the interested reader to \cite{Burattin2015} for more details.
+%\todo{Han: If we say anyway that we describe semantics informally, can't we drop Table 2?}
 %While many reasoning
 %tasks are clearly undecidable for MFOTL, this logic is appropriate to unambiguously
 %describe the semantics of the Multi-Perspective Declare~constraints we can use for conformance checking in our proposed algorithms.
@@ -196,16 +200,20 @@ Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL) a
 %\emph{ship order}
 
 %Note that all the templates in \MPDeclare\ in Table~\ref{tbl:timed-mfotl} have two parameters, an activation and a target (see also \tablename~\ref{tbl:timed-ltl}).
-The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider the response constraint ``\emph{ship order} is always eventually followed by \emph{send invoice}'' having \emph{ship order} as activation and \emph{send invoice}\ as target.
+The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider
+a Response(ship order, send invoice) constraint, with 
+% the response constraint ``\emph{ship order} is always eventually followed by \emph{send invoice}'' having 
+ \emph{ship order} as activation and \emph{send invoice}\ as target.
 The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but these constraints are not met, the constraint is not activated.
 %the amount is lower than $\euro{100}$ euros or the customer type is different from \emph{gold}, the constraint is not activated.
 
 
-The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold. A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
-
+The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold. 
+%
+%A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
 %In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever \emph{ship order} occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \emph{send invoice}\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
-
-Finally, in \MPDeclare, also a time condition can be specified through an interval ($I=[\tau_0,\tau_1)$) indicating the minimum and the maximum temporal distance allowed between the occurrence of the activation and the occurrence of the corresponding target.
+%
+Finally, a time condition can be specified through an interval ($I=[\tau_0,\tau_1)$) indicating the minimum and the maximum temporal distance allowed between the occurrence of the activation and the occurrence of the corresponding target.
 %In the following, we explain in detail the intuitive meaning of some of the constraints in Table~\ref{tbl:timed-mfotl}. We indicate with $\tau_A$ and $\tau_B$ the timestamps of $A$ and $B$, respectively.
 %The \emph{responded existence} constraint, in Table~\ref{tbl:timed-mfotl}, indicates that, if $A$ occurs at time $\tau_A$ with $\varphi_a$ holding true, $B$ must occur at some point $\tau_B\in[\tau_A + \tau_0, \tau_A + \tau_1)$ with $\varphi_c$ holding true.
 %The response constraint indicates that, if $A$ occurs at time $\tau_A$ with $\varphi_a$ holding true, $B$ must occur at some point $\tau_B\in[\tau_A + \tau_0, \tau_A + \tau_1)$ with $\varphi_c$ holding true. The alternate response constraint specifies that,
