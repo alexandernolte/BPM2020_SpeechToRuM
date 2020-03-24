@@ -14,7 +14,7 @@ execution. The possible orderings of activities are implicitly specified by
 constraints and anything that does not violate them is possible during execution.
 \MPDeclare\ is the Multi-Perspective extension of \Declare\ that was first introduced in \cite{Burattin2015} and can express constraints over perspectives of a process like data, time and resources.
 
-To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a \emph{case} an ordered sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity} (i.e., a well-defined step in a business process), has a \emph{timestamp} indicating when the event occurs and can have additional \emph{data attributes} collected into a \emph{payload}. Consider, for example, the occurrence of an event \emph{ship order} (O) and suppose that, after the occurrence of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
+To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a \emph{case} an ordered sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity}, has a \emph{timestamp} indicating when the event occurred and can have additional \emph{data attributes} as payload. Consider, e.g., the occurrence of an event \emph{ship order} (O) and suppose that, after the occurrence of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
 %In this paper, we assume that all attributes are globally visible and can be accessed/manipulated by all activity instances executed inside the case.
 
 
@@ -82,7 +82,6 @@ their semantics can be formalized using different logics
 traces, making them verifiable and executable.  Each constraint
 inherits the graphical representation and semantics from its
 template.
-\todo{We don't consider existence constraints}
 \tablename~\ref{tbl:timed-ltl} summarizes some Declare templates (the
 reader can refer to \cite{declareCSRD09} for a full description of the
 language).
@@ -164,7 +163,7 @@ Due to the inherent flexibility of natural language, this extraction step can be
 the use of synonyms (e.g., \emph{create invoice} in $s_1$  and \emph{create bill} in $s_2$) and due to different grammatical structures (e.g., $s_1$ uses verbs to denote activities, whereas $s_3$ uses nouns, like ``\emph{invoice creation}'').
 Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or the reverse order, such as $s_4$ and $s_5$.
 
-To achieve our goal of supporting users in the elicitation of declarative process models, we must not limit the user too much in terms of the input that they can provide. Rather, it has to be accommodating to the different manners in which users may choose to describe constraints. However, a successful approach must be able to do this while simultaneously being able to recognize subtle distinctions between different constraints, as discussed next.
+To support users in the elicitation of declarative process models, an approach must not limit users too much in terms of the input that they can provide. Rather, an approach must accommodate different manners in which users may describe constraints. However, a successful approach must be able to do this while also being able to recognize subtle distinctions among constraint types.
 
 
 

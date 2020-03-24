@@ -42,7 +42,7 @@
 % For commenting out some parts of the text
 \usepackage{comment}
 % For building hyperlinks
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 % For smart references
 %\usepackage{cleveref}
 %\crefname{algocf}{alg.}{algs.}
@@ -88,6 +88,8 @@
 \newcommand{\todoinline}[1]{\textcolor{red}{\bf {#1}}}
 \renewcommand{\sectionautorefname}{Section}
 \renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\figureautorefname}{Fig.}
+%\renewcommand{\tableautorefname}{Tab.}
 \newcommand{\lnext}{\ensuremath{\mathbf{X}}}
 \newcommand{\lwnext}{\ensuremath{\mathbf{\bar{X}}}}
 \newcommand{\luntil}{\ensuremath{\mathbf{U}}}
