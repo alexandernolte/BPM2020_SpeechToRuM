@@ -25,26 +25,27 @@ To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some 
 		\begin{tabular}{llc}
 			\toprule
 			\textbf{Template}    & \textbf{LTL semantics} &  \textbf{Activation}\\
-			%\midrule
-			%existence & $\lfuture A $ & $A$\\
-			%absence & $\neg \lfuture A$ & $A$ \\
+			\midrule
+			participation & $\lfuture A $ & $A$\\
+            init & $A $ & $A$\\
+			absence & $\neg \lfuture A$ & $A$ \\
 			%exclusive existence & $-$ & $\lfuture A \wedge \neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
 			%exclusive allowance & $\neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
-			%exactly(1) & $\lfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ & $\lfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ \\
+			atMostOne & $\neg \lfuture (A \wedge \lnext (\lfuture A))$ & $A$  \\
 			%|rule
 			\midrule
-			responded existence  & $\lglobally(A \rightarrow (\lonce B \vee \lfuture B))$ & $A$\\
-			%co-existence & $\lfuture A \leftrightarrow \lfuture A$ & $\lglobally(A \leftrightarrow (\lonce B \vee \lfuture B))$ \\
+			responded existence  &  $\lfuture A \rightarrow \lfuture B$ & $A$\\
+			co-existence & $\lfuture A \leftrightarrow \lfuture B$ & $A$, $B$ \\
 			\midrule
 			response &  $\lglobally(A \rightarrow \lfuture B)$ & $A$ \\
-			alternate response  & $ \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $A$\\
+		%	alternate response  & $ \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $A$\\
 			%chain response & $\lglobally(A \rightarrow \lnext B)$ & $\lglobally(A \rightarrow (\lnext B \wedge (\neg B \luntil B)))$ \\
 			chain response &  $\lglobally(A \rightarrow \lnext B)$& $A$ \\
 			\midrule
 			%precedence & $\neg B~ \lwuntil A$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( (\neg B~ \lwuntil A) \vee \lfuture B)$ \\
 			precedence &  $\lglobally(B \rightarrow \lonce A)$ & $B$\\
 			%alternate precedence & $(\neg B\luntil A) \vee ( B \rightarrow \lnext(\neg B \luntil A))$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( \lglobally(\neg B) \vee (\neg A \luntil B))$ \\
-			alternate precedence & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A ))$ & $B$\\
+	%		alternate precedence & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A ))$ & $B$\\
 			%chain precedence & $\lglobally(\lnext B \rightarrow A)$ & $\lglobally(A \rightarrow ( (\lnext \neg B) \vee (\lnext B \wedge (\neg B \luntil B)))$ \\
 			chain precedence & $\lglobally(B  \rightarrow \lyesterday A)$ & $B$\\
 			\midrule
@@ -53,14 +54,14 @@ To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some 
 			% & $  \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $\lglobally(A \rightarrow \lnext(\neg A \luntil B))$ \\
 			%chain succession & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ \\
 			% |rule
-			not responded existence  &
-			$\lglobally(A \rightarrow \neg (\lonce B \vee \lfuture B ))$ & $A$\\
-			not response  & $\lglobally(A \rightarrow \neg \lfuture B )$ & $A$\\
-			not precedence & $\lglobally(B \rightarrow \neg \lonce A )$ & $B$\\
+			not coexistence  &
+			$\lglobally(A \rightarrow \neg (\lonce B \vee \lfuture B ))$ & $A$, $B$\\
+			not succession  & $\lglobally(A \rightarrow \neg \lfuture B )$ & $A$, $B$\\
+		%	not precedence & $\lglobally(B \rightarrow \neg \lonce A )$ & $B$\\
 			%not succession & $\lglobally(A \rightarrow \neg (\lfuture B))$ & $\lglobally(A \rightarrow \neg (\lfuture B))$ \\
 			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B \wedge (\neg B \luntil B)))$ \\
-			not chain response  & $\lglobally(A \rightarrow \neg \lnext B )$ & $A$\\
-			not chain precedence  & $\lglobally(B \rightarrow \neg \lyesterday A )$ & $B$\\
+			not chain succession  & $\lglobally(A \rightarrow \neg \lnext B )$ & $A$\\
+		%	not chain precedence  & $\lglobally(B \rightarrow \neg \lyesterday A )$ & $B$\\
 			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B))$ \\
 			\bottomrule
 		\end{tabular}
@@ -108,7 +109,7 @@ the considered response constraint is satisfied in a trivial way because $a$ nev
 %	satisfied}~\cite{kupf:vacu03}. In \cite{Burattin2012}, the authors introduce
 %the notion of \emph{behavioral vacuity detection} according to which a
 %constraint is non-vacuously satisfied in a trace when it is activated in that
-%trace. 
+%trace.
 An \emph{activation} of a constraint in a trace is an event whose
 occurrence imposes, because of that constraint, some obligations on other events (targets)
 in the same trace. For example, $a$ is an activation for the \emph{response}
@@ -119,17 +120,17 @@ constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because t
 
 \subsubsection{Multi-Perspective Declare}
 \label{sec:semantics}
-\MPDeclare extends \Declare\ with additional perspectives. 
+\MPDeclare extends \Declare\ with additional perspectives.
 %Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL).
 We here describe its semantics informally and refer the interested reader to \cite{Burattin2015} for more details.
 
 The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider
-a Response(ship order, send invoice) constraint, with 
+a Response(ship order, send invoice) constraint, with
  \emph{ship order} as activation and \emph{send invoice}\ as target.
 The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but these constraints are not met, the constraint is not activated.
 
 
-The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold. 
+The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold.
 %
 %A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
 %In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever \emph{ship order} occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \emph{send invoice}\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
@@ -141,7 +142,7 @@ Finally, a time condition can be specified through an interval ($I=[\tau_0,\tau_
 \label{sec:bg:nltodeclarative}
 
 A crucial component of our work involves the extraction of declarative constraints from natural language. This extraction step involves the identification of the described actions (activities), as well as the identification of the constraint that applies to these actions.
-Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of manners, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint. 
+Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of manners, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint.
 
 \begin{table}
 	\begin{tabular}{cll}
@@ -168,9 +169,9 @@ To support users in the elicitation of declarative process models, an approach m
 
 
 \mypar{Subtle differences leading to different constraints}
-Small textual differences can have a considerable impact on the semantics of a constraint description and, thus, on the constraints that should be extracted from them. To illustrate this, consider the descriptions in \autoref{tab:challenge2}. In comparison to description $s_6$, the three other descriptions each differ by only a single word. However, as shown in the right-hand column, the described constraints vary greatly. 
-For instance, 
-the difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this \emph{must} occur, indicating an obligation, whereas the latter specifies that it \emph{can} occur. 
+Small textual differences can have a considerable impact on the semantics of a constraint description and, thus, on the constraints that should be extracted from them. To illustrate this, consider the descriptions in \autoref{tab:challenge2}. In comparison to description $s_6$, the three other descriptions each differ by only a single word. However, as shown in the right-hand column, the described constraints vary greatly.
+For instance,
+the difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this \emph{must} occur, indicating an obligation, whereas the latter specifies that it \emph{can} occur.
 Further, the direction in which a constraint is described is often signaled through small textual,  typically through the  use of temporal prepositions. For instance, in $s_8$, the use of \emph{first} completely reverses the meaning of the described constraint.
  Finally, it should be clear that the presence of negation drastically changes the meaning of a constraint, as seen for $s_9$. The addition of \emph{not} to description $s_6$ changes Response into a Not Succession.
 
@@ -194,7 +195,7 @@ Further, the direction in which a constraint is described is often signaled thro
 
 
 \mypar{State of the art}
-So far, only one approach has been developed to automatically extract declarative constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. 
+So far, only one approach has been developed to automatically extract declarative constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms.
 Its evaluation results show that it is able to handle a reasonable variety of inputs.
 Recognizing its potential as well as its limitations, we extend this approach as follows: (1) we generalized the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for augmentation with data and time conditions.
 
