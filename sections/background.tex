@@ -2,9 +2,7 @@
 
 \section{Background}
 \label{sec:background}
-%\todoinline{We have to decide which constraints we want to show here. I think that the constraints shown in this section are not the same as the ones mentioned later.}
-
-In this section, we first introduce \Declare\ and \MPDeclare\ and then discuss the main challenges associated with the translation of  natural language into declarative constraints.
+This section introduces \MPDeclare\ followed by the main challenges associated with the translation of  natural language into declarative constraints.
 
 \subsection{Declarative Process Modeling}
 \label{sec:bg:declarativemodeling}
@@ -73,13 +71,6 @@ To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some 
 \subsubsection{Declare}
 \label{sec:declare}
 
-%In
-%comparison with imperative approaches that produce ``closed'' models, i.e., all
-%that is not explicitly specified is forbidden, \Declare\ models are ``open'' and
-%tend to offer more possibilities for the execution. In this way, \Declare\ enjoys
-%flexibility and is very suitable
-%for highly dynamic processes characterized by high complexity and variability
-%due to the changeability of their execution environments.
 
 A \Declare\ model consists of a set of constraints applied to
 activities. Constraints, in turn, are based on templates. Templates
@@ -92,11 +83,6 @@ traces, making them verifiable and executable.  Each constraint
 inherits the graphical representation and semantics from its
 template.
 \todo{We don't consider existence constraints}
-%The major benefit of using templates is that analysts do
-% not have to be aware of the underlying logic-based formalization to
-% understand the models. They work with the graphical representation of
-% templates, while the underlying formulas remain
-% hidden.
 \tablename~\ref{tbl:timed-ltl} summarizes some Declare templates (the
 reader can refer to \cite{declareCSRD09} for a full description of the
 language).
@@ -130,56 +116,6 @@ in the same trace. For example, $a$ is an activation for the \emph{response}
 constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template the corresponding activation is specified.
 
 
-%
-%\begin{table*}[t!]
-%	\caption{Semantics for \MPDeclare\ constraints \label{tbl:timed-mfotl}}
-%	\centering
-%	\scriptsize{
-%		\begin{tabular}{ll}
-%			\toprule
-%			\textbf{Template} & \textbf{MFOTL Semantics} \\
-%			%\midrule
-%			%existence & $\tfuture (A \wedge \exists x.\varphi_a(x)) $ \\
-%			%absence & $\neg \tfuture (A \wedge \exists x.\varphi_a(x))$ \\
-%			%exclusive existence & $-$ & $\tfuture A \wedge \neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
-%			%exclusive allowance & $\neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
-%			%exactly(1) & $\lfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ & $\tfuture A \wedge \neg \lfuture (A \wedge \lnext (\lfuture A)) $ \\
-%			%\midrule
-%			\midrule
-%			responded existence  & $\lglobally( \forall x.((A \wedge \varphi_a(x)) \rightarrow (\tonce (B   \wedge \exists y.\varphi_c(x,y)) \vee \tfuture (B \wedge \exists y.\varphi_c(x,y)))))$ \\
-%			%co-existence & $\lfuture A \leftrightarrow \lfuture A$ & $\lglobally(A \leftrightarrow (\tonce B \vee \tfuture B))$ \\
-%			\midrule
-%			response &  $\lglobally( \forall x. ((A \wedge \varphi_a(x)) \rightarrow \tfuture (B \wedge \exists y.\varphi_c(x,y))))$ \\
-%			alternate response  & $ \lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \lnext(\neg (A \wedge \varphi_a(x)) \tuntil (B \wedge \exists y.\varphi_c(x,y)))))$ \\
-%			%chain response & $\lglobally(A \rightarrow \lnext B)$ & $\lglobally(A \rightarrow (\lnext B \wedge (\neg B \tuntil B)))$ \\
-%			chain response &  $\lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \tnext (B \wedge \exists y.\varphi_c(x,y)))$ \\
-%			\midrule
-%			%precedence & $\neg B~ \lwuntil A$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( (\neg B~ \lwuntil A) \vee \tfuture B)$ \\
-%			precedence &  $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \tonce (A \wedge \exists y.\varphi_c(x,y)))$ \\
-%			%alternate precedence & $(\neg B\luntil A) \vee ( B \rightarrow \lnext(\neg B \luntil A))$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( \lglobally(\neg B) \vee (\neg A \tuntil B))$ \\
-%			alternate precedence & $ \lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \lyesterday(\neg (B \wedge \varphi_a(x)) \tsince (A \wedge \exists y.\varphi_c(x,y))))$ \\
-%			%chain precedence & $\lglobally(\lnext B \rightarrow A)$ & $\lglobally(A \rightarrow ( (\lnext \neg B) \vee (\lnext B \wedge (\neg B \tuntil B)))$ \\
-%			chain precedence & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \tyesterday (A \wedge \exists y.\varphi_c(x,y)))$ \\
-%			\midrule
-%			%succession & $\lglobally(B \rightarrow \lonce A) ~ \wedge \lglobally(A \rightarrow \lfuture B)$ & $\lglobally(B \rightarrow \tonce A) ~ \wedge ~ \lglobally(A \rightarrow \tfuture B) $ \\
-%			%\multirow{2}{*}{alternate succession} & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A)) ~ \wedge$ & $\lglobally(B \rightarrow \lyesterday(\neg B \tsince A)) ~ %\wedge$ \\
-%			% & $  \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $\lglobally(A \rightarrow \lnext(\neg A \tuntil B))$ \\
-%			%chain succession & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ & $\lglobally(B \rightarrow \tyesterday A) ~ \wedge \lglobally(A \rightarrow \tnext B)$ \\
-%			% \midrule
-%			not responded existence  &
-%			$\lglobally( \forall x.((A \wedge \varphi_a(x)) \rightarrow \neg (\tonce (B   \wedge \exists y.\varphi_c(x,y)) \vee \tfuture (B \wedge \exists y.\varphi_c(x,y)))))$ \\
-%			not response  & $\lglobally( \forall x. ((A \wedge \varphi_a(x)) \rightarrow \neg \tfuture (B \wedge \exists y.\varphi_c(x,y))))$ \\
-%			not precedence & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \neg \tonce (A \wedge \exists y.\varphi_c(x,y)))$ \\
-%			%not succession & $\lglobally(A \rightarrow \neg (\lfuture B))$ & $\lglobally(A \rightarrow \neg (\tfuture B))$ \\
-%			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B \wedge (\neg B \tuntil B)))$ \\
-%			not chain response  & $\lglobally(\forall x. ((A \wedge \varphi_a(x)) \rightarrow \neg \tnext (B \wedge \exists y.\varphi_c(x,y)))$ \\
-%			not chain precedence  & $\lglobally(\forall x. ((B \wedge \varphi_a(x)) \rightarrow \neg \tyesterday (A \wedge \exists y.\varphi_c(x,y)))$ \\
-%			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\tnext B))$ \\
-%			\bottomrule
-%	\end{tabular}}
-%\end{table*}
-
-
 
 
 \subsubsection{Multi-Perspective Declare}
@@ -188,25 +124,10 @@ constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because t
 %Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL).
 We here describe its semantics informally and refer the interested reader to \cite{Burattin2015} for more details.
 
-% and is shown in Table~\ref{tbl:timed-mfotl}. We describe here the semantics informally and we refer the interested reader to \cite{Burattin2015} for more details.
-%\todo{Han: If we say anyway that we describe semantics informally, can't we drop Table 2?}
-%While many reasoning
-%tasks are clearly undecidable for MFOTL, this logic is appropriate to unambiguously
-%describe the semantics of the Multi-Perspective Declare~constraints we can use for conformance checking in our proposed algorithms.
-%To explain the semantics, we have to introduce some preliminary notions.
-
-
-
-%To define the new semantics for Declare, we have to contextualize the definitions given in Section \ref{sec:mfotl} in XES. Consider, for example, that the execution of an activity $pay$ is recorded in an event log and, after the execution of $pay$ at timestamp $\tau_i$, the attributes $originator$, $amount$, and $z$ have values $John$, $100$, and $July$. In this case, the valuation of $(activityName,originator,amount,z)$ is $(pay,John,100,July)$ in $\tau_i$. Considering that in XES, by definition, the activity name is a special attribute always available, if $(pay,John,100,July)$ is the valuation of $(activityName,originator,amount,z)$, we say that, when $pay$ occurs, two special relations are valid $event(pay)$ and $p_{pay}(John,100,July)$. In the following, we identify $event(pay)$ with the event itself $pay$ and we call $(John,100,July)$, the \emph{payload} of $pay$.
-%\emph{ship order}
-
-%Note that all the templates in \MPDeclare\ in Table~\ref{tbl:timed-mfotl} have two parameters, an activation and a target (see also \tablename~\ref{tbl:timed-ltl}).
 The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider
 a Response(ship order, send invoice) constraint, with 
-% the response constraint ``\emph{ship order} is always eventually followed by \emph{send invoice}'' having 
  \emph{ship order} as activation and \emph{send invoice}\ as target.
 The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but these constraints are not met, the constraint is not activated.
-%the amount is lower than $\euro{100}$ euros or the customer type is different from \emph{gold}, the constraint is not activated.
 
 
 The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold. 
@@ -215,21 +136,13 @@ The correlation condition  $\varphi_c$ is a relation that must be valid when the
 %In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever \emph{ship order} occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \emph{send invoice}\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
 %
 Finally, a time condition can be specified through an interval ($I=[\tau_0,\tau_1)$) indicating the minimum and the maximum temporal distance allowed between the occurrence of the activation and the occurrence of the corresponding target.
-%In the following, we explain in detail the intuitive meaning of some of the constraints in Table~\ref{tbl:timed-mfotl}. We indicate with $\tau_A$ and $\tau_B$ the timestamps of $A$ and $B$, respectively.
-%The \emph{responded existence} constraint, in Table~\ref{tbl:timed-mfotl}, indicates that, if $A$ occurs at time $\tau_A$ with $\varphi_a$ holding true, $B$ must occur at some point $\tau_B\in[\tau_A + \tau_0, \tau_A + \tau_1)$ with $\varphi_c$ holding true.
-%The response constraint indicates that, if $A$ occurs at time $\tau_A$ with $\varphi_a$ holding true, $B$ must occur at some point $\tau_B\in[\tau_A + \tau_0, \tau_A + \tau_1)$ with $\varphi_c$ holding true. The alternate response constraint specifies that,
-%if $A$ occurs at time $\tau_A$ with $\varphi_a$ holding true, $B$ must occur at some point $\tau_B\in[\tau_A + \tau_0, \tau_A + \tau_1)$ with $\varphi_c$ holding true. $A$ is not allowed in the interval $[\tau_A,\tau_B]$ if $\varphi_a$ is true. Any event different from $A$ is allowed and, also, $A$ is allowed if $\varphi_a$ is false.
-%The chain response constraint indicates that, if $A$ occurs at time $\tau_A$ with $\varphi_a$ holding true, $B$ must occur next at some point $\tau_B\in[\tau_A + \tau_0, \tau_A + \tau_1)$ with $\varphi_c$ holding true.
 
-
-%\todoinline{we could move this subsection to the following section?}
 
 \subsection{From Natural Language to Declarative Models}
 \label{sec:bg:nltodeclarative}
 
 A crucial component of our work involves the extraction of declarative constraints from natural language. This extraction step involves the identification of the described actions (activities), as well as the identification of the constraint that applies to these actions.
 Due to the inherent flexibility of natural language, this extraction step can be highly challenging. Its difficulty manifests itself in the sense that, on the one hand, the same declarative constraint can be expressed in a wide variety of manners, whereas, on the other hand, subtle textual differences can completely change the meaning of the described constraint. 
-%These two complimentary challenges can be illustrated as follows:
 
 \begin{table}
 	\begin{tabular}{cll}
@@ -282,11 +195,9 @@ Further, the direction in which a constraint is described is often signaled thro
 
 
 \mypar{State of the art}
-So far, only one approach has been developed to automatically extract declarative process constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. 
+So far, only one approach has been developed to automatically extract declarative constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms. 
 Its evaluation results show that it is able to handle a reasonable variety of inputs.
-Recognizing its potential, we build on this approach. In particular, we use this technique for activity extraction and employ it for the extraction of the aforementioned five constraint templates.
-
-Nevertheless, due to its limitations, we extend this approach in two main manners: (1) we generalized some of the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for the identification of multi-perspective constraints.
+Recognizing its potential as well as its limitations, we extend this approach as follows: (1) we generalized the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for augmentation with data and time conditions.
 
 
 

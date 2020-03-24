@@ -88,6 +88,20 @@ ChainPrecedence &  \textit{After an order is received, it may  \uline{immediatel
 	Since the user indicates which of these three will be added prior to recording its description, our approach is automatically aware of the type.
 	We note that descriptions of conditions likely reflect textual fragments, rather than full sentences. Furthermore, given that these are short statements, the expected variance is considerably lower than for descriptions of declarative constraints. For these reasons, our approach to extract conditions is based on pattern matching as opposed to the grammatical parsing used in \autoref{sec:texttodeclareconstraints}. 
 	
+			\begin{table}[!h]
+		\caption{Supported patterns for activation conditions}
+		\label{tab:activiationpatterns}
+		\begin{tabularx}{\linewidth}{clX}
+			\toprule
+			\textbf{Condition} & \textbf{Pattern} & \textbf{Example} \\
+			\midrule 
+			$>$ or $\geq$  & [greater$|$higher$|$more] than [or equal to] & \emph{Amount higher than 50 000.}\\ 
+			$<$ or $\leq$ & [smaller$|$lower$|$less] than [or equal to] & \emph{Quantity is less than or equal to 12.}\\ 
+			$=$ or $\neq$ & is [not] [equal to] & \emph{The color is not red.} \\
+			$\in$ or $\notin$ & is [not] in [\emph{list}] & \emph{Size is not in small, medium, large.} \\
+			\bottomrule
+		\end{tabularx}
+	\end{table}	
 	
 	\mypar{Activation conditions} Activation conditions denote specific requirements that must be met in order for a constraint to be applicable, e.g., stating that \textit{Response(receive loan application, check loan application)} should only apply when the amount associated with \emph{receive loan application} activity is above 50 000. 
 	
@@ -97,30 +111,12 @@ ChainPrecedence &  \textit{After an order is received, it may  \uline{immediatel
 	Each sub-string $s \in split(S)$ is expected to correspond to an individual expression, which together shall be joined using logical $\wedge$ and $\vee$ operators. 
 	On each $s \in split(S)$, we use pattern matching based on the patterns depicted in \autoref{tab:activiationpatterns}. In this manner, we are able to handle conditions related to both numerical, (e.g., \emph{amount} and \emph{length}) and categorical attributes (e.g., \emph{color} and \emph{customer type}).
 	
-		\begin{table}[!h]
-			\caption{Supported patterns for activation conditions}
-			\label{tab:activiationpatterns}
-			\begin{tabularx}{\linewidth}{clX}
-				\toprule
-				\textbf{Condition} & \textbf{Pattern} & \textbf{Example} \\
-				\midrule 
-				$>$ or $\geq$  & [greater$|$higher$|$more] than [or equal to] & \emph{Amount higher than 50 000.}\\ 
-				$<$ or $\leq$ & [smaller$|$lower$|$less] than [or equal to] & \emph{Quantity is less than or equal to 12.}\\ 
-				$=$ or $\neq$ & is [not] [equal to] & \emph{The color is not red.} \\
-				$\in$ or $\notin$ & is [not] in [\emph{list}] & \emph{Size is not in small, medium, large.} \\
-				\bottomrule
-			\end{tabularx}
-		\end{table}	
+
 	
 
 \mypar{Correlation conditions}
 Correlation conditions must be met when the \emph{target} of a declarative constraint is executed. These express relations that must exist between attributes associated with the activation and the target, e.g., that the employee \emph{receiving} a loan application should not be the same as the employee that \emph{checks} it.
-
 Our approach handles two patterns here, either allowing a user to express that an attribute should be equal for both activities, e.g., ``\emph{The color is the same}'' or that they not equal, e.g., ``\emph{The applicant is different}''. \todo{Han: should we justify why we have such simple patterns? Is this simply expressive enough?}
-
-
-\mypar{Time conditions} A time conditions bounds the time between the occurrence of the activation and a target of a declarative constraint, e.g., stating that a response should occur within 5 days of the activation. 
-As shown in \autoref{tab:timepatterns}, we allow users to specify time conditions according to three general patterns. The first pattern only specifies an upper bound on the duration, whereas the other two patterns specify ranges. Note that our approach accepts time conditions specified using seconds, minutes, hours, and days. Furthermore, when specifying a range, the time unit can be different for the lower and the upper bound, as seen for the third pattern in the table.
 
 		\begin{table}[!h]
 	\caption{Supported patterns for time conditions}
@@ -133,11 +129,13 @@ As shown in \autoref{tab:timepatterns}, we allow users to specify time condition
 		$x \leq time\leq y$  & between [x] and [y] & \emph{Between 3 and 5 days} \\
 		$x \leq time\leq y$  & not [before$|$earlier than] [x] and & \emph{Not before 3 hours and within} \\ 
 		& [within$|$not later than$|$not after] [y] & \emph{4 days}\\
-		
-		
-		
 		\bottomrule
 	\end{tabularx}
 \end{table}	
+
+\mypar{Time conditions} A time conditions bounds the time between the occurrence of the activation and a target of a declarative constraint, e.g., stating that a response should occur within 5 days of the activation. 
+As shown in \autoref{tab:timepatterns}, we allow users to specify time conditions according to three general patterns. The first pattern only specifies an upper bound on the duration, whereas the other two patterns specify ranges. Note that our approach accepts time conditions specified using seconds, minutes, hours, and days. Furthermore, when specifying a range, the time unit can be different for the lower and the upper bound, as seen for the third pattern in the table.
+
+
 	
 	
