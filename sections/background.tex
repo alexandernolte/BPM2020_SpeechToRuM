@@ -54,13 +54,12 @@ To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some 
 			% & $  \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $\lglobally(A \rightarrow \lnext(\neg A \luntil B))$ \\
 			%chain succession & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ \\
 			% |rule
-			not coexistence  &
-			$\lglobally(A \rightarrow \neg (\lonce B \vee \lfuture B ))$ & $A$, $B$\\
+			not coexistence  &  $\lfuture A \rightarrow \neg \lfuture B$ & $A$, $B$\\
 			not succession  & $\lglobally(A \rightarrow \neg \lfuture B )$ & $A$, $B$\\
 		%	not precedence & $\lglobally(B \rightarrow \neg \lonce A )$ & $B$\\
 			%not succession & $\lglobally(A \rightarrow \neg (\lfuture B))$ & $\lglobally(A \rightarrow \neg (\lfuture B))$ \\
 			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B \wedge (\neg B \luntil B)))$ \\
-			not chain succession  & $\lglobally(A \rightarrow \neg \lnext B )$ & $A$\\
+	%		not chain succession  & $\lglobally(A \rightarrow \neg \lnext B )$ & $A$\\
 		%	not chain precedence  & $\lglobally(B \rightarrow \neg \lyesterday A )$ & $B$\\
 			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B))$ \\
 			\bottomrule
@@ -113,24 +112,25 @@ the considered response constraint is satisfied in a trivial way because $a$ nev
 An \emph{activation} of a constraint in a trace is an event whose
 occurrence imposes, because of that constraint, some obligations on other events (targets)
 in the same trace. For example, $a$ is an activation for the \emph{response}
-constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template the corresponding activation is specified.
+constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template the corresponding activations are specified.
 
 
 
 
 \subsubsection{Multi-Perspective Declare}
 \label{sec:semantics}
-\MPDeclare extends \Declare\ with additional perspectives.
+\MPDeclare\ extends \Declare\ with additional perspectives.
 %Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL).
 We here describe its semantics informally and refer the interested reader to \cite{Burattin2015} for more details.
 
 The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider
 a Response(ship order, send invoice) constraint, with
  \emph{ship order} as activation and \emph{send invoice}\ as target.
-The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs but these constraints are not met, the constraint is not activated.
+The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs, but these constraints are not met, the constraint is not activated.
 
 
 The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold.
+For example, we can say that whenever \emph{ship order} occurs with order amount higher than $\euro{100}$ euros, and customer type \emph{gold}, eventually an invoice must be sent with the same order amount.
 %
 %A special type of correlation condition has the form $p_B(y) \wedge r_{c}(y)$, which we call \emph{target condition}, since it does not involve the payload of the activation.
 %In this paper, we aim at discovering constraints that correlate an activation and a target condition. For example, we can find that whenever \emph{ship order} occurs, and the amount of the loan is higher than $50\,000$ euros and the applicant has a salary lower than $24\,000$ euros per year, then eventually \emph{send invoice}\ must follow, and the assessment type will be $Complex$ and the cost of the assessment higher than $100$ euros.
@@ -197,7 +197,7 @@ Further, the direction in which a constraint is described is often signaled thro
 \mypar{State of the art}
 So far, only one approach has been developed to automatically extract declarative constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms.
 Its evaluation results show that it is able to handle a reasonable variety of inputs.
-Recognizing its potential as well as its limitations, we extend this approach as follows: (1) we generalized the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for augmentation with data and time conditions.
+Recognizing its potential as well as its limitations, we extend this approach as follows: (1) we generalize the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for augmentation with data and time conditions.
 
 
 

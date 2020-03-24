@@ -9,16 +9,18 @@ For processes that are relatively structured, \emph{imperative} process modeling
 can be characterized using temporal logic properties. These models do not require an explicit definition of  all allowed execution orders, but rather use constraints to define the boundaries of the permissible process behavior \cite{declareCSRD09}.
 
 Although their benefits are apparent, establishing declarative process models is known to be difficult, especially for domain experts that generally lack expertise in temporal logics, and in most of the cases find the graphical notation of \Declare\ constraints unintuitive~\cite{haisjackl2016understanding}.
-Due to these barriers to declarative model creation, a preliminary approach has been presented in~\cite{vanderaa2019extracting} that automatically extracts declarative process models from natural language texts, similar to others works that have investigated the 
+Due to these barriers to declarative model creation, a preliminary approach has been presented in~\cite{vanderaa2019extracting} that automatically extracts declarative process models from natural language texts, similar to others works that have investigated the
 generation of imperative process models from natural language descriptions  (cf., \cite{friedrich2011process,schumacher2013extracting,vanderaa2018checking,de2017assisting}).
 
 
-In this work, we go beyond this state-of-the-art by presenting and evaluating an interactive approach, which takes vocal statements from the user as input, and employs speech recognition to convert them into the closest (set of) \Declare\ constraint(s). 
+In this work, we go beyond this state-of-the-art by presenting and evaluating an interactive approach, which takes vocal statements from the user as input, and employs speech recognition to convert them into the closest (set of) \Declare\ constraint(s).
 The approach has been integrated in a declarative modeling and analysis toolkit. With this tool, the user is not required to have any experience in temporal logics nor to be familiar with the graphical notation of \Declare\ constraints, but can express temporal properties using her/his own words. The temporal properties that can be modeled with the tool cover the entire Multi-Perspective Declare (\MPDeclare) language that cannot only express control-flow properties, but also conditions on the data, time, and resource perspectives.
 A further important contribution of the paper is that the user evaluation presented in this paper can be considered the first test  of the usability of speech recognition in business process modeling.
 This evaluation revealed that participants found that the tool would improve their efficiency, particularly in mobile settings. However, it also pointed towards a learning curve, especially for less experienced users. Based on the obtained feedback, we were able to make various improvements to the user interface.
 
-The remainder of the paper is structured as follows. \autoref{sec:background} introduces background on \MPDeclare\ and the transformation of natural language into declarative constraints. \autoref{sec:framework} presents our conceptual contributions with respect to the generation of declarative constraints and multi-perspective conditions based on natural language input, while \autoref{sec:implementation} presents the implemented toolkit. \autoref{sec:evaluation} discusses the evaluation conducted to assess the usability of our tool. Finally, \autoref{sec:relatedwork} considers related work, before concluding in \autoref{sec:conclusion}.
+%on \MPDeclare\ and the transformation of natural language into declarative constraints
+
+The remainder of the paper is structured as follows. \autoref{sec:background} introduces \MPDeclare\ and the transformation of natural language into \Declare. \autoref{sec:framework} presents our conceptual contributions on the generation of multi-perspective constraints based on natural language input, while Sect.~\ref{sec:implementation} presents the implemented toolkit. \autoref{sec:evaluation} discusses the evaluation conducted to assess the usability of our tool. Finally, Sect.~\ref{sec:relatedwork} considers related work, before concluding in Sect.~\ref{sec:conclusion}.
 
 
 
