@@ -1,0 +1,350 @@
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The problem
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Constraint-conflict resolution
+%
+\newglossaryentry{confliresproblem}{%
+	name={non-redundant consistent constraints set},description={The problem of finding the conflicting constraints in a \glsentrytext{declamodel}}}
+\newglossaryentry{autopromo}{%
+	name={automata-product monoid},description={The algebraic structure in which we find a solution for the \glsentrytext{confliresproblem}}}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Declare, Declare mining, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Declare
+%
+\newglossaryentry{declare}{%
+	name={\textsc{Declare}},description={A declarative process modelling language and notation}}
+%
+% Task
+%
+\newglossaryentry{task}{%
+	name={task},description={The non-divisible, elementary activity}}
+\def\paramx {\ensuremath{x}}
+\def\paramy {\ensuremath{y}}
+\def\paramz {\ensuremath{z}}
+\newcommand{\taskize}[1] {\ensuremath{\scalebox{0.85}{\textsf{#1}}}}
+\def\taska {\taskize{a}}
+\def\taskb {\taskize{b}}
+\def\taskc {\taskize{c}}
+\def\taskd {\taskize{d}}
+%
+% Process model
+%
+\newglossaryentry{promod}{%
+	name={process model},description={The model of a process}
+}
+%
+% Declarative process model
+%
+\def\declamodel {\ensuremath{M}}
+\newglossaryentry{declamodel}{%
+	name={declarative \glsentrytext{promod}},description={The model of a process, expressed by means of constraints},
+	symbol={\declamodel}
+}
+%
+% MINERful
+%	
+\newglossaryentry{minerful}{%
+	name={MINERful},description={The declarative process discovery algorithm \glsentrytext{minerful}}}
+%
+% Declare Maps Miner
+%
+\newglossaryentry{decmapmin}{%
+	name={Declare Maps Miner},description={The declarative process discovery algorithm \glsentrytext{decmapmin}}}
+%
+% log alphabet
+%
+\def\logalph {\ensuremath{\mathfrak{A}}}
+\newglossaryentry{logalph}{
+	name={log alphabet},description={process alphabet, as reflected in the log},%
+	symbol={\logalph}}
+%
+% event
+%
+\def\evt {\ensuremath{e}}
+\newglossaryentry{evt}{
+	name={event},description={a record of an instantaneous fact during the process enactment},%
+	symbol={\evt}}
+%
+% trace
+%
+\def\evttrace {\ensuremath{\vec{t}}}
+\newglossaryentry{evttrace}{
+	name={trace},description={a sequence of \glsentrytext{event}s},%
+	symbol={\evttrace}}
+%
+% event log
+%
+\def\evtlog {\ensuremath{L}}
+\newglossaryentry{evtlog}{
+	name={event log},description={a collection of \glsentrytext{trace}s},%
+	symbol={\evtlog}}
+%
+% subsumption
+%
+\def\subsum {\ensuremath{\sqsubseteq}}
+\newglossaryentry{subsum}{%
+	name={subsumption},description={is subsumed by},%
+	symbol={\subsum}}
+%
+% relaxation operator
+%
+%---\def\relaxop {\ensuremath{\overset{\triangle}{\mathrm{r}}}}
+\def\relaxop {\mathscr{R}}
+\newglossaryentry{relaxop}{%
+	name={relaxation},description={relaxation operator, climbing the \glsentrytext{subsum} hierarchy}}
+\newcommand{\relaxopFunc}[1] {\ensuremath{\relaxop\left(#1\right)}}
+%
+% activation
+%
+\newglossaryentry{acti}{%
+	name={activation},description={activation of a constraint}}
+%
+% target
+%
+\newglossaryentry{target}{%
+	name={target},description={target}}
+%
+% constraint
+%
+\def\constraint {\ensuremath{C}}
+\newglossaryentry{con}{%
+	name={constraint},description={a temporal business rule},
+	symbol={\constraint}
+}
+\def\constraintPrime {\ensuremath{\constraint'}}
+\def\constraintSecond {\ensuremath{\constraint''}}
+%
+% existence
+%
+\newglossaryentry{exi}{
+	name={existence},
+	description={constrains single activities}
+}
+%
+% existence constraint
+%
+\newglossaryentry{exicon}{
+	name={\glsentrytext{exi} \glsentrytext{con}},
+	description={constrains single activities}
+}
+%
+% position constraint
+%
+\newglossaryentry{posicon}{
+	name={position \glsentrytext{con}},
+	description={constrains the position of activities}
+}
+%
+% cardinality constraint
+%
+\newglossaryentry{cardicon}{
+	name={cardinality \glsentrytext{con}},
+	description={limits the number of activities}
+}
+%
+% relation
+%
+\newglossaryentry{rela}{
+	name={relation},
+	description={constraint on pairs of activities}
+}
+%
+% relation constraint
+%
+\newglossaryentry{relacon}{
+	name={\glsentrytext{rela} \glsentrytext{con}},
+	description={constraint on pairs of activities}
+}
+%
+% unidirectional relation constraint
+%
+\newglossaryentry{unirelacon}{
+	name={unidirectional \glsentrytext{relacon}},
+	description={constraint on pairs of activities, out of which one is the activation, as the other is the target}
+}
+%
+% unidirectional forward relation constraint
+%
+\newglossaryentry{unifwrelacon}{
+	name={\glsentrytext{fw}-\glsentrytext{unirelacon}},
+	description={constraint on pairs of activities, having the first parameter as the activation, and the second one as the target}
+}
+\def\fw {\ensuremath{\mathit{fw}}}
+\newglossaryentry{fw}{
+	name={forward},
+	description={forward constraint},
+	symbol={\fw}
+}
+\newcommand{\fwFunc}[1] {\ensuremath{\fw\left(#1\right)}}
+%
+% unidirectional backward relation constraint
+%
+\newglossaryentry{unibwrelacon}{
+	name={\glsentrytext{bw}-\glsentrytext{unirelacon}},
+	description={constraint on pairs of activities, having the second parameter as the activation, and the first one as the target}
+}
+\def\bw {\ensuremath{\mathit{bw}}}
+\newglossaryentry{bw}{
+	name={backward},
+	description={backward constraint},
+	symbol={\bw}
+}
+\newcommand{\bwFunc}[1] {\ensuremath{\bw(#1)}}
+%
+% coupling relation constraint
+%
+\newglossaryentry{corelacon}{
+	name={coupling \glsentrytext{con}},
+	description={constraint based on pairs of relation constraints}
+}
+%
+% negative relation constraint
+%
+\newglossaryentry{nega}{
+	name={negative},
+	description={of a constraint, that negates a coupling relation constraint}
+}
+\newglossaryentry{negacon}{
+	name={\glsentrytext{nega} \glsentrytext{con}},
+	description={constraint negating a coupling relation constraint}
+}
+%
+% constraint template
+%
+\def\contemp {\ensuremath{\mathcal{C}}}
+\newglossaryentry{contemp}{%
+	name={\glsentrytext{temp}},description={the template of a \glsentrydesc{con}},
+	symbol={\contemp}}
+\newglossaryentry{temp}{%
+	name={template},description={the template of a \glsentrydesc{con}},
+	symbol={\contemp}}
+\def\contempPrime {\ensuremath{\contemp'}}
+\def\contempSecond {\ensuremath{\contemp''}}
+\newcommand{\contempFunc}[2] {\ensuremath{\contemp(#1,#2)}}
+\newcommand{\contempPrimeFunc}[2] {\ensuremath{\contempPrime(#1,#2)}}
+
+%
+% relation constraint template
+%
+\def\relacontemp {\ensuremath{\mathcal{R}}}
+\newglossaryentry{relacontemp}{%
+	name={relation template},description={the template of a relation \glsentrydesc{con}},
+	symbol={\relacontemp}}
+\newcommand{\relacontempFunc}[2] {\ensuremath{\relacontemp(#1,#2)}}
+\newcommand{\relacontempPrimeFunc}[2] {\ensuremath{\relacontemp'(#1,#2)}}
+\newcommand{\relacontempSecondFunc}[2] {\ensuremath{\relacontemp''(#1,#2)}}
+%
+% existence constraint template
+%
+\def\exicontemp {\ensuremath{\mathcal{E}}}
+\newglossaryentry{exicontemp}{%
+	name={existence template},description={the template of an existence \glsentrydesc{con}},
+		symbol={\exicontemp}}
+\newcommand{\exicontempFunc}[1] {\ensuremath{\exicontemp(#1)}}
+\newcommand{\exicontempPrimeFunc}[1] {\ensuremath{\exicontemp'(#1)}}
+\newcommand{\exicontempSecondFunc}[1] {\ensuremath{\exicontemp''(#1)}}
+%
+% support
+%
+\def\support {\ensuremath{\mathit{supp}}}
+\newglossaryentry{support}{%
+	name={support},description={the support of a \glsentrydesc{con}},
+	symbol={\support}}
+\newcommand{\supportFunc}[1] { \ensuremath{\support \left( #1 \right)} }
+\def\tsupp {\ensuremath{\tau_{\textrm{supp}}}}
+%
+% confidence
+%
+\def\conf {\ensuremath{\mathit{conf}}}
+\newglossaryentry{conf}{%
+	name={confidence},description={the confidence level of a \glsentrydesc{con}},
+	symbol={\conf}}
+\newcommand{\confFunc}[1] { \ensuremath{\conf \left( #1 \right)} }
+%
+% interest factor
+%
+\def\intf {\ensuremath{\mathit{IF}}}
+\newglossaryentry{intf}{%
+	name={interest factor},description={the interest factor of a \glsentrydesc{con}},
+	symbol={\intf}}
+\newcommand{\intfFunc}[1] { \ensuremath{\intf \left( #1 \right)} }
+%
+%
+%
+\def\PartTxt {Participation}
+\def\UniqTxt {AtMostOne}
+\def\InitTxt {Init}
+\def\EndTxt {End}
+\def\ResExTxt {RespondedExistence}
+\def\RespTxt {Response}
+\def\AltRespTxt {AlternateResponse}
+\def\ChaRespTxt {ChainResponse}
+\def\PrecTxt {Precedence}
+\def\AltPrecTxt {AlternatePrecedence}
+\def\ChaPrecTxt {ChainPrecedence}
+\def\CoExiTxt {CoExistence}
+\def\SuccTxt {Succession}
+\def\AltSuccTxt {AlternateSuccession}
+\def\ChaSuccTxt {ChainSuccession}
+\def\NotCoExiTxt {NotCoExistence}
+\def\NotSuccTxt {NotSuccession}
+\def\NotChaSuccTxt {NotChainSuccession}
+%
+\def\PartTmp {\ensuremath{\mathit{\PartTxt}}}
+\def\UniqTmp {\ensuremath{\mathit{\UniqTxt}}}
+\def\InitTmp {\ensuremath{\mathit{\InitTxt}}}
+\def\EndTmp {\ensuremath{\mathit{\EndTxt}}}
+\def\ResExTmp {\ensuremath{\mathit{\ResExTxt}}}
+\def\RespTmp {\ensuremath{\mathit{\RespTxt}}}
+\def\AltRespTmp {\ensuremath{\mathit{\AltRespTxt}}}
+\def\ChaRespTmp {\ensuremath{\mathit{\ChaRespTxt}}}
+\def\PrecTmp {\ensuremath{\mathit{\PrecTxt}}}
+\def\AltPrecTmp {\ensuremath{\mathit{\AltPrecTxt}}}
+\def\ChaPrecTmp {\ensuremath{\mathit{\ChaPrecTxt}}}
+\def\CoExiTmp {\ensuremath{\mathit{\CoExiTxt}}}
+\def\SuccTmp {\ensuremath{\mathit{\SuccTxt}}}
+\def\AltSuccTmp {\ensuremath{\mathit{\AltSuccTxt}}}
+\def\ChaSuccTmp {\ensuremath{\mathit{\ChaSuccTxt}}}
+\def\NotCoExiTmp {\ensuremath{\mathit{\NotCoExiTxt}}}
+\def\NotSuccTmp {\ensuremath{\mathit{\NotSuccTxt}}}
+\def\NotChaSuccTmp {\ensuremath{\mathit{\NotChaSuccTxt}}}
+%
+\newcommand{\Part}[1] {\ensuremath{\mathit{\PartTxt}(#1)}}
+\newcommand{\Uniq}[1] {\ensuremath{\mathit{\UniqTxt}(#1)}}
+\newcommand{\Init}[1] {\ensuremath{\mathit{\InitTxt}(#1)}}
+\newcommand{\End}[1] {\ensuremath{\mathit{\EndTxt}(#1)}}
+\newcommand{\ResEx}[2] {\ensuremath{\mathit{\ResExTxt}(#1,#2)}}
+\newcommand{\Resp}[2] {\ensuremath{\mathit{\RespTxt}(#1,#2)}}
+\newcommand{\AltResp}[2] {\ensuremath{\mathit{\AltRespTxt}(#1,#2)}}
+\newcommand{\ChaResp}[2] {\ensuremath{\mathit{\ChaRespTxt}(#1,#2)}}
+\newcommand{\Prec}[2] {\ensuremath{{\mathit{\PrecTxt}}(#1,#2)}}
+\newcommand{\AltPrec}[2] {\ensuremath{\mathit{\AltPrecTxt}(#1,#2)}}
+\newcommand{\ChaPrec}[2] {\ensuremath{\mathit{\ChaPrecTxt}(#1,#2)}}
+\newcommand{\CoExi}[2] {\ensuremath{\mathit{\CoExiTxt}(#1,#2)}}
+\newcommand{\Succ}[2] {\ensuremath{\mathit{\SuccTxt}(#1,#2)}}
+\newcommand{\AltSucc}[2] {\ensuremath{\mathit{\AltSuccTxt}(#1,#2)}}
+\newcommand{\ChaSucc}[2] {\ensuremath{\mathit{\ChaSuccTxt}(#1,#2)}}
+\newcommand{\NotCoExi}[2] {\ensuremath{\mathit{\NotCoExiTxt}(#1,#2)}}
+\newcommand{\NotSucc}[2] {\ensuremath{\mathit{\NotSuccTxt}(#1,#2)}}
+\newcommand{\NotChaSucc}[2] {\ensuremath{\mathit{\NotChaSuccTxt}(#1,#2)}}
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LTL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\def\LTLnext {\ensuremath{\bigcirc}}
+\def\LTLfut {\ensuremath{\Diamond}}
+\def\LTLglob {\ensuremath{\Box}}
+\def\LTLuntil {\ensuremath{\;\mathcal{U}\,}}
+\def\LTLwntil {\ensuremath{\;\mathcal{W}\,}}
+%
+%
+%% Not-sign in Regular Expressions
+%
+\def\nore{{\textasciicircum}} 

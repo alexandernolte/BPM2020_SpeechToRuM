@@ -1,0 +1,52 @@
+\begin{tiny}
+\begin{tikzpicture}[scale = 0.5]
+\tikzstyle{block} = [draw,text width=11em,align=center]
+\tikzstyle{conlabel} = [text width=11em,align=center]
+\tikzset{snake it/.style={decorate, decoration={snake,amplitude=.4mm,segment length=2mm,post length=6mm}}}
+%
+  \node[conlabel]        (unibwlabel) at (0, 2) {Backward-unidirectional relation templates};
+  \node[conlabel]        (unibwlabel) at (6, 2) {Coupling templates};
+  \node[conlabel]        (unibwlabel) at (12, 2) {Forward-unidirectional relation templates};
+  \node[conlabel]        (unibwlabel) at (18, 2) {Negative templates};
+
+  \node[block] (resexab)  at (12,  0) {$\ResEx{\paramx}{\paramy}$};
+  \node[block] (resexba)  at ( 0,  0) {$\ResEx{\paramy}{\paramx}$};
+  \node[block] (coexab)   at ( 6,  0) {$\CoExi{\paramx}{\paramy}$};
+  \node[block] (ncoexab)  at (18,  0) {$\NotCoExi{\paramx}{\paramy}$};
+  \node[block] (respab)   at (12, -2) {$\Resp{\paramx}{\paramy}$};
+  \node[block] (arespab)  at (12, -4) {$\AltResp{\paramx}{\paramy}$};
+  \node[block] (crespab)  at (12, -6) {$\ChaResp{\paramx}{\paramy}$};
+  \node[block] (precab)  at ( 0, -2) {$\Prec{\paramx}{\paramy}$};
+  \node[block] (aprecab) at ( 0, -4) {$\AltPrec{\paramx}{\paramy}$};
+  \node[block] (cprecab) at ( 0, -6) {$\ChaPrec{\paramx}{\paramy}$};
+  \node[block] (suab)     at ( 6, -2) {$\Succ{\paramx}{\paramy}$};
+  \node[block] (asuab)    at ( 6, -4) {$\AltSucc{\paramx}{\paramy}$};
+  \node[block] (csuab)    at ( 6, -6) {$\ChaSucc{\paramx}{\paramy}$};
+  \node[block] (nsuab)    at (18, -2) {$\NotSucc{\paramx}{\paramy}$};
+  \node[block] (ncsuab)   at (18, -6) {$\NotChaSucc{\paramx}{\paramy}$};
+%
+  \draw[black!40,->,>=latex] (coexab) -- +(-2,0.75) -- +(-4,0.75) -- (resexba) node [above,pos=0.25] {backward};
+  \draw[black!40,->,>=latex] (suab) -- +(-2,0.75) -- +(-4,0.75) -- (precab);
+  \draw[black!40,->,>=latex] (asuab) -- +(-2,0.75) -- +(-4,0.75) -- (aprecab);
+  \draw[black!40,->,>=latex] (csuab) -- +(-2,0.75) -- +(-4,0.75) -- (cprecab);
+  \draw[black!40,->,>=latex] (coexab) -- +(2,0.75) -- +(4,0.75) -- (resexab) node [above,pos=0.25] {forward};
+  \draw[black!40,->,>=latex] (suab) -- +(2,0.75) -- +(4,0.75) -- (respab);
+  \draw[black!40,->,>=latex] (asuab) -- +(2,0.75) -- +(4,0.75) -- (arespab);
+  \draw[black!40,->,>=latex] (csuab) -- +(2,0.75) -- +(4,0.75) -- (crespab);
+  \draw[black!40,snake it,->,>=latex] (ncoexab) -- +(-2,-0.95) -- +(-10,-0.95) -- (coexab);
+  \draw[black!40,snake it,->,>=latex] (nsuab) -- +(-2,-0.95) -- +(-10,-0.95) -- (suab);
+  \draw[black!40,snake it,->,>=latex] (ncsuab) -- +(-2,-0.95) node [below] {negates} -- +(-10,-0.95) -- (csuab);
+%
+  \draw[-open triangle 45] (respab) -- (resexab);
+  \draw[-open triangle 45] (arespab) -- (respab);
+  \draw[-open triangle 45] (crespab) -- (arespab);
+  \draw[-open triangle 45] (precab) -- (resexba);
+  \draw[-open triangle 45] (aprecab) -- (precab);
+  \draw[-open triangle 45] (cprecab) -- (aprecab);
+  \draw[-open triangle 45] (suab) -- (coexab);
+  \draw[-open triangle 45] (asuab) -- (suab);
+  \draw[-open triangle 45] (csuab) -- (asuab);
+  \draw[-open triangle 45] (nsuab) -- (ncsuab);
+  \draw[-open triangle 45] (ncoexab) -- (nsuab);
+\end{tikzpicture}
+\end{tiny} 

@@ -1,0 +1,44 @@
+\begin{table}[tb]
+  \subfloat[Input \label{tab:runningexample:input}]{%
+	\begin{tiny}
+	\begin{tabular}{lrrr}
+		\toprule
+		\Gls{con}                     & \Glssymbol{support} & \Glssymbol{conf} & \Glssymbol{intf} \\ \midrule
+		\Init{\taska}                 & 1.0           & 1.0        & 1.0        \\
+		\Part{\taska}                 & 1.0           & 1.0        & 1.0        \\
+		\CoExi{\taska}{\taskd}        & 1.0           & 1.0        & 1.0        \\
+		\End{\taskd}                  & 1.0           & 1.0        & 1.0        \\
+		\NotChaSucc{\taskb}{\taskd}   & 1.0           & 0.9        & 0.8        \\
+		\NotChaSucc{\taska}{\taskd}   & 0.75          & 0.5        & 0.5        \\
+		\ChaResp{\taskb}{\taskize{c}} & 1.0           & 0.9        & 0.8        \\
+		\NotChaSucc{\taska}{\taskb}   & 0.9           & 0.7        & 0.6        \\
+		\NotChaSucc{\taska}{\taskc}   & 0.8           & 0.7        & 0.6        \\
+		\ChaResp{\taskb}{\taska}      & 0.75          & 0.9        & 0.9        \\ \bottomrule
+	\end{tabular}
+	\end{tiny}
+  }
+  \subfloat[Processed output \label{tab:runningexample:output}]{%
+	\begin{tiny}
+	\begin{tabular}{crlrrr}
+		\toprule
+		& $i$ & \Gls{con}                                         &       \Glssymbol{support} &          \Glssymbol{conf} &          \Glssymbol{intf} \\ \midrule
+		\multirow{6}{1em}{\sidewaysheader{\safeconlist}} &
+		   1 & \Init{\taska}                                     &                       1.0 &                       1.0 &                       1.0 \\
+		  % & \textcolor{black!20}{\Part{\taska}}               &                       1.0 &                       1.0 &                       1.0 \\
+		    &                                                   &                           &                           &  & \\
+		&  2 & \End{\taskd}                                      &                       1.0 &                       1.0 &                       1.0 \\
+		&  3 & \textcolor{black!60}{\CoExi{\taska}{\taskd}}       & \textcolor{black!60}{1.0} & \textcolor{black!60}{1.0} & \textcolor{black!60}{1.0} \\
+		&  4 & \ChaResp{\taskb}{\taskize{c}}                     &                       1.0 &                       0.9 &                       0.8 \\
+		&  5 & \textcolor{black!60}{\NotChaSucc{\taskb}{\taskd}} & \textcolor{black!60}{1.0} & \textcolor{black!60}{0.9} & \textcolor{black!60}{0.8} \\
+		  \midrule
+		\multirow{4}{1em}{\sidewaysheader{\unsafeconlist}} & 1 & \NotChaSucc{\taska}{\taskb}                       &                       0.9 &                       0.7 &                       0.6 
+		  \\
+		&  2 & \NotChaSucc{\taska}{\taskc}                       &                       0.8 &                       0.7 &                       0.6 \\
+		&  3 & \sout{\NotChaSucc{\taska}{\taskd}}                &               \sout{0.75} &                \sout{0.5} &                \sout{0.5} \\
+		&  4 & \AltResp{\taskb}{\taska}                          &                      0.75 &                       0.9 &                       0.9 \\ \bottomrule
+	\end{tabular}
+	\end{tiny}
+  }
+\caption{An example of input \gls{con} set processing}
+\label{tab:runningexample}
+\end{table}

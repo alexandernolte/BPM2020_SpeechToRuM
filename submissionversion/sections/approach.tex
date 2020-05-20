@@ -1,0 +1,141 @@
+% !TeX root = ../Main.tex
+\section{Conceptual Approach}
+\label{sec:framework}
+
+
+\autoref{fig:overview} provides an overview of the main components of our Speech2RuM approach. As shown, the user provides input through speech as well as interaction with the Graphical User Interface (GUI). In this way, users are able to construct a declarative process model through three main functions: (1) using speech to describe constraints in natural language, (2) augmenting constraints with data and time conditions, and (3)  editing and connecting the model's constraints.
+
+
+\begin{figure}[!b]
+	\includegraphics[width=\textwidth]{figures/overview}
+	\caption{Overview of the Speech2RuM approach}
+	\label{fig:overview}
+\end{figure}
+
+In this section, we outline our conceptual contributions with respect to the first two functions, i.e., for the transformation from natural language text into declarative constraints (Sect.~\ref{sec:texttodeclareconstraints}) and for the augmentation of constraints with multi-perspective conditions (Sect.~\ref{sec:multiperspectiveaugmentation}).
+We cover the implementation of the approach and the user interaction it supports in Sect.~\ref{sec:implementation}.
+
+	
+
+\subsection{Constraint generation}
+	\label{sec:texttodeclareconstraints}
+	
+	In this component, our approach turns a constraint description, recorded using speech, into one or more declarative constraints.
+	For this task,  we take the result of the parsing step of the state-of-the-art  approach~\cite{vanderaa2019extracting} as a starting point. Given a sentence $S$, parsing yields  a list $A_S$ of actions described in the sentence and the inter-relations that exist between the actions, i.e., a mapping $rel_S: A_S \times A_S \rightarrow type$, with $type \in \{xor, and, dep\}$. 	
+	  As depicted in \autoref{fig:semanticcomponents}, an action $a \in A_S$ consists of a verb and optional subjects and objects, which may, furthermore, be augmented with additional information.
+%	  such as whether or not an action is negated.
+	
+	\begin{figure}
+		\includegraphics[width=0.55\textwidth]{figures/extractedcomponents}
+		\caption{Semantic components returned in the parsing step of~\cite{vanderaa2019extracting}}
+		\label{fig:semanticcomponents}
+	\end{figure}
+	
+
+	\begin{table}[!b]
+	\caption{Additional constraint types in Speech2RuM}
+	\label{tab:additionalconstraints}
+	\begin{tabularx}{\textwidth}{lX}
+		\toprule
+		\textbf{Constraint}  &  \textbf{Example}\\
+		\midrule
+		Participation & \textit{An invoice must be created}\\
+		Absence &  \textit{Dogs are \uline{not} allowed in the restaurant.} \\
+		AtMostOne & \textit{An invoice should be paid \uline{at most once}.} \\
+		CoExistence &  \textit{Order shipment and invoice payment \uline{should occur together}.}\\
+		RespondedExistence &  \textit{If a product is produced, it \uline{must be tested}.}\\
+		NotCoExistence & \textit{If an application is accepted, it cannot be rejected.} \\
+ChainPrecedence &  \textit{After an order is received, it may  \uline{immediately} be refused.}\\
+		ChainResponse &  \textit{After an order is received, it must \uline{directly} be  checked.}\\
+		
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+
+	Based on this parsing step, we have added support to handle eight additional constraint types, presented in \autoref{tab:additionalconstraints}. 	Given a set of activities $A_S$ and a relation $rel_S$ extracted for a sentence $S$, these  types are identified as follows:
+	\begin{compactitem}
+		\item \textbf{\textit{Participation} and \textit{Absence}.} If $A_S$ contains only one action, either an existence or absence constraint is established for the action, depending on whether it is negative or not.
+		
+		\item \textbf{\textit{AtMostOne}.} If a \PartTmp\ constraint is originally recognized, we subsequently check if $S$ specifies a bound on its number of  executions, i.e., by checking for phrases such as \emph{at most once}, \emph{not more than once}, \emph{one time}.
+		
+		\item \textbf{\textit{CoExistence}.}
+			\textit{CoExistence} relations are identified for sentences with two actions in an \emph{and} relation, typically extracted from a coordinating conjunction like ``\emph{shipped and paid}''. Furthermore, some notion of obligation should be present, in order to distinguish between actions that \emph{can} happen together and ones that \emph{should}.
+		
+	
+		\item \textbf{\textit{RespondedExistence}.} Responded existence constraints are similar to the originally extracted \RespTmp. Their extraction occurs when two actions are in a dependency relation, i.e., $a_1\ dep\ a_2$ for which it holds that the target action, $a_2$, is indicated to be mandatory, e.g., using \emph{must}. The key difference between \RespTmp\ and \ResExTmp\ is that the former includes a notion of order, i.e., $a_1$ precedes $a_2$, whereas no such order is specified for \ResExTmp\ constraints.
+
+	\item \textbf{\textit{NotCoExistence}.}  This constraint type is identified for negated forms of descriptions of both \emph{CoExistence} and \emph{RespondedExistence} constraints. Semantically, in both cases, the description shall state that two actions should not appear for the same process instance. This is, e.g., seen in \autoref{tab:additionalconstraints}, where ``\emph{If an application is accepted, it cannot be rejected}'' is actually the negative form of a \emph{RespondedExistence} description.
+
+		
+	\item \textbf{\textit{ChainPrecedence} and \textit{ChainResponse}.} These constraint types are specializations of \PrecTmp\ and \RespTmp\ constraints. Chain constraints are recognized by the presence of a temporal preposition that indicates immediacy. Generally, such a preposition is associated with the verb of either an action $a_1$ or $a_2$ in a relation $a_1\ dep\ a_2$. For this, we consider the preposition  \emph{immediately} and several of its synonyms, i.e., \emph{instantly}, \emph{directly}, and \emph{promptly}.
+	\end{compactitem}
+	
+		\noindent Note that for sentences that did not yield constraints for these additional types, constraint generation proceeded as done for the original approach~\cite{vanderaa2019extracting}.
+	
+
+	
+	
+
+\subsection{Multi-Perspective Augmentation}
+	\label{sec:multiperspectiveaugmentation}
+	
+	Our approach supports the augmentation of declarative constraints with conditions on the data and time perspectives, turning \Declare\ into \MPDeclare\ ones. Our approach allows users to express three types of conditions through speech input, i.e.,
+	\emph{activation}, \emph{correlation}, and \emph{time} conditions (see Sect.~\ref{sec:bg:declarativemodeling}).
+	
+%	Since the user indicates which of these three will be added prior to recording its description, our approach is automatically aware of the type.
+	We note that descriptions of conditions likely reflect textual fragments  rather than full sentences. Furthermore, given that these are short statements, the expected variance is considerably lower than for descriptions of declarative constraints. For these reasons, our approach to extract conditions is based on pattern matching as opposed to the grammatical parsing used in Sect.~\ref{sec:texttodeclareconstraints}.
+	
+			\begin{table}[!h]
+		\caption{Supported patterns for activation conditions}
+		\label{tab:activiationpatterns}
+		\begin{tabularx}{\linewidth}{clX}
+			\toprule
+			\textbf{Condition} & \textbf{Pattern} & \textbf{Example} \\
+			\midrule
+			$>$ or $\geq$  & [greater$|$higher$|$more] than [or equal to] & \emph{Amount higher than 500.}\\
+			$<$ or $\leq$ & [smaller$|$lower$|$less] than [or equal to] & \emph{Quantity is less than or equal to 12.}\\
+			$=$ or $\neq$ & is [not] [equal to] & \emph{The color is not red.} \\
+			$\in$ or $\notin$ & is [not] in [\emph{list}] & \emph{Size is not in small, medium, large.} \\
+			\bottomrule
+		\end{tabularx}
+	\end{table}	
+	
+	\mypar{Activation conditions} Activation conditions denote specific requirements that must be met in order for a constraint to be applicable, e.g., stating that \textit{Response(ship order, send invoice)} should only apply when the amount associated with \emph{ship order} activity is above 500.
+	
+	Our approach allows users to express complex conditions, i.e., conditions that concatenate multiple logical statements, such as ``\emph{The amount is higher than 500 and the color is not red}''.
+	Therefore, given an input string $S$, our approach first splits $S$ into sub-strings, denoted by $split(S)$. This is done by recognizing the presence of coordinating conjunctions (\emph{and} and \emph{or}) and dividing $S$ accordingly.
+	
+	Each sub-string $s \in split(S)$ is expected to correspond to an individual expression, which together shall be joined using logical $\wedge$ and $\vee$ operators.
+	On each $s \in split(S)$, we use pattern matching based on the patterns depicted in \autoref{tab:activiationpatterns}. In this manner, we are able to handle conditions related to both numerical, (e.g., \emph{amount} and \emph{length}) and categorical attributes (e.g., \emph{color} and \emph{customer type}).
+	
+
+	
+
+\mypar{Correlation conditions}
+Correlation conditions must be met when the \emph{target} of a declarative constraint is executed. These express relations that must exist between attributes associated with the activation and the target, e.g., that the employee \emph{receiving} a loan application should not be the same as the employee that \emph{checks} it.
+Our approach handles two patterns here, either allowing a user to express that an attribute should be equal for both activities, e.g., ``\emph{The color is the same}'' or that they not equal, e.g., ``\emph{The applicant is different}''.
+%\todo{Han: should we justify why we have such simple patterns? Is this simply expressive enough?}
+
+		\begin{table}[!h]
+	\caption{Supported patterns for time conditions}
+	\label{tab:timepatterns}
+	\begin{tabularx}{\linewidth}{clX}
+		\toprule
+		\textbf{Condition} & \textbf{Pattern} & \textbf{Example} \\
+		\midrule
+		$time \leq x$  & [in$|$at most$|$no later than] [x] & \emph{At most 3 hours} \\
+		$x \leq time\leq y$  & between [x] and [y] & \emph{Between 3 and 5 days} \\
+		$x \leq time\leq y$  & not [before$|$earlier than] [x] and & \emph{Not before 3 hours and within} \\
+		& [within$|$not later than$|$not after] [y] & \emph{12 hours}\\
+		\bottomrule
+	\end{tabularx}
+\end{table}	
+
+\mypar{Time conditions} A time condition bounds the time between the occurrence of the activation and target of a constraint, e.g., stating that a response should occur within 5 days after the activation.
+As shown in \autoref{tab:timepatterns}, we allow users to specify time conditions according to three general patterns. The first pattern only specifies an upper bound on the duration, whereas the other two patterns specify ranges. Note that our approach accepts time conditions specified using seconds, minutes, hours, and days. 
+%Furthermore, when specifying a range, the time unit can be different for the lower and the upper bound, as seen for the third pattern in the table.
+
+
+	
+	

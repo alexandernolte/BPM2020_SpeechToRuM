@@ -1,0 +1,15 @@
+\begin{tiny}
+\begin{tikzpicture}[
+  edge from parent fork down,
+  sibling distance=5em,
+  level 1/.style={level distance=5em}
+]
+
+\tikzstyle{edge from parent}=[open triangle 45-,>=stealth,draw]
+\tikzstyle{every node}=[draw,minimum width=4em]
+\node {$\Part{\paramx}$}
+  child {node {$\Init{\paramx}$}}
+  child {node {$\End{\paramx}$}};
+\end{tikzpicture}
+\end{tiny}
+\endinput
