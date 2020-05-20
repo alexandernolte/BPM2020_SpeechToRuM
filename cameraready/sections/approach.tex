@@ -23,7 +23,6 @@ We cover the implementation of the approach and the user interaction it supports
 	In this component, our approach turns a constraint description, recorded using speech, into one or more declarative constraints.
 	For this task,  we take the result of the parsing step of the state-of-the-art  approach~\cite{vanderaa2019extracting} as a starting point. Given a sentence $S$, parsing yields  a list $A_S$ of actions described in the sentence and the inter-relations that exist between the actions, i.e., a mapping $rel_S: A_S \times A_S \rightarrow type$, with $type \in \{xor, and, dep\}$. 	
 	  As depicted in \autoref{fig:semanticcomponents}, an action $a \in A_S$ consists of a verb and optional subjects and objects, which may, furthermore, be augmented with additional information.
-%	  such as whether or not an action is negated.
 	
 	\begin{figure}
 		\includegraphics[width=0.55\textwidth]{figures/extractedcomponents}
@@ -83,7 +82,6 @@ ChainPrecedence &  \textit{After an order is received, it may  \uline{immediatel
 	Our approach supports the augmentation of declarative constraints with conditions on the data and time perspectives, turning \Declare\ into \MPDeclare\ ones. Our approach allows users to express three types of conditions through speech input, i.e.,
 	\emph{activation}, \emph{correlation}, and \emph{time} conditions (see Sect.~\ref{sec:bg:declarativemodeling}).
 	
-%	Since the user indicates which of these three will be added prior to recording its description, our approach is automatically aware of the type.
 	We note that descriptions of conditions likely reflect textual fragments  rather than full sentences. Furthermore, given that these are short statements, the expected variance is considerably lower than for descriptions of declarative constraints. For these reasons, our approach to extract conditions is based on pattern matching as opposed to the grammatical parsing used in Sect.~\ref{sec:texttodeclareconstraints}.
 	
 			\begin{table}[!h]
@@ -115,7 +113,7 @@ ChainPrecedence &  \textit{After an order is received, it may  \uline{immediatel
 \mypar{Correlation conditions}
 Correlation conditions must be met when the \emph{target} of a declarative constraint is executed. These express relations that must exist between attributes associated with the activation and the target, e.g., that the employee \emph{receiving} a loan application should not be the same as the employee that \emph{checks} it.
 Our approach handles two patterns here, either allowing a user to express that an attribute should be equal for both activities, e.g., ``\emph{The color is the same}'' or that they not equal, e.g., ``\emph{The applicant is different}''.
-%\todo{Han: should we justify why we have such simple patterns? Is this simply expressive enough?}
+
 
 		\begin{table}[!h]
 	\caption{Supported patterns for time conditions}
@@ -134,7 +132,7 @@ Our approach handles two patterns here, either allowing a user to express that a
 
 \mypar{Time conditions} A time condition bounds the time between the occurrence of the activation and target of a constraint, e.g., stating that a response should occur within 5 days after the activation.
 As shown in \autoref{tab:timepatterns}, we allow users to specify time conditions according to three general patterns. The first pattern only specifies an upper bound on the duration, whereas the other two patterns specify ranges. Note that our approach accepts time conditions specified using seconds, minutes, hours, and days. 
-%Furthermore, when specifying a range, the time unit can be different for the lower and the upper bound, as seen for the third pattern in the table.
+
 
 
 	
