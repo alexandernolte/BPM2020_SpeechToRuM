@@ -11,7 +11,7 @@
   \subfloat[Inserting a Response constraint \label{fig:response}]{
     \includegraphics[scale = 0.4]{figures/response}
   }
-\caption{Inserting control-flow properties.}
+\caption{Inserting control-flow properties}
 \label{fig:controlflow}
 \end{figure}
 
@@ -19,7 +19,7 @@
 
 \section{The Tool}
 \label{sec:implementation}
-We integrated the proposed Speech2RuM approach into RuM, a modeling and analysis toolkit for Rule Mining.\footnote{The tool can be found at \url{https://tinyurl.com/wjbhb4x}} The tool is implemented in Java 11 and uses the speech recognition API provided by \emph{Google Cloud Speech}.\footnote{https://cloud.google.com/speech-to-text/} In \figurename~\ref{fig:toolNew}, a screenshot of the latest version of the tool is shown. In the top-left area of the screen the recognized vocal input is shown. It is possible to record a constraint (control-flow perspective) as shown in \figurename~\ref{fig:controlflow} where an Init and a Response constraint are modeled. After having inserted a \Declare\ constraint, the user can record an activation, a correlation and a time condition as shown in \figurename~\ref{fig:toolNew} where an activation (\emph{amount} is greater than 100 and \emph{customer type} is \emph{gold}) and a correlation (activation and target share the same value for attribute \emph{amount}) condition have already been recorded and a time condition is extracted from the vocal input \textit{``not before 2 hours and within 12 hours''}. The constraints expressed with their graphical notation are shown in the top-right area of the screen, and modifiable lists of activities and constraints are shown in the bottom part of the screen.
+We integrated the proposed Speech2RuM approach into RuM, a modeling and analysis toolkit for Rule Mining.\footnote{The tool can be found at \url{https://github.com/fmmaggi/Speech2RuM}} The tool is implemented in Java 11 and uses the speech recognition API provided by \emph{Google Cloud Speech}.\footnote{https://cloud.google.com/speech-to-text/} In \figurename~\ref{fig:toolNew}, a screenshot of the latest version of the tool is shown. In the top-left area of the screen, the recognized vocal input is shown. It is possible to record a constraint (control-flow perspective) as shown in \figurename~\ref{fig:controlflow} where an Init and a Response constraint are modeled. After having inserted a \Declare\ constraint, the user can record an activation, a correlation, and a time condition as shown in \figurename~\ref{fig:toolNew} where an activation (\emph{amount} is greater than 100 and \emph{customer type} is \emph{gold}) and a correlation (activation and target share the same value for attribute \emph{amount}) condition have already been recorded and a time condition is extracted from the vocal input \textit{``not before 2 hours and within 12 hours''}. The constraints expressed with their graphical notation are shown in the top-right area of the screen, and modifiable lists of activities and constraints are shown in the bottom part of the screen.
 
 
 

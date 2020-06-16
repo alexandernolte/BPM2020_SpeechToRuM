@@ -12,9 +12,9 @@ specifying the flow of the interactions among process activities, \Declare\
 describes a set of constraints that must be satisfied throughout the process
 execution. The possible orderings of activities are implicitly specified by
 constraints and anything that does not violate them is possible during execution.
-\MPDeclare\ is the Multi-Perspective extension of \Declare\ that was first introduced in \cite{Burattin2015} and can express constraints over perspectives of a process like data, time and resources.
+\MPDeclare\ is the Multi-Perspective extension of \Declare\ that was first introduced in \cite{Burattin2015} and can express constraints over perspectives of a process like data, time, and resources.
 
-To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a \emph{case} an ordered sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity}, has a \emph{timestamp} indicating when the event occurred and can have additional \emph{data attributes} as payload. Consider, e.g., the occurrence of an event \emph{ship order} (O) and suppose that, after the occurrence of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
+To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some preliminary notions. In particular, we call a \emph{case} an ordered sequence of events representing a single ``run'' of a process (often referred to as a \emph{trace} of events). Each event in a trace refers to an \emph{activity}, has a \emph{timestamp} indicating when the event occurred, and can have additional \emph{data attributes} as payload. Consider, e.g., the occurrence of an event \emph{ship order} (O) and suppose that, after the occurrence of O at timestamp $\tau_{O}$, the attributes \emph{customer type} and \emph{amount} have values \emph{gold} and $155\euro$. In this case, we say that, when O occurs, two special relations are valid \emph{event}(O) and $p_{O}($\emph{gold},$155\euro)$. In the following, we identify \emph{event}(O) with the event itself O and we call (\emph{gold},155), the \emph{payload} of O.
 %In this paper, we assume that all attributes are globally visible and can be accessed/manipulated by all activity instances executed inside the case.
 
 
@@ -26,36 +26,36 @@ To explain the semantics of \Declare\ and \MPDeclare, we have to introduce some 
 			\toprule
 			\textbf{Template}    & \textbf{LTL semantics} &  \textbf{Activation}\\
 			\midrule
-			participation & $\lfuture A $ & $A$\\
-            init & $A $ & $A$\\
-			absence & $\neg \lfuture A$ & $A$ \\
+			Participation(A) & $\lfuture A $ & $A$\\
+            Init(A) & $A $ & $A$\\
+			Absence(A) & $\neg \lfuture A$ & $A$ \\
 			%exclusive existence & $-$ & $\lfuture A \wedge \neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
 			%exclusive allowance & $\neg \ensuremath{\mathbf{F}_{[0,a]}}A \wedge \neg \ensuremath{\mathbf{F}_{[b,\infty]}} A$ \\
-			atMostOne & $\neg \lfuture (A \wedge \lnext (\lfuture A))$ & $A$  \\
+			AtMostOne(A) & $\neg \lfuture (A \wedge \lnext (\lfuture A))$ & $A$  \\
 			%|rule
 			\midrule
-			responded existence  &  $\lfuture A \rightarrow \lfuture B$ & $A$\\
-			co-existence & $\lfuture A \leftrightarrow \lfuture B$ & $A$, $B$ \\
+			Responded Existence(A,B)  &  $\lfuture A \rightarrow \lfuture B$ & $A$\\
+			Coexistence(A,B) & $\lfuture A \leftrightarrow \lfuture B$ & $A$, $B$ \\
 			\midrule
-			response &  $\lglobally(A \rightarrow \lfuture B)$ & $A$ \\
+			Response(A,B) &  $\lglobally(A \rightarrow \lfuture B)$ & $A$ \\
 		%	alternate response  & $ \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $A$\\
 			%chain response & $\lglobally(A \rightarrow \lnext B)$ & $\lglobally(A \rightarrow (\lnext B \wedge (\neg B \luntil B)))$ \\
-			chain response &  $\lglobally(A \rightarrow \lnext B)$& $A$ \\
+			Chain Response(A,B) &  $\lglobally(A \rightarrow \lnext B)$& $A$ \\
 			\midrule
 			%precedence & $\neg B~ \lwuntil A$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( (\neg B~ \lwuntil A) \vee \lfuture B)$ \\
-			precedence &  $\lglobally(B \rightarrow \lonce A)$ & $B$\\
+			Precedence(A,B) &  $\lglobally(B \rightarrow \lonce A)$ & $B$\\
 			%alternate precedence & $(\neg B\luntil A) \vee ( B \rightarrow \lnext(\neg B \luntil A))$ & $(\neg B ~\lwuntil A) ~ \wedge ~ \lglobally(A \rightarrow ( \lglobally(\neg B) \vee (\neg A \luntil B))$ \\
 	%		alternate precedence & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A ))$ & $B$\\
 			%chain precedence & $\lglobally(\lnext B \rightarrow A)$ & $\lglobally(A \rightarrow ( (\lnext \neg B) \vee (\lnext B \wedge (\neg B \luntil B)))$ \\
-			chain precedence & $\lglobally(B  \rightarrow \lyesterday A)$ & $B$\\
+			Chain Precedence(A,B) & $\lglobally(B  \rightarrow \lyesterday A)$ & $B$\\
 			\midrule
 			%succession & $\lglobally(B \rightarrow \lonce A) ~ \wedge \lglobally(A \rightarrow \lfuture B)$ & $\lglobally(B \rightarrow \lonce A) ~ \wedge ~ \lglobally(A \rightarrow \lfuture B) $ \\
 			%\multirow{2}{*}{alternate succession} & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A)) ~ \wedge$ & $\lglobally(B \rightarrow \lyesterday(\neg B \lsince A)) ~ %\wedge$ \\
 			% & $  \lglobally(A \rightarrow \lnext(\neg A \luntil B))$ & $\lglobally(A \rightarrow \lnext(\neg A \luntil B))$ \\
 			%chain succession & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ & $\lglobally(B \rightarrow \lyesterday A) ~ \wedge \lglobally(A \rightarrow \lnext B)$ \\
 			% |rule
-			not coexistence  &  $\lfuture A \rightarrow \neg \lfuture B$ & $A$, $B$\\
-			not succession  & $\lglobally(A \rightarrow \neg \lfuture B )$ & $A$, $B$\\
+			Not Coexistence(A,B)  &  $\lfuture A \rightarrow \neg \lfuture B$ & $A$, $B$\\
+			Not Succession(A,B)  & $\lglobally(A \rightarrow \neg \lfuture B )$ & $A$, $B$\\
 		%	not precedence & $\lglobally(B \rightarrow \neg \lonce A )$ & $B$\\
 			%not succession & $\lglobally(A \rightarrow \neg (\lfuture B))$ & $\lglobally(A \rightarrow \neg (\lfuture B))$ \\
 			%not chain succession & $\lglobally(A \rightarrow \neg (\lnext B))$ & $\lglobally(A \rightarrow \neg (\lnext B \wedge (\neg B \luntil B)))$ \\
@@ -96,7 +96,7 @@ that $\phi_1$ holds sometime in the past, $\lyesterday \phi_1$ means that $\phi_
 holds in the previous position, and, lastly, $\phi_1 \lsince \phi_2$ means that sometime in the past $\phi_2$
 holds and since that moment $\phi_1$ holds.
 
-Consider, for example, the \emph{response} constraint $\lglobally(a \rightarrow \lfuture b)$. This constraint indicates that if $a$ {\it occurs}, $b$ must
+Consider, for example, constraint Response(a,b). This constraint indicates that if $a$ {\it occurs}, $b$ must
 eventually {\it follow}.
 Therefore, this constraint is satisfied for traces such as $\textbf{t}_1$ =
 $\langle a, a, b, c \rangle$, $\textbf{t}_2 = \langle b,
@@ -111,10 +111,9 @@ the considered response constraint is satisfied in a trivial way because $a$ nev
 %trace.
 An \emph{activation} of a constraint in a trace is an event whose
 occurrence imposes, because of that constraint, some obligations on other events (targets)
-in the same trace. For example, $a$ is an activation for the \emph{response}
-constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template the corresponding activations are specified.
+in the same trace. For example, $a$ is an activation for Response(a,b) and $b$ is a target because the execution of $a$ forces $b$ to be executed, eventually. In \tablename~\ref{tbl:timed-ltl}, for each template, the corresponding activations are specified.
 
-
+%\vspace{-1em}
 
 
 \subsubsection{Multi-Perspective Declare}
@@ -123,10 +122,9 @@ constraint $\lglobally(a \rightarrow \lfuture b)$ and $b$ is a target, because t
 %Its semantics is expressed in Metric First-Order Linear Temporal Logic (MFOTL).
 We here describe its semantics informally and refer the interested reader to \cite{Burattin2015} for more details.
 
-The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider
-a Response(ship order, send invoice) constraint, with
+The standard semantics of \Declare\ is extended by requiring additional conditions on data, i.e., the \emph{activation condition}, the \emph{correlation condition}, and a \emph{time condition.} As an example, we consider constraint Response(ship order, send invoice), with
  \emph{ship order} as activation and \emph{send invoice}\ as target.
-The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs, but these constraints are not met, the constraint is not activated.
+The activation condition $\varphi_a$ is a relation that must be valid when the activation occurs. If the activation condition does not hold the constraint is not activated. The activation condition has the form $p_A(x) \wedge r_{a}(x)$, meaning that when $A$ occurs with payload $x$, the relation $r_a$ over $x$ must hold. For example, we can say that whenever \emph{ship order} occurs, the order amount is higher than $\euro{100}$ euros, and the customer is of type \emph{gold}, eventually an invoice must be sent. In case \emph{ship order} occurs, but these conditions are not satisfied, the constraint is not activated.
 
 
 The correlation condition  $\varphi_c$ is a relation that must be valid when the target occurs. It has the form $p_B(y) \wedge r_{c}(x,y)$, meaning that when $B$ occurs with payload $y$, the relation $r_c$ involving the payload $x$ of $A$ and the payload $y$ of $B$ must hold.
@@ -156,38 +154,38 @@ Due to the inherent flexibility of natural language, this extraction step can be
 		$s_5$ & Before an invoice is approved, it must be created. \\
 		\bottomrule
 	\end{tabular}
-	\caption{Different descriptions of \textit{Precedence(create order, approve order)}}
+	\caption{Different descriptions of Precedence(create invoice, approve invoice)}
 	\label{tab:challenge1}			
 \end{table}
 
 \mypar{Variability of textual descriptions} As shown in \autoref{tab:challenge1}, the same declarative constraint can be described in a broad range of manners. Key types of differences occur due to:
 the use of synonyms (e.g., \emph{create invoice} in $s_1$  and \emph{create bill} in $s_2$) and due to different grammatical structures (e.g., $s_1$ uses verbs to denote activities, whereas $s_3$ uses nouns, like ``\emph{invoice creation}'').
-Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or the reverse order, such as $s_4$ and $s_5$.
+Finally, constraint descriptions can differ in the order in which they describe the different components of binary constraints, i.e., whether they describe the constraint in a chronological fashion, e.g., $s_1$ to $s_3$, or in the reverse order, such as $s_4$ and $s_5$.
 
 To support users in the elicitation of declarative process models, an approach must not limit users too much in terms of the input that they can provide. Rather, an approach must accommodate different manners in which users may describe constraints. However, a successful approach must be able to do this while also being able to recognize subtle distinctions among constraint types.
 
 
 
 \mypar{Subtle differences leading to different constraints}
-Small textual differences can have a considerable impact on the semantics of a constraint description and, thus, on the constraints that should be extracted from them. To illustrate this, consider the descriptions in \autoref{tab:challenge2}. In comparison to description $s_6$, the three other descriptions each differ by only a single word. However, as shown in the right-hand column, the described constraints vary greatly.
+Small textual differences can have a considerable impact on the semantics of constraint descriptions and, thus, on the constraints that should be extracted from them. To illustrate this, consider the descriptions in \autoref{tab:challenge2}. In comparison to description $s_6$, the three other descriptions each differ by only a single word. However, as shown in the right-hand column, the described constraints vary greatly.
 For instance,
-the difference between the Response constraint of $s_6$ and the Precedence constraints described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this \emph{must} occur, indicating an obligation, whereas the latter specifies that it \emph{can} occur.
-Further, the direction in which a constraint is described is often signaled through small textual,  typically through the  use of temporal prepositions. For instance, in $s_8$, the use of \emph{first} completely reverses the meaning of the described constraint.
- Finally, it should be clear that the presence of negation drastically changes the meaning of a constraint, as seen for $s_9$. The addition of \emph{not} to description $s_6$ changes Response into a Not Succession.
+the difference between the Response constraint of $s_6$ and the Precedence constraint described by $s_7$ lies in the obligation associated with the \emph{send invoice} action. The former specifies that this \emph{must} occur, whereas the latter specifies that it \emph{can} occur.
+Further, the direction in which a constraint is described is often signaled through small textual elements, typically through the use of temporal prepositions. For instance, in $s_8$, the use of \emph{first} completely reverses the meaning of the described constraint.
+ Finally, the presence of a negation also drastically changes the meaning of a constraint, as seen for $s_9$. The addition of \emph{not} to description $s_6$ changes Response into Not Succession.
 
 \begin{table}
-	\caption{Subtle textual differences ($A$ as \emph{ship order}, $B$ as \emph{send invoice})}
+	\caption{Subtle textual differences (A as \emph{ship order}, B as \emph{send invoice})}
 	\label{tab:challenge2}
 	\begin{tabular}{cll}
 		\begin{tabular}{cll}
 			\toprule
 			\textbf{ID} & \textbf{Description}  & \textbf{Constraint}\\
 			\midrule
-			$s_6$ & If an order is shipped, an invoice must be sent. & Response($A$, $B$)\\
-			$s_7$ & If an order is shipped, an invoice can be sent. & Precedence($A$, $B$)\\
-			$s_8$ & If an order is shipped, an invoice must be sent first. & Precedence($B$, $A$)\\
+			$s_6$ & If an order is shipped, an invoice must be sent. & Response(A,B)\\
+			$s_7$ & If an order is shipped, an invoice can be sent. & Precedence(A,B)\\
+			$s_8$ & If an order is shipped, an invoice must be sent first. & Precedence(B,A)\\
 			$s_9$ & If an order is shipped, an invoice must not be sent.
-			& NotSuccn.($A$, $B$) \\
+			& Not Succ.(A,B) \\
 			\bottomrule
 		\end{tabular}
 	\end{tabular}
@@ -195,7 +193,7 @@ Further, the direction in which a constraint is described is often signaled thro
 
 
 \mypar{State of the art}
-So far, only one approach has been developed to automatically extract declarative constraints from natural language text. This approach, by Van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms.
+So far, only one approach has been developed to automatically extract declarative constraints from natural language text. This approach, by van der Aa et al.~\cite{vanderaa2019extracting}, is able to extract five types of Declare templates, Init, End, Precedence, Response, Succession, as well as  their negated forms.
 Its evaluation results show that it is able to handle a reasonable variety of inputs.
 Recognizing its potential as well as its limitations, we extend this approach as follows: (1) we generalize the pattern recognition mechanisms in order to handle more flexible inputs, (2) we cover eight additional constraint templates, and (3) we add support for augmentation with data and time conditions.
 
