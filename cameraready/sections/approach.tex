@@ -100,11 +100,8 @@ Chain Precedence &  \textit{After an order is received, it may  \uline{immediate
 	\end{table}	
 	
 	\mypar{Activation conditions} Activation conditions denote specific requirements that must be met in order for a constraint to be applicable, e.g., stating that Response(ship order, send invoice) should only apply when the amount associated with \emph{ship order} activity is above 500.
-	
 	Our approach allows users to express complex conditions, i.e., conditions that concatenate multiple logical statements, such as ``\emph{The amount is higher than 500 and the color is not red}''.
 	Therefore, given an input string $S$, our approach first splits $S$ into sub-strings, denoted by $split(S)$. This is done by recognizing the presence of coordinating conjunctions (\emph{and} and \emph{or}) and dividing $S$ accordingly.
-
-	
 	Each sub-string $s \in split(S)$ is expected to correspond to an individual expression, which together are joined using logical $\wedge$ and $\vee$ operators.
 	On each $s \in split(S)$, we use pattern matching based on the patterns depicted in \autoref{tab:activiationpatterns}. In this manner, we are able to handle conditions related to both numerical, (e.g., \emph{amount} and \emph{length}) and categorical attributes (e.g., \emph{color} and \emph{customer type}).
 	
